@@ -1,4 +1,4 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="es">
 
 <head>
@@ -6,7 +6,7 @@
     <!-- Required meta tags -->
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-    <meta name="description" content="Calendario de eventos y actividades de la Iglesia EvangÃ©lica Casa del Gran REY.">
+    <meta name="description" content="Calendario de eventos y actividades de la Iglesia Evangélica Casa del Gran REY.">
 
     <!-- Bootstrap CSS v5.3.2 -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
@@ -52,7 +52,7 @@
 
 <body>
 
-    <!-- BARRA DE NAVEGACIÃ“N -->
+    <!-- BARRA DE NAVEGACIÓN -->
     <nav class="navbar navbar-expand-lg fixed-top glass-nav"
         style="background: rgba(15, 23, 42, 0.95); box-shadow: 0 4px 20px rgba(0,0,0,0.1);">
         <div class="container">
@@ -72,7 +72,7 @@
                         <a class="nav-link" href="proyecto.html">Proyecto</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="quienes-somos.html">QuiÃ©nes Somos</a>
+                        <a class="nav-link" href="quienes-somos.html">Quiénes Somos</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="biblioteca.html">Biblioteca</a>
@@ -117,10 +117,10 @@
                         <div class="card premium-card border-0 shadow-sm h-100">
                             <div class="card-body p-4">
                                 <h4 class="fw-bold mb-4" style="color: var(--primary-dark);"><i
-                                        class="fa-regular fa-calendar-check text-gold me-2"></i> PrÃ³ximos Eventos</h4>
+                                        class="fa-regular fa-calendar-check text-gold me-2"></i> Próximos Eventos</h4>
 
                                 <div id="event-list-container">
-                                    <!-- Los eventos se cargarÃ¡n aquÃ­ vÃ­a JS -->
+                                    <!-- Los eventos se cargarán aquí vía JS -->
                                 </div>
                             </div>
                         </div>
@@ -162,15 +162,15 @@
             <div class="row g-4">
                 <div class="col-lg-4 mb-4 mb-lg-0">
                     <img src="img/logo.png" alt="Logo" style="width: 80px; margin-bottom: 20px;">
-                    <p class="pe-lg-4">Iglesia EvangÃ©lica Casa del Gran REY. Un lugar para conocer a Dios y crecer en
+                    <p class="pe-lg-4">Iglesia Evangélica Casa del Gran REY. Un lugar para conocer a Dios y crecer en
                         fe.</p>
                 </div>
                 <div class="col-lg-4 mb-4 mb-lg-0">
-                    <h5>Enlaces RÃ¡pidos</h5>
+                    <h5>Enlaces Rápidos</h5>
                     <ul class="list-unstyled">
                         <li class="mb-2"><a href="index.html">Inicio</a></li>
                         <li class="mb-2"><a href="proyecto.html">Proyecto</a></li>
-                        <li class="mb-2"><a href="quienes-somos.html">QuiÃ©nes Somos</a></li>
+                        <li class="mb-2"><a href="quienes-somos.html">Quiénes Somos</a></li>
                         <li class="mb-2"><a href="eventos.html">Eventos</a></li>
                     </ul>
                 </div>
@@ -178,7 +178,7 @@
                     <h5>Contacto</h5>
                     <ul class="list-unstyled">
                         <li class="mb-3"><i class="fa-solid fa-location-dot me-2 text-gold"
-                                style="color: var(--accent-gold);"></i> C. del Priorato, 34, 28915 LeganÃ©s, Madrid</li>
+                                style="color: var(--accent-gold);"></i> C. del Priorato, 34, 28915 Leganés, Madrid</li>
                         <li class="mb-3"><i class="fa-solid fa-phone me-2" style="color: var(--accent-gold);"></i> 693
                             49 17 59</li>
                     </ul>
@@ -186,7 +186,7 @@
             </div>
             <hr class="mt-5 mb-4" style="border-color: rgba(255,255,255,0.1);">
             <div class="text-center pb-3">
-                <p class="mb-0">&copy; 2026 Iglesia EvangÃ©lica Casa Del Gran REY. Todos los derechos reservados.</p>
+                <p class="mb-0">&copy; 2026 Iglesia Evangélica Casa Del Gran REY. Todos los derechos reservados.</p>
             </div>
         </div>
     </footer>
@@ -214,7 +214,7 @@
                     today: 'Hoy',
                     month: 'Mes',
                     week: 'Semana',
-                    day: 'DÃ­a'
+                    day: 'Día'
                 },
                 events: eventosDB,
                 eventClick: function (info) {
@@ -225,7 +225,7 @@
                     let timeStr = info.event.start.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' });
 
                     document.getElementById('modalEventTime').textContent = dateStr + ' - ' + timeStr;
-                    document.getElementById('modalEventDescription').textContent = info.event.extendedProps.description || 'Sin descripciÃ³n disponible.';
+                    document.getElementById('modalEventDescription').textContent = info.event.extendedProps.description || 'Sin descripción disponible.';
 
                     eventModal.show();
                 }
@@ -245,10 +245,10 @@
             const ahora = new Date();
             const proximos = eventosDB.filter(e => new Date(e.start) >= ahora)
                 .sort((a, b) => new Date(a.start) - new Date(b.start))
-                .slice(0, 4); // Mostrar mÃ¡ximo 4
+                .slice(0, 4); // Mostrar máximo 4
 
             if (proximos.length === 0) {
-                container.innerHTML = '<p class="text-muted">No hay eventos prÃ³ximos.</p>';
+                container.innerHTML = '<p class="text-muted">No hay eventos próximos.</p>';
                 return;
             }
 
@@ -278,5 +278,3 @@
 </body>
 
 </html>
-
-
