@@ -17,9 +17,7 @@ const navbarHTML = `
                     <li class="nav-item">
                         <a class="nav-link" href="index.html">Inicio</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="proyecto.html">Proyecto</a>
-                    </li>
+
                     <li class="nav-item">
                         <a class="nav-link" href="quienes-somos.html">Quiénes Somos</a>
                     </li>
@@ -47,7 +45,7 @@ document.write(navbarHTML);
 document.addEventListener('DOMContentLoaded', () => {
     // Obtenemos el nombre del archivo actual, si está vacío asumimos index.html
     const currentPath = window.location.pathname.split('/').pop() || 'index.html';
-    
+
     const navLinks = document.querySelectorAll('.navbar-nav .nav-link, .navbar-nav .btn');
     navLinks.forEach(link => {
         if (link.getAttribute('href') === currentPath) {
