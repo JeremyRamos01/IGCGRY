@@ -15,11 +15,11 @@ const footerHTML = `
                 <div class="col-lg-4 mb-4 mb-lg-0">
                     <h5>Enlaces Rápidos</h5>
                     <ul class="list-unstyled">
-                        <li class="mb-2"><a href="index.html">Inicio</a></li>
-                        <li class="mb-2"><a href="quienes-somos.html">Quiénes Somos</a></li>
-                        <li class="mb-2"><a href="biblioteca.html">Biblioteca</a></li>
-                        <li class="mb-2"><a href="eventos.html">Eventos</a></li>
-                        <li class="mb-2"><a href="chat.html">Foro Libre</a></li>
+                        <li class="mb-2"><a href="#inicio">Inicio</a></li>
+                        <li class="mb-2"><a href="#conocenos">Conócenos</a></li>
+                        <li class="mb-2"><a href="#eventos">Eventos</a></li>
+                        <li class="mb-2"><a href="#multimedia">Mensajes</a></li>
+                        <li class="mb-2"><a href="#contacto">Ubicaciones</a></li>
                     </ul>
                 </div>
                 <div class="col-lg-4">
@@ -40,3 +40,17 @@ const footerHTML = `
 `;
 
 document.write(footerHTML);
+
+document.addEventListener('DOMContentLoaded', () => {
+    const isHomePage = window.location.pathname.endsWith('index.html') || window.location.pathname.endsWith('/');
+    
+    // Update links if not on homepage
+    if (!isHomePage) {
+        document.querySelectorAll('.footer a').forEach(anchor => {
+            const href = anchor.getAttribute('href');
+            if (href && href.startsWith('#')) {
+                anchor.setAttribute('href', 'index.html' + href);
+            }
+        });
+    }
+});

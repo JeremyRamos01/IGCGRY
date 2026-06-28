@@ -28,227 +28,249 @@
     <script src="js/navbar.js"></script>
 
     <!-- HEADER HERO SECTION -->
-    <header class="hero-section">
-        <div class="container text-center" data-aos="fade-up" data-aos-duration="1500">
+    <header id="inicio" class="hero-section">
+        <div class="hero-content" data-aos="fade-up" data-aos-duration="1500">
             <h1 class="hero-title">Casa del Gran REY</h1>
-            <p class="hero-subtitle">Una iglesia de sana doctrina, con la misión de predicar la palabra de Dios y
-                brindar amor.</p>
-            <a href="quienes-somos.html" class="btn btn-gold me-3">Conócenos</a>
-            <a href="contacto.html" class="btn btn-outline-light rounded-pill px-4 py-2 fw-bold"
-                style="border-width: 2px;">Visítanos</a>
+            <p class="hero-subtitle">Una iglesia de sana doctrina, con la misión de predicar la palabra de Dios y brindar amor a todos.</p>
+            <div class="d-flex flex-wrap gap-3">
+                <a href="#conocenos" class="btn-primary-custom">Conócenos</a>
+                <a href="#eventos" class="btn-outline-custom">Ver Anuncios</a>
+            </div>
         </div>
     </header>
 
     <main>
-        <!-- WELCOME SECTION -->
-        <section class="section-padding bg-white">
+        <!-- CONÓCENOS SECTION -->
+        <section id="conocenos" class="section-padding bg-white">
             <div class="container">
                 <div class="row align-items-center">
                     <div class="col-lg-6 mb-5 mb-lg-0" data-aos="fade-right">
                         <img src="img/carrusel/B.jpg" alt="Bienvenidos a Casa del Gran REY"
-                            class="img-fluid rounded-4 shadow-lg"
-                            style="max-height: 500px; width: 100%; object-fit: cover;">
+                            class="img-fluid rounded shadow-sm"
+                            style="height: 600px; width: 100%; object-fit: cover;">
                     </div>
                     <div class="col-lg-6 ps-lg-5" data-aos="fade-left">
                         <h6 class="text-uppercase"
-                            style="color: var(--accent-gold); font-weight: 700; letter-spacing: 2px;">Bienvenidos</h6>
-                        <h2 class="display-5 fw-bold mb-4" style="color: var(--primary-dark);">Lugar de Paz y Esperanza
+                            style="color: var(--accent-color); font-weight: 700; letter-spacing: 2px; margin-bottom: 1rem;">Bienvenidos</h6>
+                        <h2 class="display-4 fw-bold mb-4" style="color: var(--primary-dark); line-height: 1.1;">Lugar de Paz y Esperanza
                         </h2>
-                        <p class="lead text-muted mb-4">Somos una congregación en Leganés dedicada a la enseñanza de la
-                            Palabra, la oración y la búsqueda espiritual. Creemos en el maravilloso amor de Cristo Jesús
-                            evidente entre nosotros.</p>
-                        <p class="text-muted mb-4">"Una iglesia de solidaridad manifiesta, cero hipocresía, donde
-                            Jesucristo es el centro de nuestra vida."</p>
-                        <a href="proyecto.html" class="btn btn-gold">Descubre Nuestro Proyecto <i
-                                class="fa-solid fa-arrow-right ms-2"></i></a>
+                        <p class="lead text-muted mb-4">Somos una congregación dedicada a la enseñanza de la Palabra, la oración y la búsqueda espiritual. Creemos en el maravilloso amor de Cristo Jesús evidente entre nosotros.</p>
+                        <p class="text-muted mb-5">"Una iglesia de solidaridad manifiesta, cero hipocresía, donde Jesucristo es el centro de nuestra vida."</p>
+                        
+                        <div class="row g-4 mb-5">
+                            <div class="col-6">
+                                <div class="d-flex align-items-center">
+                                    <div class="bg-light rounded-circle p-3 me-3 text-primary">
+                                        <i class="fa-solid fa-book-bible fs-4"></i>
+                                    </div>
+                                    <div>
+                                        <h5 class="fw-bold mb-0">Sana Doctrina</h5>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="d-flex align-items-center">
+                                    <div class="bg-light rounded-circle p-3 me-3 text-primary">
+                                        <i class="fa-solid fa-people-group fs-4"></i>
+                                    </div>
+                                    <div>
+                                        <h5 class="fw-bold mb-0">Comunidad</h5>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <a href="#eventos" class="btn-primary-custom">Nuestros Eventos <i class="fa-solid fa-arrow-right ms-2"></i></a>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- SERVICES / FEATURES SECTION -->
-        <section class="section-padding" style="background-color: var(--bg-color);">
+        <!-- MULTIMEDIA SECTION (NEW) -->
+        <section id="multimedia" class="section-padding" style="background-color: var(--bg-color);">
             <div class="container">
-                <div class="section-title" data-aos="fade-up">
-                    <h2>Nuestra Vida en Comunidad</h2>
+                <div class="section-title text-center" data-aos="fade-up">
+                    <h2>Revive nuestra experiencia Online</h2>
+                    <p>Mensajes y predicaciones para edificar tu vida dondequiera que estés.</p>
                 </div>
-                <div class="row g-4 mt-2">
-                    <!-- Feature 1 -->
-                    <div class="col-md-4" data-aos="fade-up" data-aos-delay="100">
-                        <div class="premium-card card h-100 text-center p-4">
-                            <div class="card-body">
-                                <div class="mb-4 d-inline-flex justify-content-center align-items-center"
-                                    style="width: 80px; height: 80px; border-radius: 50%; background: rgba(212, 175, 55, 0.1);">
-                                    <i class="fa-solid fa-book-bible"
-                                        style="font-size: 2.5rem; color: var(--accent-gold);"></i>
-                                </div>
-                                <h4 class="card-title fw-bold">Sana Doctrina</h4>
-                                <p class="card-text">Nos dedicamos a la enseñanza fiel de la palabra de Dios como guía
-                                    para nuestras vidas.</p>
-                            </div>
+                
+                <div class="row g-5 align-items-center">
+                    <div class="col-lg-6" data-aos="fade-right">
+                        <h4 class="fw-bold mb-4">Último Mensaje Dominical</h4>
+                        <div class="ratio ratio-16x9 rounded overflow-hidden shadow-sm">
+                            <iframe src="https://www.youtube.com/embed/jGLcaFU3Xao?si=72Pl6_bvO0O-eq6K" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                        </div>
+                        <div class="mt-4">
+                            <a href="https://www.youtube.com/@CRISTOVIVEMADRID" target="_blank" class="btn-primary-custom"><i class="fa-brands fa-youtube me-2"></i> Ver Canal de YouTube</a>
                         </div>
                     </div>
-                    <!-- Feature 2 -->
-                    <div class="col-md-4" data-aos="fade-up" data-aos-delay="200">
-                        <div class="premium-card card h-100 text-center p-4">
-                            <div class="card-body">
-                                <div class="mb-4 d-inline-flex justify-content-center align-items-center"
-                                    style="width: 80px; height: 80px; border-radius: 50%; background: rgba(212, 175, 55, 0.1);">
-                                    <i class="fa-solid fa-hands-praying"
-                                        style="font-size: 2.5rem; color: var(--accent-gold);"></i>
-                                </div>
-                                <h4 class="card-title fw-bold">Oración</h4>
-                                <p class="card-text">Una iglesia de oración y búsqueda espiritual constante para
-                                    fortalecer nuestro vínculo con Cristo.</p>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Feature 3 -->
-                    <div class="col-md-4" data-aos="fade-up" data-aos-delay="300">
-                        <div class="premium-card card h-100 text-center p-4">
-                            <div class="card-body">
-                                <div class="mb-4 d-inline-flex justify-content-center align-items-center"
-                                    style="width: 80px; height: 80px; border-radius: 50%; background: rgba(212, 175, 55, 0.1);">
-                                    <i class="fa-solid fa-people-group"
-                                        style="font-size: 2.5rem; color: var(--accent-gold);"></i>
-                                </div>
-                                <h4 class="card-title fw-bold">Comunidad</h4>
-                                <p class="card-text">Un lugar lleno de amor para dar, de solidaridad y compañerismo
-                                    sincero.</p>
-                            </div>
+                    
+                    <div class="col-lg-6" data-aos="fade-left">
+                        <div class="bg-white p-5 rounded border border-light shadow-sm">
+                            <h4 class="fw-bold mb-3"><i class="fa-brands fa-spotify text-success me-2"></i> Nuestro Podcast</h4>
+                            <p class="text-muted mb-4">¿Prefieres solo escuchar en lugar de ver el video? ¡Estamos en Spotify! Escucha nuestros mensajes mientras conduces o trabajas.</p>
+                            <iframe style="border-radius:12px" src="https://open.spotify.com/embed/show/0DVSK3iUI6L1bx1rrW1OIP?utm_source=generator" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
                         </div>
                     </div>
                 </div>
+            </div>
+        </section>
 
-                <!-- ESQUEMA DE IGLESIAS (RAMIFICADO) -->
-                <style>
-                    /* CSS para el esquema de iglesias */
-                    .church-network {
-                        margin-top: 6rem;
-                        position: relative;
-                    }
+        <!-- LATEST NEWS/MESSAGES SECTION -->
+        <section id="eventos" class="section-padding bg-white">
+            <div class="container">
+                <div class="section-title text-center" data-aos="fade-up">
+                    <h2>Anuncios</h2>
+                    <p>No te pierdas los próximos eventos de nuestra congregación.</p>
+                </div>
+                <!-- Contenedor dinámico alimentado por Firebase -->
+                <div id="carrusel-novedades" class="carousel slide" data-bs-ride="carousel">
+                    <div class="carousel-inner pb-5" id="ultimas-novedades-container">
+                        <!-- Las tarjetas se inyectarán aquí mediante JS -->
+                    </div>
+                    <button class="carousel-control-prev custom-btn custom-carousel-control" type="button" data-bs-target="#carrusel-novedades" data-bs-slide="prev">
+                        <i class="fa-solid fa-chevron-left" style="color: var(--primary-dark); font-size: 1.5rem;"></i>
+                        <span class="visually-hidden">Anterior</span>
+                    </button>
+                    <button class="carousel-control-next custom-btn custom-carousel-control" type="button" data-bs-target="#carrusel-novedades" data-bs-slide="next">
+                        <i class="fa-solid fa-chevron-right" style="color: var(--primary-dark); font-size: 1.5rem;"></i>
+                        <span class="visually-hidden">Siguiente</span>
+                    </button>
+                </div>
+            </div>
+        </section>
 
-                    .network-mother {
-                        position: relative;
-                        z-index: 2;
-                    }
+        <!-- ESQUEMA DE IGLESIAS (RAMIFICADO) -->
+        <style>
+            /* CSS para el esquema de iglesias */
+            .church-network {
+                position: relative;
+            }
 
-                    .network-mother::after {
-                        content: '';
-                        position: absolute;
-                        width: 3px;
-                        height: 40px;
-                        background-color: var(--accent-gold);
-                        bottom: -40px;
-                        left: 50%;
-                        transform: translateX(-50%);
-                    }
+            .network-mother {
+                position: relative;
+                z-index: 2;
+            }
 
-                    .network-children-container {
-                        position: relative;
-                        margin-top: 40px;
-                        padding-top: 20px;
-                        display: flex;
-                        justify-content: center;
-                        gap: 20px;
-                        flex-wrap: wrap;
-                    }
+            .network-mother::after {
+                content: '';
+                position: absolute;
+                width: 3px;
+                height: 40px;
+                background-color: var(--accent-gold);
+                bottom: -40px;
+                left: 50%;
+                transform: translateX(-50%);
+            }
 
-                    /* Línea horizontal principal (solo en desktop) */
-                    @media (min-width: 992px) {
-                        .network-children-container::before {
-                            content: '';
-                            position: absolute;
-                            top: 0;
-                            left: 10%;
-                            /* Ajustar la anchura de la línea horizontal */
-                            right: 10%;
-                            height: 3px;
-                            background-color: var(--accent-gold);
-                            border-radius: 5px;
-                        }
-                    }
+            .network-children-container {
+                position: relative;
+                margin-top: 40px;
+                padding-top: 20px;
+                display: flex;
+                justify-content: center;
+                gap: 20px;
+                flex-wrap: wrap;
+            }
 
-                    .network-child {
-                        position: relative;
-                        flex: 1;
-                        min-width: 160px;
-                        max-width: 200px;
-                        text-align: center;
-                    }
+            /* Línea horizontal principal (solo en desktop) */
+            @media (min-width: 992px) {
+                .network-children-container::before {
+                    content: '';
+                    position: absolute;
+                    top: 0;
+                    left: 10%;
+                    /* Ajustar la anchura de la línea horizontal */
+                    right: 10%;
+                    height: 3px;
+                    background-color: var(--accent-gold);
+                    border-radius: 5px;
+                }
+            }
 
-                    /* Líneas verticales hacia los hijos (solo desktop) */
-                    @media (min-width: 992px) {
-                        .network-child::before {
-                            content: '';
-                            position: absolute;
-                            top: -20px;
-                            left: 50%;
-                            width: 3px;
-                            height: 20px;
-                            background-color: var(--accent-gold);
-                            transform: translateX(-50%);
-                        }
-                    }
+            .network-child {
+                position: relative;
+                flex: 1;
+                min-width: 160px;
+                max-width: 200px;
+                text-align: center;
+            }
 
-                    /* Diseño en móviles (apilar verticalmente con líneas simples) */
-                    @media (max-width: 991px) {
-                        .network-children-container {
-                            flex-direction: column;
-                            align-items: center;
-                            gap: 40px;
-                        }
+            /* Líneas verticales hacia los hijos (solo desktop) */
+            @media (min-width: 992px) {
+                .network-child::before {
+                    content: '';
+                    position: absolute;
+                    top: -20px;
+                    left: 50%;
+                    width: 3px;
+                    height: 20px;
+                    background-color: var(--accent-gold);
+                    transform: translateX(-50%);
+                }
+            }
 
-                        .network-child::before {
-                            content: '';
-                            position: absolute;
-                            top: -40px;
-                            left: 50%;
-                            width: 3px;
-                            height: 40px;
-                            background-color: var(--accent-gold);
-                            transform: translateX(-50%);
-                        }
+            /* Diseño en móviles (apilar verticalmente con líneas simples) */
+            @media (max-width: 991px) {
+                .network-children-container {
+                    flex-direction: column;
+                    align-items: center;
+                    gap: 40px;
+                }
 
-                        /* Ocultar la línea de la madre en móvil para no duplicar con el primer hijo */
-                        .network-mother::after {
-                            display: none;
-                        }
-                    }
+                .network-child::before {
+                    content: '';
+                    position: absolute;
+                    top: -40px;
+                    left: 50%;
+                    width: 3px;
+                    height: 40px;
+                    background-color: var(--accent-gold);
+                    transform: translateX(-50%);
+                }
 
-                    .network-card {
-                        border-radius: 15px;
-                        border: none;
-                        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
-                        transition: all 0.3s ease;
-                        background: white;
-                        padding: 25px 15px;
-                        height: 100%;
-                        position: relative;
-                        z-index: 2;
-                    }
+                /* Ocultar la línea de la madre en móvil para no duplicar con el primer hijo */
+                .network-mother::after {
+                    display: none;
+                }
+            }
 
-                    .network-card:hover {
-                        transform: translateY(-8px);
-                        box-shadow: 0 15px 30px rgba(212, 175, 55, 0.2);
-                    }
+            .network-card {
+                border-radius: 15px;
+                border: none;
+                box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+                transition: all 0.3s ease;
+                background: white;
+                padding: 25px 15px;
+                height: 100%;
+                position: relative;
+                z-index: 2;
+            }
 
-                    .network-mother-card {
-                        border-bottom: 5px solid var(--accent-gold);
-                        max-width: 350px;
-                        margin: 0 auto;
-                        background: linear-gradient(145deg, #ffffff, #f8f9fa);
-                    }
+            .network-card:hover {
+                transform: translateY(-8px);
+                box-shadow: 0 15px 30px rgba(212, 175, 55, 0.2);
+            }
 
-                    .network-child-card {
-                        border-top: 4px solid var(--primary-dark);
-                    }
-                </style>
+            .network-mother-card {
+                border-bottom: 5px solid var(--accent-gold);
+                max-width: 350px;
+                margin: 0 auto;
+                background: linear-gradient(145deg, #ffffff, #f8f9fa);
+            }
 
+            .network-child-card {
+                border-top: 4px solid var(--primary-dark);
+            }
+        </style>
+
+        <!-- RED DE IGLESIAS (UBICACIONES) -->
+        <section id="contacto" class="section-padding bg-light">
+            <div class="container">
                 <div class="church-network">
-                    <div class="section-title text-center mb-5" data-aos="fade-up">
-                        <h3 class="fw-bold" style="color: var(--primary-dark);">Nuestra Red de Iglesias</h3>
-                        <p class="text-muted">Expandiendo el Reino a través de nuestras congregaciones hijas</p>
+                    <div class="section-title text-center" data-aos="fade-up">
+                        <h2>Ubicaciones y Contacto</h2>
+                        <p>Encuentra una congregación cerca de ti</p>
                     </div>
 
                     <!-- Madre -->
@@ -324,30 +346,6 @@
                 </div>
             </div>
         </section>
-
-        <!-- LATEST NEWS/MESSAGES SECTION -->
-        <section class="section-padding bg-white">
-            <div class="container">
-                <div class="section-title" data-aos="fade-up">
-                    <h2 style="font-weight: 800; color: var(--primary-dark);">Anuncios</h2>
-                    <p class="text-muted fw-semibold">No te pierdas los próximos eventos de nuestra congregación.</p>
-                </div>
-                <!-- Contenedor dinámico alimentado por Firebase -->
-                <div id="carrusel-novedades" class="carousel slide mt-5" data-bs-ride="carousel">
-                    <div class="carousel-inner pb-5" id="ultimas-novedades-container">
-                        <!-- Las tarjetas se inyectarán aquí mediante JS -->
-                    </div>
-                    <button class="carousel-control-prev custom-btn custom-carousel-control" type="button" data-bs-target="#carrusel-novedades" data-bs-slide="prev">
-                        <i class="fa-solid fa-chevron-left" style="color: var(--primary-dark); font-size: 1.5rem;"></i>
-                        <span class="visually-hidden">Anterior</span>
-                    </button>
-                    <button class="carousel-control-next custom-btn custom-carousel-control" type="button" data-bs-target="#carrusel-novedades" data-bs-slide="next">
-                        <i class="fa-solid fa-chevron-right" style="color: var(--primary-dark); font-size: 1.5rem;"></i>
-                        <span class="visually-hidden">Siguiente</span>
-                    </button>
-                </div>
-            </div>
-        </section>
     </main>
 
     <!-- FOOTER CENTRALIZADO -->
@@ -371,10 +369,10 @@
             var navbar = document.querySelector('.glass-nav');
             if (navbar) {
                 if (window.scrollY > 50) {
-                    navbar.style.background = 'rgba(15, 23, 42, 0.95)';
+                    navbar.style.background = 'rgba(255, 255, 255, 0.98)';
                     navbar.style.boxShadow = '0 4px 20px rgba(0,0,0,0.1)';
                 } else {
-                    navbar.style.background = 'rgba(15, 23, 42, 0.85)';
+                    navbar.style.background = 'rgba(255, 255, 255, 0.9)';
                     navbar.style.boxShadow = 'none';
                 }
             }
