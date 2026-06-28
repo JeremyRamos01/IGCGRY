@@ -332,9 +332,19 @@
                     <h2>Últimos Eventos</h2>
                     <p class="text-muted">No te pierdas los próximos eventos de nuestra congregación.</p>
                 </div>
-                <!-- Contenedor dinámico alimentado por js/data/eventos.js -->
-                <div class="row mt-4" id="ultimas-novedades-container">
-                    <!-- Las tarjetas se inyectarán aquí mediante JS -->
+                <!-- Contenedor dinámico alimentado por Firebase -->
+                <div id="carrusel-novedades" class="carousel slide mt-5" data-bs-ride="carousel">
+                    <div class="carousel-inner pb-4" id="ultimas-novedades-container">
+                        <!-- Las tarjetas se inyectarán aquí mediante JS -->
+                    </div>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#carrusel-novedades" data-bs-slide="prev" style="width: 5%;">
+                        <span class="carousel-control-prev-icon bg-dark rounded-circle p-3" aria-hidden="true"></span>
+                        <span class="visually-hidden">Anterior</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#carrusel-novedades" data-bs-slide="next" style="width: 5%;">
+                        <span class="carousel-control-next-icon bg-dark rounded-circle p-3" aria-hidden="true"></span>
+                        <span class="visually-hidden">Siguiente</span>
+                    </button>
                 </div>
             </div>
         </section>
@@ -371,55 +381,112 @@
         });
     </script>
     <script type="module">
-        import { fetchEventos } from './js/data/firebase-config.js';
+        import { db } from './js/firebase-config.js';
+        import { collection, getDocs } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
-        // Renderizado dinámico de Últimos Eventos
+        // Renderizado dinámico de Últimos Eventos Especiales
         async function renderNovedades() {
             const container = document.getElementById('ultimas-novedades-container');
             if (!container) return;
 
-            const eventosDB = await fetchEventos();
-            const ahora = new Date();
-            // Filtrar eventos futuros y ordenar por proximidad
-            const proximos = eventosDB
-                .filter(e => new Date(e.start) >= ahora)
-                .sort((a, b) => new Date(a.start) - new Date(b.start))
-                .slice(0, 2); // Tomar solo los 2 más próximos
-
-            if (proximos.length === 0) {
-                container.innerHTML = '<div class="col-12 text-center"><p class="text-muted">No hay eventos próximos programados.</p></div>';
+            let eventosDB = [];
+            try {
+                const querySnapshot = await getDocs(collection(db, "eventos"));
+                querySnapshot.forEach((doc) => {
+                    eventosDB.push(doc.data());
+                });
+            } catch(e) {
+                console.error("Error fetching events:", e);
+                container.innerHTML = '<div class="text-center text-danger p-5">Error al cargar novedades.</div>';
                 return;
             }
 
+            const ahora = new Date();
+            // Filtrar eventos futuros, que NO sean de rutina, y ordenar por proximidad
+            const especiales = eventosDB
+                .filter(e => {
+                    if(!e.start || !e.title) return false;
+                    const titleLower = e.title.toLowerCase();
+                    const isRegular = titleLower.includes("oración") || titleLower.includes("oracion") || titleLower.includes("culto en el templo");
+                    const isFuture = new Date(e.start) >= ahora;
+                    return isFuture && !isRegular;
+                })
+                .sort((a, b) => new Date(a.start) - new Date(b.start));
 
-            proximos.forEach((ev, index) => {
+            if (especiales.length === 0) {
+                container.innerHTML = `
+                    <div class="carousel-item active">
+                        <div class="row justify-content-center">
+                            <div class="col-lg-8">
+                                <div class="card border-0 shadow-sm text-center p-5 rounded-4" style="background: linear-gradient(135deg, #f8fafc, white);">
+                                    <i class="fa-solid fa-calendar-check text-muted mb-3" style="font-size: 3rem;"></i>
+                                    <h4 class="fw-bold" style="color: var(--primary-dark);">Sin eventos especiales próximos</h4>
+                                    <p class="text-muted">Por el momento no tenemos eventos especiales anunciados. Revisa el calendario para ver nuestros horarios regulares.</p>
+                                    <a href="eventos.html" class="btn btn-outline-dark mt-3 rounded-pill fw-bold">Ver Calendario Completo</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>`;
+                return;
+            }
+
+            let html = '';
+            especiales.forEach((ev, index) => {
                 const fecha = new Date(ev.start);
                 const fechaFormat = fecha.toLocaleDateString('es-ES', { weekday: 'long', day: 'numeric', month: 'long' });
                 const horaFormat = fecha.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' });
+                const activeClass = index === 0 ? 'active' : '';
 
-                const delay = (index + 1) * 100;
-                const html = `
-                    <div class="col-lg-6 mb-4 mb-lg-0" data-aos="fade-up" data-aos-delay="${delay}">
-                        <div class="premium-card card h-100">
-                            <img src="${ev.image || 'img/carrusel/A.jpg'}" class="card-img-top" alt="${ev.title}" style="height: 250px; object-fit: cover;">
-                            <div class="card-body d-flex flex-column">
-                                <div class="d-flex justify-content-between align-items-center mb-2">
-                                    <span class="badge" style="background-color: var(--primary-dark);">Próximamente</span>
-                                    <small class="text-muted fw-bold" style="color: var(--accent-gold) !important;">
-                                        <i class="fa-regular fa-calendar text-gold me-1"></i> ${fechaFormat} - ${horaFormat}
-                                    </small>
+                html += `
+                    <div class="carousel-item ${activeClass}" data-bs-interval="4000">
+                        <div class="row justify-content-center">
+                            <div class="col-lg-10">
+                                <div class="premium-card card border-0 rounded-4 shadow-lg mx-auto" style="max-width: 900px; background-color: #ffffff;">
+                                    <div class="row g-0 align-items-center">
+                                        <div class="col-md-5 h-100 p-4 text-center d-flex align-items-center justify-content-center" style="background-color: var(--primary-dark); border-radius: 1rem 0 0 1rem;">
+                                            <img src="${ev.image || 'img/Logo.png'}" class="img-fluid" alt="${ev.title}" style="max-height: 250px; object-fit: contain;">
+                                        </div>
+                                        <div class="col-md-7">
+                                            <div class="card-body p-4 p-lg-5 d-flex flex-column justify-content-center h-100">
+                                                <div class="mb-3">
+                                                    <span class="badge py-2 px-3 rounded-pill shadow-sm" style="background-color: var(--accent-gold); color: #000; font-size: 0.85rem;">
+                                                        <i class="fa-solid fa-star me-1"></i> Especial
+                                                    </span>
+                                                </div>
+                                                <h3 class="card-title fw-bold mb-3" style="color: var(--primary-dark); font-size: 2.2rem;">${ev.title}</h3>
+                                                <div class="d-flex align-items-center mb-4 text-muted fw-semibold">
+                                                    <div class="bg-light p-2 rounded-3 me-3 text-center" style="min-width: 60px;">
+                                                        <span class="d-block text-uppercase" style="font-size: 0.8rem; color: var(--accent-gold);">${fecha.toLocaleDateString('es-ES', { month: 'short' })}</span>
+                                                        <span class="d-block fs-4 text-dark">${fecha.getDate()}</span>
+                                                    </div>
+                                                    <div>
+                                                        <i class="fa-regular fa-clock me-1"></i> ${horaFormat}
+                                                    </div>
+                                                </div>
+                                                <p class="card-text text-secondary mb-4" style="line-height: 1.6;">${ev.description || 'Te invitamos a ser parte de este evento especial. No te lo pierdas.'}</p>
+                                                <a href="eventos.html" class="btn btn-dark fw-bold py-2 px-4 rounded-pill shadow-sm" style="width: fit-content;">
+                                                    Ver en el Calendario <i class="fa-solid fa-arrow-right ms-2"></i>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
-                                <h3 class="card-title fw-bold mt-2" style="color: var(--primary-dark);">${ev.title}</h3>
-                                <p class="card-text text-muted mb-4">${ev.description}</p>
-                                <a href="eventos.html" class="text-decoration-none fw-bold mt-auto" style="color: var(--accent-gold);">
-                                    Ver en el Calendario <i class="fa-solid fa-arrow-right ms-1"></i>
-                                </a>
                             </div>
                         </div>
                     </div>
                 `;
-                container.innerHTML += html;
             });
+            container.innerHTML = html;
+
+            // Inicializar el carrusel para que se mueva automáticamente
+            const carouselElement = document.getElementById('carrusel-novedades');
+            if (carouselElement && especiales.length > 1) {
+                new bootstrap.Carousel(carouselElement, {
+                    interval: 4000,
+                    ride: 'carousel',
+                    pause: 'hover'
+                });
+            }
         }
 
         // Ejecutar al cargar
