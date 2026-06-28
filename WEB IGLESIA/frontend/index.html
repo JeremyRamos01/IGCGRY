@@ -337,12 +337,12 @@
                     <div class="carousel-inner pb-5" id="ultimas-novedades-container">
                         <!-- Las tarjetas se inyectarán aquí mediante JS -->
                     </div>
-                    <button class="carousel-control-prev" type="button" data-bs-target="#carrusel-novedades" data-bs-slide="prev" style="width: 5%; justify-content: flex-start; margin-left: -20px;">
-                        <span class="carousel-control-prev-icon bg-dark rounded-circle p-3 shadow" aria-hidden="true"></span>
+                    <button class="carousel-control-prev custom-btn custom-carousel-control" type="button" data-bs-target="#carrusel-novedades" data-bs-slide="prev">
+                        <i class="fa-solid fa-chevron-left" style="color: var(--primary-dark); font-size: 1.5rem;"></i>
                         <span class="visually-hidden">Anterior</span>
                     </button>
-                    <button class="carousel-control-next" type="button" data-bs-target="#carrusel-novedades" data-bs-slide="next" style="width: 5%; justify-content: flex-end; margin-right: -20px;">
-                        <span class="carousel-control-next-icon bg-dark rounded-circle p-3 shadow" aria-hidden="true"></span>
+                    <button class="carousel-control-next custom-btn custom-carousel-control" type="button" data-bs-target="#carrusel-novedades" data-bs-slide="next">
+                        <i class="fa-solid fa-chevron-right" style="color: var(--primary-dark); font-size: 1.5rem;"></i>
                         <span class="visually-hidden">Siguiente</span>
                     </button>
                 </div>
@@ -430,6 +430,40 @@
             border-color: #d4af37;
             transform: scale(1.05);
             box-shadow: 0 10px 20px rgba(212, 175, 55, 0.3);
+        }
+        
+        /* Controles premium del carrusel */
+        .custom-carousel-control {
+            width: 55px !important;
+            height: 55px !important;
+            background: linear-gradient(45deg, var(--accent-gold), #f3e5ab) !important;
+            border-radius: 50% !important;
+            top: 50% !important;
+            transform: translateY(-50%) !important;
+            opacity: 0.9 !important;
+            box-shadow: 0 5px 15px rgba(212, 175, 55, 0.5) !important;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            z-index: 10 !important;
+            border: 2px solid white !important;
+        }
+        .custom-carousel-control:hover {
+            opacity: 1 !important;
+            transform: translateY(-50%) scale(1.15) !important;
+            box-shadow: 0 8px 25px rgba(212, 175, 55, 0.7) !important;
+            background: linear-gradient(45deg, #f3e5ab, var(--accent-gold)) !important;
+        }
+        .carousel-control-prev.custom-btn {
+            left: -10px;
+        }
+        .carousel-control-next.custom-btn {
+            right: -10px;
+        }
+        @media (max-width: 768px) {
+            .carousel-control-prev.custom-btn { left: 5px; }
+            .carousel-control-next.custom-btn { right: 5px; }
         }
     </style>
     <script type="module">
