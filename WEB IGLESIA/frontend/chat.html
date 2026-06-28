@@ -269,87 +269,111 @@
 
     <script>
         AOS.init({ once: true, offset: 50 });
+    </script>
 
-        document.addEventListener('DOMContentLoaded', function () {
-            const chatMessages = document.getElementById('chat-messages');
-            const messageInput = document.getElementById('message-input');
-            const sendBtn = document.getElementById('send-btn');
-            const nameModal = new bootstrap.Modal(document.getElementById('nameModal'));
-            const modalNameInput = document.getElementById('modal-name-input');
-            const joinChatBtn = document.getElementById('join-chat-btn');
+    <script type="module">
+        import { db } from './js/firebase-config.js';
+        import { collection, addDoc, onSnapshot, query, orderBy, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
-            let currentUser = sessionStorage.getItem('chatUsername');
+        // Obtener elementos del DOM
+        const chatMessages = document.getElementById('chat-messages');
+        const messageInput = document.getElementById('message-input');
+        const sendBtn = document.getElementById('send-btn');
+        const nameModal = new bootstrap.Modal(document.getElementById('nameModal'));
+        const modalNameInput = document.getElementById('modal-name-input');
+        const joinChatBtn = document.getElementById('join-chat-btn');
 
-            if (!currentUser) {
-                nameModal.show();
-            }
+        // Manejo de usuario
+        let currentUser = sessionStorage.getItem('chatUsername');
 
-            joinChatBtn.addEventListener('click', () => {
-                const name = modalNameInput.value.trim();
-                if (name) {
-                    currentUser = name;
-                    sessionStorage.setItem('chatUsername', name);
-                    nameModal.hide();
-                    messageInput.focus();
-                }
-            });
+        if (!currentUser) {
+            nameModal.show();
+        }
 
-            // Función simulada para enviar mensajes
-            // En un futuro, esto se cambiaría por: firebase.database().ref('messages').push({...})
-            function sendMessage() {
-                const text = messageInput.value.trim();
-                if (text && currentUser) {
-                    const time = new Date().toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' });
-
-                    const messageHTML = `
-                        <div class="message sent">
-                            <span class="sender">Tú (${currentUser})</span>
-                            <span class="text">${escapeHTML(text)}</span>
-                            <span class="time">${time}</span>
-                        </div>
-                    `;
-
-                    chatMessages.insertAdjacentHTML('beforeend', messageHTML);
-                    messageInput.value = '';
-                    scrollToBottom();
-
-                    // Simular una respuesta automática para dar vida al chat
-                    setTimeout(() => {
-                        const botTime = new Date().toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' });
-                        const botHTML = `
-                            <div class="message received">
-                                <span class="sender">Moderador (Automático)</span>
-                                <span class="text">Gracias por tu mensaje, ${currentUser}. Bendiciones.</span>
-                                <span class="time">${botTime}</span>
-                            </div>
-                        `;
-                        chatMessages.insertAdjacentHTML('beforeend', botHTML);
-                        scrollToBottom();
-                    }, 1500);
-                }
-            }
-
-            sendBtn.addEventListener('click', sendMessage);
-            messageInput.addEventListener('keypress', (e) => {
-                if (e.key === 'Enter') sendMessage();
-            });
-
-            function scrollToBottom() {
-                chatMessages.scrollTop = chatMessages.scrollHeight;
-            }
-
-            function escapeHTML(str) {
-                return str.replace(/[&<>'"]/g,
-                    tag => ({
-                        '&': '&amp;',
-                        '<': '&lt;',
-                        '>': '&gt;',
-                        "'": '&#39;',
-                        '"': '&quot;'
-                    }[tag] || tag)
-                );
+        joinChatBtn.addEventListener('click', () => {
+            const name = modalNameInput.value.trim();
+            if (name) {
+                currentUser = name;
+                sessionStorage.setItem('chatUsername', name);
+                nameModal.hide();
+                messageInput.focus();
             }
         });
+
+        // Referencia a la colección 'chatMessages' en Firestore
+        const messagesRef = collection(db, "chatMessages");
+        // Consulta ordenada por fecha
+        const q = query(messagesRef, orderBy("timestamp", "asc"));
+
+        // Escuchar cambios en tiempo real
+        onSnapshot(q, (snapshot) => {
+            chatMessages.innerHTML = '<div class="text-center my-3"><span class="badge bg-light text-muted border px-3 py-2 rounded-pill">Foro en vivo</span></div>';
+            
+            snapshot.forEach((doc) => {
+                const data = doc.data();
+                const isSentByMe = data.sender === currentUser;
+                
+                let timeString = "";
+                if (data.timestamp) {
+                    const date = data.timestamp.toDate();
+                    timeString = date.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' });
+                } else {
+                    timeString = "Enviando..."; // Mientras se confirma en el servidor
+                }
+
+                const messageHTML = `
+                    <div class="message ${isSentByMe ? 'sent' : 'received'}">
+                        <span class="sender">${isSentByMe ? 'Tú (' + data.sender + ')' : data.sender}</span>
+                        <span class="text">${escapeHTML(data.text)}</span>
+                        <span class="time">${timeString}</span>
+                    </div>
+                `;
+                chatMessages.insertAdjacentHTML('beforeend', messageHTML);
+            });
+            scrollToBottom();
+        }, (error) => {
+            console.error("Error al escuchar mensajes. ¿Configuraste Firestore?", error);
+            chatMessages.innerHTML += `<div class="alert alert-danger mx-3 mt-3">Error de conexión con Firebase.</div>`;
+        });
+
+        // Función para enviar mensaje a Firestore
+        async function sendMessage() {
+            const text = messageInput.value.trim();
+            if (text && currentUser) {
+                messageInput.value = ''; // Limpiar input rápido
+                try {
+                    await addDoc(messagesRef, {
+                        sender: currentUser,
+                        text: text,
+                        timestamp: serverTimestamp()
+                    });
+                } catch (error) {
+                    console.error("Error al enviar el mensaje:", error);
+                    alert("Error al enviar el mensaje. Verifica tu configuración de Firebase.");
+                }
+            }
+        }
+
+        sendBtn.addEventListener('click', sendMessage);
+        messageInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') sendMessage();
+        });
+
+        function scrollToBottom() {
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        function escapeHTML(str) {
+            return str.replace(/[&<>'"]/g,
+                tag => ({
+                    '&': '&amp;',
+                    '<': '&lt;',
+                    '>': '&gt;',
+                    "'": '&#39;',
+                    '"': '&quot;'
+                }[tag] || tag)
+            );
+        }
     </script>
 </body>
 
