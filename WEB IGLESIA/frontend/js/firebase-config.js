@@ -5,12 +5,13 @@ import { getFirestore } from "https://www.gstatic.com/firebasejs/10.7.1/firebase
 // TODO: Reemplaza este objeto con la configuración de tu proyecto de Firebase.
 // Puedes encontrar esto en Configuración del Proyecto > General > Tus aplicaciones en la consola de Firebase.
 const firebaseConfig = {
-  apiKey: "TU_API_KEY_AQUI",
-  authDomain: "TU_PROYECTO.firebaseapp.com",
-  projectId: "TU_PROYECTO",
-  storageBucket: "TU_PROYECTO.appspot.com",
-  messagingSenderId: "TU_SENDER_ID",
-  appId: "TU_APP_ID"
+  apiKey: "AIzaSyCCTbCCB551dIlPpInrUPKb8L9qLrgHORg",
+  authDomain: "casa-del-gran-rey.firebaseapp.com",
+  projectId: "casa-del-gran-rey",
+  storageBucket: "casa-del-gran-rey.firebasestorage.app",
+  messagingSenderId: "346085992467",
+  appId: "1:346085992467:web:28fd5e3d3ce95a3796f7e6",
+  measurementId: "G-1VLJEHWB3M"
 };
 
 // Inicializar Firebase
