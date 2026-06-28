@@ -26,7 +26,7 @@ const footerHTML = `
                     <h5>Contacto</h5>
                     <ul class="list-unstyled">
                         <li class="mb-3"><i class="fa-solid fa-location-dot me-2 text-gold" style="color: var(--accent-gold);"></i> C. del Priorato, 34, 28915 Leganés, Madrid</li>
-                        <li class="mb-3"><i class="fa-solid fa-phone me-2" style="color: var(--accent-gold);"></i> <a href="tel:693491759">693 49 17 59</a></li>
+                        <li class="mb-3"><i class="fa-solid fa-phone me-2" style="color: var(--accent-gold);"></i> <a href="tel:693491759">624 48 03 51</a></li>
                         <li class="mb-3"><i class="fa-regular fa-clock me-2" style="color: var(--accent-gold);"></i> Horarios: Mar, Jue (19h-20h), Sáb (18h-20h), Dom (11h-14h)</li>
                     </ul>
                 </div>
