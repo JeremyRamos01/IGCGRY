@@ -210,3 +210,52 @@ h1, h2, h3, h4, h5, h6 {
   color: #fff;
   transform: translateY(-3px);
 }
+
+/* Page Header for subpages */
+.page-header {
+  padding: 120px 0 60px;
+  background: linear-gradient(135deg, var(--primary-dark), #1e293b);
+  color: #fff;
+  text-align: center;
+}
+
+/* Cards & Interactions */
+.premium-card {
+  border: none;
+  border-radius: 16px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.premium-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+.contact-info-box {
+  background: #fff;
+  padding: 30px;
+  border-radius: 16px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
+  text-align: center;
+}
+
+.contact-info-box i {
+  font-size: 2.5rem;
+  color: var(--accent-color);
+  margin-bottom: 15px;
+}
+
+.contact-info-box:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
+img {
+  transition: transform 0.5s ease;
+}
+
+img:hover {
+  transform: scale(1.02);
+}

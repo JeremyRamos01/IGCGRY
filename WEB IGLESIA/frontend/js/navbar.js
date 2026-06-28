@@ -17,7 +17,7 @@ const navbarHTML = `
                         <a class="nav-link" href="#inicio">Inicio</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#conocenos">Conócenos</a>
+                        <a class="nav-link" href="quienes-somos.html">Conócenos</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#eventos">Eventos</a>
@@ -26,7 +26,7 @@ const navbarHTML = `
                         <a class="nav-link" href="#multimedia">Mensajes</a>
                     </li>
                     <li class="nav-item ms-lg-3 mt-3 mt-lg-0">
-                        <a class="btn btn-primary-custom" href="#contacto">Contáctanos</a>
+                        <a class="btn btn-primary-custom" href="contacto.html">Contáctanos</a>
                     </li>
                 </ul>
             </div>

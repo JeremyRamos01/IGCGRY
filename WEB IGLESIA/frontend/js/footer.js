@@ -16,10 +16,10 @@ const footerHTML = `
                     <h5>Enlaces Rápidos</h5>
                     <ul class="list-unstyled">
                         <li class="mb-2"><a href="#inicio">Inicio</a></li>
-                        <li class="mb-2"><a href="#conocenos">Conócenos</a></li>
+                        <li class="mb-2"><a href="quienes-somos.html">Conócenos</a></li>
                         <li class="mb-2"><a href="#eventos">Eventos</a></li>
                         <li class="mb-2"><a href="#multimedia">Mensajes</a></li>
-                        <li class="mb-2"><a href="#contacto">Ubicaciones</a></li>
+                        <li class="mb-2"><a href="contacto.html">Ubicaciones</a></li>
                     </ul>
                 </div>
                 <div class="col-lg-4">
