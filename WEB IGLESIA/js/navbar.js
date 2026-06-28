@@ -3,7 +3,7 @@ const navbarHTML = `
     <nav class="navbar navbar-expand-lg fixed-top glass-nav">
         <div class="container">
             <a class="navbar-brand d-flex align-items-center" href="index.html">
-                <img class="logo img-fluid" src="img/logo.png" alt="Logo Iglesia Del Gran REY">
+                <img class="logo img-fluid" src="img/Logo.png" alt="Logo Iglesia Del Gran REY">
                 <span class="ms-3 ps-3 border-start border-2 text-white fw-bold d-none d-md-block fs-5"
                     style="border-color: rgba(255,255,255,0.3) !important; letter-spacing: 1px;">Casa del Gran
                     REY</span>

@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="es">
+
 <head>
     <title>Foro Libre - Casa del Gran REY</title>
     <!-- Required meta tags -->
@@ -9,14 +10,15 @@
 
     <!-- Bootstrap CSS v5.3.2 -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
-    
+
     <!-- AOS Animation CSS -->
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-    
+
     <!-- FontAwesome for Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
+
     <!-- Custom CSS -->
+
     <link href="css/style.css" rel="stylesheet">
 
     <style>
@@ -28,8 +30,9 @@
             background: #f8f9fa;
             border-radius: 15px;
             overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
         }
+
         .chat-header {
             background: var(--primary-dark);
             color: white;
@@ -38,6 +41,7 @@
             display: flex;
             align-items: center;
         }
+
         .chat-messages {
             flex: 1;
             padding: 20px;
@@ -45,8 +49,10 @@
             display: flex;
             flex-direction: column;
             gap: 15px;
-            background: url('https://www.transparenttextures.com/patterns/cubes.png') #f8f9fa; /* Subtle pattern */
+            background: url('https://www.transparenttextures.com/patterns/cubes.png') #f8f9fa;
+            /* Subtle pattern */
         }
+
         .message {
             max-width: 80%;
             padding: 12px 18px;
@@ -54,32 +60,53 @@
             position: relative;
             animation: fadeIn 0.3s ease-out;
         }
+
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
+
         .message.received {
             align-self: flex-start;
             background: white;
             border-bottom-left-radius: 5px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
         }
+
         .message.sent {
             align-self: flex-end;
             background: var(--primary-dark);
             color: white;
             border-bottom-right-radius: 5px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
         }
+
         .message .sender {
             font-size: 0.8rem;
             font-weight: bold;
             margin-bottom: 3px;
             display: block;
         }
-        .message.received .sender { color: var(--accent-gold); }
-        .message.sent .sender { color: #cbd5e1; }
-        .message .text { font-size: 0.95rem; }
+
+        .message.received .sender {
+            color: var(--accent-gold);
+        }
+
+        .message.sent .sender {
+            color: #cbd5e1;
+        }
+
+        .message .text {
+            font-size: 0.95rem;
+        }
+
         .message .time {
             font-size: 0.7rem;
             opacity: 0.7;
@@ -87,6 +114,7 @@
             margin-top: 5px;
             display: block;
         }
+
         .chat-input-area {
             background: white;
             padding: 15px;
@@ -94,17 +122,20 @@
             display: flex;
             gap: 10px;
         }
+
         .chat-input {
             border-radius: 30px;
             padding: 10px 20px;
             border: 1px solid #ddd;
             flex: 1;
         }
+
         .chat-input:focus {
             outline: none;
             border-color: var(--accent-gold);
             box-shadow: 0 0 0 0.2rem rgba(212, 175, 55, 0.25);
         }
+
         .btn-send {
             background: var(--accent-gold);
             color: white;
@@ -117,17 +148,19 @@
             justify-content: center;
             transition: all 0.2s;
         }
+
         .btn-send:hover {
             background: #b5952f;
             transform: scale(1.05);
         }
     </style>
 </head>
+
 <body>
-    
+
     <!-- BARRA DE NAVEGACIÓN CENTRALIZADA -->
     <script src="js/navbar.js"></script>
-    
+
     <!-- PAGE HEADER -->
     <header class="page-header" data-aos="fade-in" data-aos-duration="1500">
         <div class="container">
@@ -141,52 +174,62 @@
             <div class="container">
                 <div class="row justify-content-center">
                     <div class="col-lg-8" data-aos="fade-up">
-                        
+
                         <!-- CHAT UI -->
                         <div class="chat-container border">
                             <div class="chat-header">
                                 <div class="d-flex align-items-center">
-                                    <div class="rounded-circle bg-white d-flex justify-content-center align-items-center me-3" style="width: 40px; height: 40px;">
+                                    <div class="rounded-circle bg-white d-flex justify-content-center align-items-center me-3"
+                                        style="width: 40px; height: 40px;">
                                         <i class="fa-solid fa-users text-dark"></i>
                                     </div>
                                     <div>
                                         <h5 class="mb-0 fw-bold">Chat General</h5>
-                                        <small class="text-white-50"><i class="fa-solid fa-circle text-success me-1" style="font-size: 8px;"></i> Online</small>
+                                        <small class="text-white-50"><i class="fa-solid fa-circle text-success me-1"
+                                                style="font-size: 8px;"></i> Online</small>
                                     </div>
                                 </div>
                             </div>
-                            
+
                             <div class="chat-messages" id="chat-messages">
                                 <!-- Mensajes cargados dinámicamente -->
                                 <div class="text-center my-3">
                                     <span class="badge bg-light text-muted border px-3 py-2 rounded-pill">Hoy</span>
                                 </div>
-                                
+
                                 <div class="message received">
                                     <span class="sender">Moderador (Pastor)</span>
-                                    <span class="text">¡Bienvenidos al foro libre de la Casa del Gran REY! Este es un espacio para compartir peticiones de oración, testimonios y charlar sanamente. Dios les bendiga.</span>
+                                    <span class="text">¡Bienvenidos al foro libre de la Casa del Gran REY! Este es un
+                                        espacio para compartir peticiones de oración, testimonios y charlar sanamente.
+                                        Dios les bendiga.</span>
                                     <span class="time">10:00 AM</span>
                                 </div>
-                                
+
                                 <div class="message received">
                                     <span class="sender">Hermano Juan</span>
-                                    <span class="text">Amén. Saludos a todos los hermanos. Pido oración por mi familia esta semana.</span>
+                                    <span class="text">Amén. Saludos a todos los hermanos. Pido oración por mi familia
+                                        esta semana.</span>
                                     <span class="time">10:15 AM</span>
                                 </div>
                             </div>
-                            
+
                             <div class="chat-input-area">
-                                <input type="text" id="username-input" class="form-control me-2 d-none" placeholder="Tu Nombre">
-                                <input type="text" id="message-input" class="chat-input" placeholder="Escribe un mensaje aquí..." autocomplete="off">
+                                <input type="text" id="username-input" class="form-control me-2 d-none"
+                                    placeholder="Tu Nombre">
+                                <input type="text" id="message-input" class="chat-input"
+                                    placeholder="Escribe un mensaje aquí..." autocomplete="off">
                                 <button class="btn-send" id="send-btn" aria-label="Enviar mensaje">
                                     <i class="fa-solid fa-paper-plane"></i>
                                 </button>
                             </div>
                         </div>
-                        
+
                         <!-- Info about scaling -->
                         <div class="alert alert-light border mt-4 text-muted small shadow-sm rounded-4">
-                            <i class="fa-solid fa-circle-info text-info me-2"></i> <strong>Nota de Infraestructura:</strong> Esta interfaz de chat está diseñada y estructurada en HTML/JS para ser conectada fácilmente a una base de datos en tiempo real como <strong>Firebase Realtime Database</strong> para cuando se decida escalar el proyecto.
+                            <i class="fa-solid fa-circle-info text-info me-2"></i> <strong>Nota de
+                                Infraestructura:</strong> Esta interfaz de chat está diseñada y estructurada en HTML/JS
+                            para ser conectada fácilmente a una base de datos en tiempo real como <strong>Firebase
+                                Realtime Database</strong> para cuando se decida escalar el proyecto.
                         </div>
 
                     </div>
@@ -196,19 +239,22 @@
     </main>
 
     <!-- Modal Identificación -->
-    <div class="modal fade" id="nameModal" tabindex="-1" data-bs-backdrop="static" aria-labelledby="nameModalLabel" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content border-0 shadow">
-          <div class="modal-header bg-dark text-white border-0">
-            <h5 class="modal-title fw-bold" id="nameModalLabel">Únete al Chat</h5>
-          </div>
-          <div class="modal-body p-4">
-            <p class="text-muted mb-4">Por favor, introduce tu nombre para participar en el foro libre.</p>
-            <input type="text" id="modal-name-input" class="form-control form-control-lg mb-3" placeholder="Ej. Hermana María">
-            <button type="button" id="join-chat-btn" class="btn btn-gold btn-lg w-100 rounded-pill">Entrar al Foro</button>
-          </div>
+    <div class="modal fade" id="nameModal" tabindex="-1" data-bs-backdrop="static" aria-labelledby="nameModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content border-0 shadow">
+                <div class="modal-header bg-dark text-white border-0">
+                    <h5 class="modal-title fw-bold" id="nameModalLabel">Únete al Chat</h5>
+                </div>
+                <div class="modal-body p-4">
+                    <p class="text-muted mb-4">Por favor, introduce tu nombre para participar en el foro libre.</p>
+                    <input type="text" id="modal-name-input" class="form-control form-control-lg mb-3"
+                        placeholder="Ej. Hermana María">
+                    <button type="button" id="join-chat-btn" class="btn btn-gold btn-lg w-100 rounded-pill">Entrar al
+                        Foro</button>
+                </div>
+            </div>
         </div>
-      </div>
     </div>
 
     <!-- FOOTER CENTRALIZADO -->
@@ -217,21 +263,21 @@
     <!-- Bootstrap JavaScript -->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"></script>
-    
+
     <!-- AOS Animation Script -->
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    
+
     <script>
         AOS.init({ once: true, offset: 50 });
 
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             const chatMessages = document.getElementById('chat-messages');
             const messageInput = document.getElementById('message-input');
             const sendBtn = document.getElementById('send-btn');
             const nameModal = new bootstrap.Modal(document.getElementById('nameModal'));
             const modalNameInput = document.getElementById('modal-name-input');
             const joinChatBtn = document.getElementById('join-chat-btn');
-            
+
             let currentUser = sessionStorage.getItem('chatUsername');
 
             if (!currentUser) {
@@ -254,7 +300,7 @@
                 const text = messageInput.value.trim();
                 if (text && currentUser) {
                     const time = new Date().toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' });
-                    
+
                     const messageHTML = `
                         <div class="message sent">
                             <span class="sender">Tú (${currentUser})</span>
@@ -262,7 +308,7 @@
                             <span class="time">${time}</span>
                         </div>
                     `;
-                    
+
                     chatMessages.insertAdjacentHTML('beforeend', messageHTML);
                     messageInput.value = '';
                     scrollToBottom();
@@ -293,7 +339,7 @@
             }
 
             function escapeHTML(str) {
-                return str.replace(/[&<>'"]/g, 
+                return str.replace(/[&<>'"]/g,
                     tag => ({
                         '&': '&amp;',
                         '<': '&lt;',
@@ -306,4 +352,5 @@
         });
     </script>
 </body>
+
 </html>
