@@ -8,8 +8,13 @@ const port = process.env.PORT || 3000;
 app.use(cors());
 app.use(express.json());
 
-// Rutas básicas
-app.get('/', (req, res) => {
+const path = require('path');
+
+// Servir archivos estáticos del frontend
+app.use(express.static(path.join(__dirname, '../frontend')));
+
+// Rutas básicas API
+app.get('/api', (req, res) => {
   res.json({ 
     message: 'Backend de Casa del Gran REY funcionando correctamente',
     status: 'online'
