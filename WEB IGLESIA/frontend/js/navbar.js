@@ -20,7 +20,7 @@ const navbarHTML = `
                         <a class="nav-link" href="quienes-somos.html">Conócenos</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#eventos">Eventos</a>
+                        <a class="nav-link" href="eventos.html">Eventos</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#multimedia">Mensajes</a>

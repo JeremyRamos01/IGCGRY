@@ -8,7 +8,7 @@ html {
   --primary-dark: #1e293b; 
   --primary-light: #334155;
   --accent-gold: #d4af37;
-  --accent-color: #2563eb; 
+  --accent-color: #d4af37; 
   --text-main: #334155;
   --text-muted: #64748b;
   --bg-color: #f8fafc;
@@ -118,10 +118,10 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .btn-primary-custom:hover {
-  background-color: #1d4ed8;
+  background-color: #b3932f;
   color: #fff;
   transform: translateY(-2px);
-  box-shadow: 0 10px 15px -3px rgba(37, 99, 235, 0.3);
+  box-shadow: 0 10px 15px -3px rgba(212, 175, 55, 0.3);
 }
 
 .btn-outline-custom {
