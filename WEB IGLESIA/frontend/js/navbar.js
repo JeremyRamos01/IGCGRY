@@ -20,10 +20,13 @@ const navbarHTML = `
                         <a class="nav-link" href="quienes-somos.html">Conócenos</a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link" href="biblioteca.html">Biblioteca</a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link" href="eventos.html">Eventos</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#multimedia">Mensajes</a>
+                        <a class="nav-link" href="chat.html">Foro Libre</a>
                     </li>
                     <li class="nav-item ms-lg-3 mt-3 mt-lg-0">
                         <a class="btn btn-primary-custom" href="contacto.html">Contáctanos</a>

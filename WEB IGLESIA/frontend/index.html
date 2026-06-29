@@ -134,11 +134,11 @@
         </section>
 
         <!-- LATEST NEWS/MESSAGES SECTION -->
-        <section id="eventos" class="section-padding bg-white">
+        <section id="eventos" class="section-padding" style="background-color: var(--primary-dark); color: white;">
             <div class="container">
                 <div class="section-title text-center" data-aos="fade-up">
-                    <h2>Anuncios</h2>
-                    <p>No te pierdas los próximos eventos de nuestra congregación.</p>
+                    <h2 class="fw-bold" style="color: var(--accent-gold);">Anuncios</h2>
+                    <p class="text-light opacity-75">No te pierdas los próximos eventos de nuestra congregación.</p>
                 </div>
                 <!-- Contenedor dinámico alimentado por Firebase -->
                 <div id="carrusel-novedades" class="carousel slide" data-bs-ride="carousel">
@@ -146,11 +146,11 @@
                         <!-- Las tarjetas se inyectarán aquí mediante JS -->
                     </div>
                     <button class="carousel-control-prev custom-btn custom-carousel-control" type="button" data-bs-target="#carrusel-novedades" data-bs-slide="prev">
-                        <i class="fa-solid fa-chevron-left" style="color: var(--primary-dark); font-size: 1.5rem;"></i>
+                        <i class="fa-solid fa-chevron-left" style="color: var(--accent-gold); font-size: 1.5rem;"></i>
                         <span class="visually-hidden">Anterior</span>
                     </button>
                     <button class="carousel-control-next custom-btn custom-carousel-control" type="button" data-bs-target="#carrusel-novedades" data-bs-slide="next">
-                        <i class="fa-solid fa-chevron-right" style="color: var(--primary-dark); font-size: 1.5rem;"></i>
+                        <i class="fa-solid fa-chevron-right" style="color: var(--accent-gold); font-size: 1.5rem;"></i>
                         <span class="visually-hidden">Siguiente</span>
                     </button>
                 </div>
@@ -292,8 +292,8 @@
             <div class="container">
                 <div class="church-network">
                     <div class="section-title text-center" data-aos="fade-up">
-                        <h2>Ubicaciones y Contacto</h2>
-                        <p>Encuentra una congregación cerca de ti</p>
+                        <h2 class="fw-bold" style="color: var(--primary-dark);">Nuestra Red de Iglesias</h2>
+                        <p class="text-muted fw-semibold">Expandiendo el Reino a través de nuestras congregaciones hijas</p>
                     </div>
 
                     <!-- Madre -->
@@ -394,10 +394,10 @@
             var navbar = document.querySelector('.glass-nav');
             if (navbar) {
                 if (window.scrollY > 50) {
-                    navbar.style.background = 'rgba(255, 255, 255, 0.98)';
-                    navbar.style.boxShadow = '0 4px 20px rgba(0,0,0,0.1)';
+                    navbar.style.background = 'rgba(30, 41, 59, 0.98)';
+                    navbar.style.boxShadow = '0 4px 20px rgba(0,0,0,0.2)';
                 } else {
-                    navbar.style.background = 'rgba(255, 255, 255, 0.9)';
+                    navbar.style.background = 'rgba(30, 41, 59, 0.95)';
                     navbar.style.boxShadow = 'none';
                 }
             }

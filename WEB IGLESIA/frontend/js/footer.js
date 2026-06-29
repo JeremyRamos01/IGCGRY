@@ -17,8 +17,9 @@ const footerHTML = `
                     <ul class="list-unstyled">
                         <li class="mb-2"><a href="#inicio">Inicio</a></li>
                         <li class="mb-2"><a href="quienes-somos.html">Conócenos</a></li>
+                        <li class="mb-2"><a href="biblioteca.html">Biblioteca</a></li>
                         <li class="mb-2"><a href="eventos.html">Eventos</a></li>
-                        <li class="mb-2"><a href="#multimedia">Mensajes</a></li>
+                        <li class="mb-2"><a href="chat.html">Foro Libre</a></li>
                         <li class="mb-2"><a href="contacto.html">Ubicaciones</a></li>
                     </ul>
                 </div>
