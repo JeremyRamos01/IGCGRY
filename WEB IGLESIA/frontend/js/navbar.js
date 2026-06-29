@@ -4,12 +4,12 @@ const navbarHTML = `
         <div class="container">
             <a class="navbar-brand d-flex align-items-center" href="#">
                 <img class="logo img-fluid" src="img/Logo.png" alt="Logo Iglesia Del Gran REY">
-                <span class="ms-3 ps-3 border-start border-2 fw-bold d-none d-md-block fs-5"
-                    style="color: var(--primary-dark); border-color: rgba(0,0,0,0.1) !important; letter-spacing: 1px;">Casa del Gran REY</span>
+                <span class="ms-3 ps-3 border-start border-2 fw-bold d-none d-md-block fs-5 text-white"
+                    style="border-color: rgba(255,255,255,0.3) !important; letter-spacing: 1px;">Casa del Gran REY</span>
             </a>
             <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <i class="fa-solid fa-bars" style="color: var(--primary-dark); font-size: 1.5rem;"></i>
+                <i class="fa-solid fa-bars text-white" style="font-size: 1.5rem;"></i>
             </button>
             <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
                 <ul class="navbar-nav align-items-center">
