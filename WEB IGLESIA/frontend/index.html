@@ -552,40 +552,52 @@
                 const horaFormat = fecha.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' });
                 const activeClass = index === 0 ? 'active' : '';
 
-                html += `
-                    <div class="carousel-item ${activeClass}" data-bs-interval="5000">
-                        <div class="row justify-content-center px-2 px-md-4">
-                            <div class="col-lg-10">
-                                <div class="event-card-clean card mx-auto overflow-hidden shadow-sm" style="max-width: 950px; border-radius: 0.5rem;">
-                                    <div class="row g-0 align-items-stretch">
-                                        <div class="col-md-5 p-4 text-center d-flex align-items-center justify-content-center" style="background-color: var(--primary-dark); min-height: 250px;">
-                                            <img src="${ev.image || 'img/Logo.png'}" class="img-fluid" alt="${ev.title}" style="max-height: 220px; object-fit: contain;">
-                                        </div>
-                                        <div class="col-md-7 p-4 p-lg-5 d-flex flex-column justify-content-center bg-white">
-                                            <div class="mb-3">
-                                                <span class="badge bg-warning text-dark text-uppercase px-3 py-2" style="font-size: 0.75rem; letter-spacing: 0.5px;">
-                                                    <i class="fa-solid fa-star me-1"></i> Evento Destacado
-                                                </span>
+                if (ev.flyerUrl && ev.flyerUrl.trim() !== '') {
+                    html += `
+                        <div class="carousel-item ${activeClass}" data-bs-interval="5000">
+                            <div class="row justify-content-center px-2 px-md-4">
+                                <div class="col-lg-10 text-center">
+                                    <img src="${ev.flyerUrl}" alt="${ev.title}" class="img-fluid rounded shadow-sm" style="max-height: 450px; object-fit: contain; cursor: pointer;" onclick="window.location.href='eventos.html'">
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                } else {
+                    html += `
+                        <div class="carousel-item ${activeClass}" data-bs-interval="5000">
+                            <div class="row justify-content-center px-2 px-md-4">
+                                <div class="col-lg-10">
+                                    <div class="event-card-clean card mx-auto overflow-hidden shadow-sm" style="max-width: 950px; border-radius: 0.5rem;">
+                                        <div class="row g-0 align-items-stretch">
+                                            <div class="col-md-5 p-4 text-center d-flex align-items-center justify-content-center" style="background-color: var(--primary-dark); min-height: 250px;">
+                                                <img src="${ev.image || 'img/Logo.png'}" class="img-fluid" alt="${ev.title}" style="max-height: 220px; object-fit: contain;">
                                             </div>
-                                            <h3 class="card-title fw-bold mb-4" style="color: var(--primary-dark); font-size: 2rem;">${ev.title}</h3>
-                                            
-                                            <div class="d-flex align-items-center mb-4 text-dark date-box p-3 rounded">
-                                                <div class="text-center pe-4 border-end border-secondary border-opacity-25">
-                                                    <span class="d-block text-uppercase fw-bold text-muted" style="font-size: 0.8rem;">${fecha.toLocaleDateString('es-ES', { month: 'short' })}</span>
-                                                    <span class="d-block text-dark" style="font-size: 1.75rem; font-weight: 800; line-height: 1;">${fecha.getDate()}</span>
+                                            <div class="col-md-7 p-4 p-lg-5 d-flex flex-column justify-content-center bg-white">
+                                                <div class="mb-3">
+                                                    <span class="badge bg-warning text-dark text-uppercase px-3 py-2" style="font-size: 0.75rem; letter-spacing: 0.5px;">
+                                                        <i class="fa-solid fa-star me-1"></i> Evento Destacado
+                                                    </span>
                                                 </div>
-                                                <div class="ps-4 text-muted">
-                                                    <div class="mb-1"><i class="fa-regular fa-calendar me-2"></i> <span class="text-capitalize">${fecha.toLocaleDateString('es-ES', { weekday: 'long' })}</span></div>
-                                                    <div><i class="fa-regular fa-clock me-2"></i> ${horaFormat} H</div>
+                                                <h3 class="card-title fw-bold mb-4" style="color: var(--primary-dark); font-size: 2rem;">${ev.title}</h3>
+                                                
+                                                <div class="d-flex align-items-center mb-4 text-dark date-box p-3 rounded">
+                                                    <div class="text-center pe-4 border-end border-secondary border-opacity-25">
+                                                        <span class="d-block text-uppercase fw-bold text-muted" style="font-size: 0.8rem;">${fecha.toLocaleDateString('es-ES', { month: 'short' })}</span>
+                                                        <span class="d-block text-dark" style="font-size: 1.75rem; font-weight: 800; line-height: 1;">${fecha.getDate()}</span>
+                                                    </div>
+                                                    <div class="ps-4 text-muted">
+                                                        <div class="mb-1"><i class="fa-regular fa-calendar me-2"></i> <span class="text-capitalize">${fecha.toLocaleDateString('es-ES', { weekday: 'long' })}</span></div>
+                                                        <div><i class="fa-regular fa-clock me-2"></i> ${horaFormat} H</div>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            
-                                            <p class="card-text text-secondary mb-4" style="line-height: 1.6;">${ev.description || 'Te invitamos a ser parte de este evento especial. Ven a compartir con toda nuestra congregación.'}</p>
-                                            
-                                            <div class="mt-auto">
-                                                <a href="eventos.html" class="btn btn-dark px-4 py-2">
-                                                    Ver todos los detalles <i class="fa-solid fa-arrow-right ms-2"></i>
-                                                </a>
+                                                
+                                                <p class="card-text text-secondary mb-4" style="line-height: 1.6;">${ev.description || 'Te invitamos a ser parte de este evento especial. Ven a compartir con toda nuestra congregación.'}</p>
+                                                
+                                                <div class="mt-auto">
+                                                    <a href="eventos.html" class="btn btn-dark px-4 py-2">
+                                                        Ver todos los detalles <i class="fa-solid fa-arrow-right ms-2"></i>
+                                                    </a>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>

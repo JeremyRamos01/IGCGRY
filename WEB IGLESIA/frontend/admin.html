@@ -231,6 +231,11 @@
                                     <label class="form-label fw-bold">Descripción / Detalles</label>
                                     <textarea class="form-control" id="event-description" rows="3" placeholder="Información adicional sobre el evento..."></textarea>
                                 </div>
+                                <div class="mb-4">
+                                    <label class="form-label fw-bold">Enlace a imagen de Volante (Opcional)</label>
+                                    <input type="url" class="form-control" id="event-flyer-url" placeholder="Ej. https://misitio.com/volante.jpg">
+                                    <div class="form-text">Si incluyes este enlace, el anuncio destacado se reemplazará por la imagen de este volante.</div>
+                                </div>
                                 <div class="mb-4 form-check">
                                     <input type="checkbox" class="form-check-input border-gold" id="event-destacado">
                                     <label class="form-check-label fw-bold" for="event-destacado"><i class="fa-solid fa-star text-gold me-1"></i> Marcar como Evento Destacado (Se mostrará en la Agenda principal)</label>
@@ -447,10 +452,11 @@
                 const start = document.getElementById('event-start').value; 
                 const end = document.getElementById('event-end').value;
                 const description = document.getElementById('event-description').value;
+                const flyerUrl = document.getElementById('event-flyer-url').value;
                 const destacado = document.getElementById('event-destacado').checked;
-
+                
                 try {
-                    const eventData = { title, start, description, destacado };
+                    const eventData = { title, start, description, flyerUrl, destacado };
                     if (end) eventData.end = end;
                     await addDoc(eventsRef, eventData);
                     form.reset();
