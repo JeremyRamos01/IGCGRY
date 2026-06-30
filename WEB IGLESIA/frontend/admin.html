@@ -330,7 +330,7 @@
         import { db, storage } from './js/firebase-config.js';
         import { collection, addDoc, getDocs, deleteDoc, doc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
         import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-        import { ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-storage.js";
+        import { ref, uploadBytes, getDownloadURL, deleteObject } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-storage.js";
 
         const auth = getAuth();
         const provider = new GoogleAuthProvider();
@@ -416,6 +416,18 @@
                     btn.addEventListener('click', async (e) => {
                         if(confirm("¿Seguro que quieres borrar este evento de forma permanente?")) {
                             const id = e.currentTarget.getAttribute('data-id');
+                            const evToDelete = allEvents.find(ev => ev.id === id);
+                            
+                            // Si tiene imagen en Storage, borrarla también
+                            if (evToDelete && evToDelete.flyerUrl && evToDelete.flyerUrl.includes('firebasestorage')) {
+                                try {
+                                    const imageRef = ref(storage, evToDelete.flyerUrl);
+                                    await deleteObject(imageRef);
+                                } catch (err) {
+                                    console.warn("No se pudo borrar la imagen:", err);
+                                }
+                            }
+                            
                             await deleteDoc(doc(db, "eventos", id));
                             loadEvents(); 
                         }
@@ -437,9 +449,34 @@
                 try {
                     const snapshot = await getDocs(eventsRef);
                     allEvents = [];
+                    
+                    const ahora = new Date();
+                    ahora.setHours(0,0,0,0);
+                    const deletePromises = [];
+
                     snapshot.forEach(docSnap => {
-                        allEvents.push({ id: docSnap.id, ...docSnap.data() });
+                        const ev = { id: docSnap.id, ...docSnap.data() };
+                        const evDate = new Date(ev.start);
+                        evDate.setHours(0,0,0,0);
+                        
+                        // Limpieza automática: si el evento ya pasó, lo borramos de BD y Storage
+                        if (evDate < ahora) {
+                            if (ev.flyerUrl && ev.flyerUrl.includes('firebasestorage')) {
+                                try {
+                                    const imageRef = ref(storage, ev.flyerUrl);
+                                    deletePromises.push(deleteObject(imageRef).catch(()=>{}));
+                                } catch(e) {}
+                            }
+                            deletePromises.push(deleteDoc(doc(db, "eventos", ev.id)));
+                        } else {
+                            allEvents.push(ev);
+                        }
                     });
+
+                    if (deletePromises.length > 0) {
+                        await Promise.all(deletePromises);
+                    }
+
                     // Ordenar por fecha más reciente primero
                     allEvents.sort((a, b) => new Date(b.start) - new Date(a.start));
                     renderEventsList(allEvents);
