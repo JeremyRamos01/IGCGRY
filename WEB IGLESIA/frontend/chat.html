@@ -363,11 +363,11 @@
                 const messageHTML = `
                     <div class="chat-message ${isSentByMe ? 'message-out' : 'message-in'}">
                         <div class="message-bubble">
-                            ${!isSentByMe ? \`<div class="message-sender">\${data.sender}</div>\` : ''}
-                            <div class="message-text">\${escapeHTML(data.text)}</div>
+                            ${!isSentByMe ? `<div class="message-sender">${data.sender}</div>` : ''}
+                            <div class="message-text">${escapeHTML(data.text)}</div>
                             <div class="message-time">
-                                <span>\${timeString}</span>
-                                <button class="btn-reply-bubble" data-username="\${data.sender}" title="Responder"><i class="fa-solid fa-reply"></i></button>
+                                <span>${timeString}</span>
+                                <button class="btn-reply-bubble" data-username="${data.sender}" title="Responder"><i class="fa-solid fa-reply"></i></button>
                             </div>
                         </div>
                     </div>
