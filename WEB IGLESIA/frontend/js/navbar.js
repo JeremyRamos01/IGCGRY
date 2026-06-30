@@ -1,7 +1,7 @@
 const navbarHTML = `
     <!-- BARRA DE NAVEGACIÓN -->
     <nav class="navbar navbar-expand-lg fixed-top glass-nav">
-        <div class="container">
+        <div class="container-fluid px-2">
             <a class="navbar-brand d-flex align-items-center" href="/">
                 <img class="logo img-fluid" src="img/Logo.png" alt="Logo Iglesia Del Gran REY">
                 <span class="ms-3 ps-3 border-start border-2 fw-bold d-none d-md-block fs-5 text-white"
