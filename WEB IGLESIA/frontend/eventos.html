@@ -144,9 +144,10 @@
                     eventosDB.push({
                         id: doc.id,
                         title: data.title,
-                        start: data.start, // ej: "2023-11-20T10:00:00" o "2023-11-20"
+                        start: data.start, 
                         end: data.end,
                         description: data.description,
+                        destacado: data.destacado === true,
                         backgroundColor: data.backgroundColor || '#0f172a'
                     });
                 });
@@ -195,7 +196,7 @@
             container.innerHTML = ''; 
 
             const ahora = new Date();
-            const proximos = eventosDB.filter(e => new Date(e.start) >= ahora)
+            const proximos = eventosDB.filter(e => new Date(e.start) >= ahora && e.destacado)
                 .sort((a, b) => new Date(a.start) - new Date(b.start))
                 .slice(0, 6); // Mostrar hasta 6
 
