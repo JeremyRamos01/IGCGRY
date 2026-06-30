@@ -28,6 +28,7 @@
     <link href="css/style.css" rel="stylesheet">
 
     <style>
+        /* === CALENDARIO RESPONSIVE === */
         .fc-theme-standard td,
         .fc-theme-standard th {
             border-color: rgba(0, 0, 0, 0.1);
@@ -43,6 +44,59 @@
             cursor: pointer;
         }
 
+        /* Toolbar: apilado vertical en móvil */
+        @media (max-width: 576px) {
+            .fc .fc-toolbar {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 0.6rem;
+                margin-bottom: 1rem;
+            }
+
+            .fc .fc-toolbar-chunk {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 0.25rem;
+            }
+
+            /* Título del mes más pequeño */
+            .fc .fc-toolbar-title {
+                font-size: 1.1rem !important;
+                text-align: center;
+            }
+
+            /* Botones más pequeños */
+            .fc .fc-button {
+                padding: 0.25rem 0.55rem !important;
+                font-size: 0.78rem !important;
+            }
+
+            /* Números de día pequeños */
+            .fc-daygrid-day-number {
+                font-size: 0.78rem;
+                padding: 2px 4px;
+            }
+
+            /* Cabecera días semana */
+            .fc-col-header-cell-cushion {
+                font-size: 0.72rem;
+                padding: 4px 2px;
+            }
+
+            /* Celdas más compactas */
+            .fc .fc-daygrid-day {
+                min-height: 2.5rem;
+            }
+
+            /* Contenedor del calendario sin overflow */
+            #calendar {
+                overflow: hidden;
+            }
+        }
+
+        /* Tarjetas de eventos */
         .event-list-card {
             border-left: 4px solid var(--accent-gold);
             transition: transform 0.3s ease;
@@ -160,14 +214,22 @@
             }
 
             // 2. Inicializar calendario
+            var isMobile = window.innerWidth < 576;
             var calendar = new FullCalendar.Calendar(calendarEl, {
                 initialView: 'dayGridMonth',
                 locale: 'es',
-                headerToolbar: {
+                headerToolbar: isMobile ? {
+                    left: 'prev,next',
+                    center: 'title',
+                    right: 'today'
+                } : {
                     left: 'prev,next today',
                     center: 'title',
                     right: 'dayGridMonth,timeGridWeek,timeGridDay'
                 },
+                footerToolbar: isMobile ? {
+                    center: 'dayGridMonth,timeGridWeek,timeGridDay'
+                } : false,
                 buttonText: {
                     today: 'Hoy',
                     month: 'Mes',
