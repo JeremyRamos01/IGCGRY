@@ -253,9 +253,58 @@
                         </div>
                     </div>
 
+                    <!-- Modal de edición -->
+                    <div class="modal fade" id="editEventModal" tabindex="-1" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered modal-lg">
+                            <div class="modal-content">
+                                <div class="modal-header" style="background:var(--primary-dark);">
+                                    <h5 class="modal-title text-white fw-bold"><i class="fa-solid fa-pen-to-square me-2 text-gold"></i> Editar Evento</h5>
+                                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                                </div>
+                                <div class="modal-body p-4">
+                                    <form id="edit-event-form">
+                                        <input type="hidden" id="edit-event-id">
+                                        <div class="mb-3">
+                                            <label class="form-label fw-bold">Título del Evento</label>
+                                            <input type="text" class="form-control" id="edit-event-title" required>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6 mb-3">
+                                                <label class="form-label fw-bold">Fecha y Hora de Inicio</label>
+                                                <input type="datetime-local" class="form-control" id="edit-event-start" required>
+                                            </div>
+                                            <div class="col-md-6 mb-3">
+                                                <label class="form-label fw-bold">Fecha y Hora de Fin (Opcional)</label>
+                                                <input type="datetime-local" class="form-control" id="edit-event-end">
+                                            </div>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label fw-bold">Descripción / Detalles</label>
+                                            <textarea class="form-control" id="edit-event-description" rows="3"></textarea>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label fw-bold">URL del Volante (Opcional)</label>
+                                            <input type="url" class="form-control" id="edit-event-flyer-url" placeholder="https://...">
+                                        </div>
+                                        <div class="mb-3 form-check">
+                                            <input type="checkbox" class="form-check-input" id="edit-event-destacado">
+                                            <label class="form-check-label fw-bold" for="edit-event-destacado"><i class="fa-solid fa-star text-gold me-1"></i> Marcar como Evento Destacado</label>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                    <button type="button" class="btn btn-gold fw-bold px-4" id="save-edit-btn">
+                                        <i class="fa-solid fa-floppy-disk me-2"></i> Guardar Cambios
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="card shadow-sm border-0 rounded-4">
                         <div class="card-body p-4">
-                            <h5 class="fw-bold text-danger mb-4"><i class="fa-solid fa-trash me-2"></i> Eliminar Eventos</h5>
+                            <h5 class="fw-bold mb-4" style="color:var(--primary-dark);"><i class="fa-solid fa-list me-2 text-gold"></i> Eventos Actuales</h5>
                             
                             <div class="mb-4">
                                 <div class="input-group">
@@ -328,7 +377,7 @@
     <!-- Firebase Script (Module) -->
     <script type="module">
         import { db, storage } from './js/firebase-config.js';
-        import { collection, addDoc, getDocs, deleteDoc, doc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+        import { collection, addDoc, getDocs, deleteDoc, doc, updateDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
         import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
         import { ref, uploadBytes, getDownloadURL, deleteObject } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-storage.js";
 
@@ -419,23 +468,48 @@
                     div.className = "list-group-item d-flex justify-content-between align-items-center border-0 shadow-sm mb-2 rounded-3";
                     div.innerHTML = `
                         <div>
-                            <strong class="text-primary-dark">${ev.title}</strong> ${ev.destacado ? '<i class="fa-solid fa-star text-gold ms-1" title="Destacado"></i>' : ''}<br>
+                            <strong style="color:var(--primary-dark)">${ev.title}</strong> ${ev.destacado ? '<i class="fa-solid fa-star text-gold ms-1" title="Destacado"></i>' : ''}<br>
                             <small class="text-muted"><i class="fa-regular fa-calendar me-1"></i> ${date}</small>
                         </div>
-                        <button class="btn btn-sm btn-outline-danger delete-btn" data-id="${ev.id}">
-                            <i class="fa-solid fa-trash"></i>
-                        </button>
+                        <div class="d-flex gap-2">
+                            <button class="btn btn-sm btn-outline-primary edit-btn" data-id="${ev.id}" title="Editar">
+                                <i class="fa-solid fa-pen-to-square"></i>
+                            </button>
+                            <button class="btn btn-sm btn-outline-danger delete-btn" data-id="${ev.id}" title="Eliminar">
+                                <i class="fa-solid fa-trash"></i>
+                            </button>
+                        </div>
                     `;
                     eventListEl.appendChild(div);
                 });
 
+                // Botones EDITAR
+                document.querySelectorAll('.edit-btn').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        const id = e.currentTarget.getAttribute('data-id');
+                        const ev = allEvents.find(ev => ev.id === id);
+                        if (!ev) return;
+
+                        document.getElementById('edit-event-id').value = ev.id;
+                        document.getElementById('edit-event-title').value = ev.title || '';
+                        document.getElementById('edit-event-start').value = ev.start || '';
+                        document.getElementById('edit-event-end').value = ev.end || '';
+                        document.getElementById('edit-event-description').value = ev.description || '';
+                        document.getElementById('edit-event-flyer-url').value = ev.flyerUrl || '';
+                        document.getElementById('edit-event-destacado').checked = ev.destacado || false;
+
+                        const editModal = new bootstrap.Modal(document.getElementById('editEventModal'));
+                        editModal.show();
+                    });
+                });
+
+                // Botones ELIMINAR
                 document.querySelectorAll('.delete-btn').forEach(btn => {
                     btn.addEventListener('click', async (e) => {
                         if(confirm("¿Seguro que quieres borrar este evento de forma permanente?")) {
                             const id = e.currentTarget.getAttribute('data-id');
                             const evToDelete = allEvents.find(ev => ev.id === id);
                             
-                            // Si tiene imagen en Storage, borrarla también
                             if (evToDelete && evToDelete.flyerUrl && evToDelete.flyerUrl.includes('firebasestorage')) {
                                 try {
                                     const imageRef = ref(storage, evToDelete.flyerUrl);
@@ -542,6 +616,41 @@
             });
 
             loadEvents();
+
+            // Guardar cambios de edición
+            document.getElementById('save-edit-btn').addEventListener('click', async () => {
+                const id = document.getElementById('edit-event-id').value;
+                const title = document.getElementById('edit-event-title').value.trim();
+                const start = document.getElementById('edit-event-start').value;
+                const end = document.getElementById('edit-event-end').value;
+                const description = document.getElementById('edit-event-description').value;
+                const flyerUrl = document.getElementById('edit-event-flyer-url').value;
+                const destacado = document.getElementById('edit-event-destacado').checked;
+
+                if (!title || !start) {
+                    alert('El título y la fecha de inicio son obligatorios.');
+                    return;
+                }
+
+                const saveBtn = document.getElementById('save-edit-btn');
+                saveBtn.disabled = true;
+                saveBtn.innerHTML = '<span class="spinner-border spinner-border-sm"></span> Guardando...';
+
+                try {
+                    const eventData = { title, start, description, flyerUrl, destacado };
+                    if (end) eventData.end = end; else eventData.end = '';
+                    await updateDoc(doc(db, "eventos", id), eventData);
+                    
+                    bootstrap.Modal.getInstance(document.getElementById('editEventModal')).hide();
+                    loadEvents();
+                    alert('¡Evento actualizado con éxito!');
+                } catch(err) {
+                    alert('Error al actualizar: ' + err.message);
+                } finally {
+                    saveBtn.disabled = false;
+                    saveBtn.innerHTML = '<i class="fa-solid fa-floppy-disk me-2"></i> Guardar Cambios';
+                }
+            });
 
             // 2. FORO LIBRE (Limpiar Chat)
             const btnClearChat = document.getElementById('btn-clear-chat');
