@@ -89,11 +89,13 @@
             justify-content: center;
         }
 
-        /* Eventos: fondo marino */
-        .fc-event, .fc-event-main {
-            background-color: var(--primary-dark) !important;
-            border-color: var(--accent-gold) !important;
+        /* Eventos: solo puntero */
+        .fc-event {
             cursor: pointer;
+        }
+        /* Solo cambiar color de texto de eventos, sin tocar el fondo */
+        .fc-event-title {
+            color: #fff !important;
         }
 
         /* ===========================
