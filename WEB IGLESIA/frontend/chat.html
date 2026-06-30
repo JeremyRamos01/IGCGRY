@@ -209,37 +209,6 @@
 
                             <div class="chat-messages" id="chat-messages">
                                 <!-- Mensajes cargados dinámicamente -->
-                                <div class="forum-post">
-                                    <div class="post-sidebar">
-                                        <div class="post-avatar"><i class="fa-solid fa-user-tie"></i></div>
-                                        <span class="username">Moderador</span>
-                                    </div>
-                                    <div class="post-content">
-                                        <div class="post-meta">
-                                            <span><i class="fa-regular fa-clock me-1"></i> 10:00 AM</span>
-                                            <button class="btn-reply" data-username="Moderador"><i class="fa-solid fa-reply me-1"></i> Responder</button>
-                                        </div>
-                                        <div class="post-body">
-                                            ¡Bienvenidos al foro libre de la Casa del Gran REY! Este es un espacio para compartir, debatir sanamente y pedir oración. Dios les bendiga.
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="forum-post">
-                                    <div class="post-sidebar">
-                                        <div class="post-avatar"><i class="fa-solid fa-user"></i></div>
-                                        <span class="username">Hermano Juan</span>
-                                    </div>
-                                    <div class="post-content">
-                                        <div class="post-meta">
-                                            <span><i class="fa-regular fa-clock me-1"></i> 10:15 AM</span>
-                                            <button class="btn-reply" data-username="Hermano Juan"><i class="fa-solid fa-reply me-1"></i> Responder</button>
-                                        </div>
-                                        <div class="post-body">
-                                            Amén. Saludos a todos los hermanos. Pido oración por mi familia esta semana.
-                                        </div>
-                                    </div>
-                                </div>
                             </div>
 
                             <div class="chat-input-area">
@@ -338,7 +307,7 @@
 
     <script type="module">
         import { db } from './js/firebase-config.js';
-        import { collection, addDoc, onSnapshot, query, orderBy, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+        import { collection, addDoc, onSnapshot, query, orderBy, where, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
         // Obtener elementos del DOM
         const chatMessages = document.getElementById('chat-messages');
@@ -367,8 +336,13 @@
 
         // Referencia a la colección 'chatMessages' en Firestore
         const messagesRef = collection(db, "chatMessages");
-        // Consulta ordenada por fecha
-        const q = query(messagesRef, orderBy("timestamp", "asc"));
+        
+        // Obtener el inicio del día de hoy para reiniciar los mensajes diariamente
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+
+        // Consulta ordenada por fecha, mostrando solo los de hoy
+        const q = query(messagesRef, where("timestamp", ">=", today), orderBy("timestamp", "asc"));
 
         // Escuchar cambios en tiempo real
         onSnapshot(q, (snapshot) => {
