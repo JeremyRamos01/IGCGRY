@@ -391,19 +391,27 @@
             
             // Comando secreto para borrar la BBDD
             if (text === '/clear') {
-                if(confirm("¿Estás seguro de que quieres borrar TODOS los mensajes de la base de datos?")) {
-                    messageInput.value = 'Borrando...';
-                    try {
-                        const snap = await getDocs(collection(db, "chatMessages"));
-                        snap.forEach(d => deleteDoc(doc(db, "chatMessages", d.id)));
-                        messageInput.value = '';
-                        alert("Base de datos borrada con éxito. El chat está vacío.");
-                    } catch (err) {
-                        alert("Error al borrar: " + err.message);
+                const pass = prompt("Introduce la clave de administrador para borrar la base de datos:");
+                if (pass === "Pastor123") {
+                    if(confirm("¿Estás seguro de que quieres borrar TODOS los mensajes de la base de datos?")) {
+                        messageInput.value = 'Borrando...';
+                        try {
+                            const snap = await getDocs(collection(db, "chatMessages"));
+                            snap.forEach(d => deleteDoc(doc(db, "chatMessages", d.id)));
+                            messageInput.value = '';
+                            alert("Base de datos borrada con éxito. El chat está vacío.");
+                        } catch (err) {
+                            alert("Error al borrar: " + err.message);
+                            messageInput.value = '';
+                        }
+                    } else {
                         messageInput.value = '';
                     }
-                } else {
+                } else if (pass !== null) {
+                    alert("Clave incorrecta. Acción denegada.");
                     messageInput.value = '';
+                } else {
+                    messageInput.value = ''; // Cancelled
                 }
                 return;
             }
