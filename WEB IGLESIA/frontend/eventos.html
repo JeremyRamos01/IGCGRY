@@ -28,116 +28,154 @@
     <link href="css/style.css" rel="stylesheet">
 
     <style>
-        /* === CALENDARIO RESPONSIVE === */
-        .fc-theme-standard td,
-        .fc-theme-standard th {
-            border-color: rgba(0, 0, 0, 0.1);
+        /* ===========================
+           COLORES DE MARCA - FULLCALENDAR
+        =========================== */
+
+        /* Bordes */
+        .fc-theme-standard td, .fc-theme-standard th {
+            border-color: rgba(30, 41, 59, 0.12);
         }
 
+        /* Número de día y cabecera */
         .fc-col-header-cell-cushion,
         .fc-daygrid-day-number {
             color: var(--primary-dark);
             text-decoration: none;
+            font-weight: 600;
         }
 
-        .fc-event {
+        /* Título del mes */
+        .fc .fc-toolbar-title {
+            color: var(--primary-dark);
+            font-family: 'Outfit', sans-serif;
+            font-weight: 800;
+        }
+
+        /* Botones de FullCalendar: color dorado/marino */
+        .fc .fc-button-primary {
+            background-color: var(--primary-dark) !important;
+            border-color: var(--primary-dark) !important;
+            color: #fff !important;
+        }
+        .fc .fc-button-primary:hover {
+            background-color: var(--accent-gold) !important;
+            border-color: var(--accent-gold) !important;
+            color: var(--primary-dark) !important;
+        }
+        .fc .fc-button-primary:not(:disabled).fc-button-active,
+        .fc .fc-button-primary:not(:disabled):active {
+            background-color: var(--accent-gold) !important;
+            border-color: var(--accent-gold) !important;
+            color: var(--primary-dark) !important;
+            font-weight: 700;
+        }
+        .fc .fc-button-primary:focus {
+            box-shadow: 0 0 0 0.2rem rgba(212, 175, 55, 0.4) !important;
+        }
+
+        /* Día de hoy destacado en dorado */
+        .fc .fc-daygrid-day.fc-day-today {
+            background-color: rgba(212, 175, 55, 0.1) !important;
+        }
+        .fc .fc-daygrid-day.fc-day-today .fc-daygrid-day-number {
+            background: var(--accent-gold);
+            color: #fff !important;
+            border-radius: 50%;
+            width: 26px;
+            height: 26px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Eventos: fondo marino */
+        .fc-event, .fc-event-main {
+            background-color: var(--primary-dark) !important;
+            border-color: var(--accent-gold) !important;
             cursor: pointer;
         }
 
-        /* Toolbar: apilado vertical en móvil */
+        /* ===========================
+           VISTA LISTA - colores marca
+        =========================== */
+        /* Cabecera de fecha (fila azul marino) */
+        .fc .fc-list-day-cushion {
+            background: var(--primary-dark) !important;
+            color: #fff !important;
+            padding: 0.45rem 1rem;
+            font-family: 'Outfit', sans-serif;
+            font-weight: 700;
+            font-size: 0.88rem;
+        }
+        .fc .fc-list-day-text,
+        .fc .fc-list-day-side-text {
+            color: #fff !important;
+            text-decoration: none !important;
+        }
+
+        /* Filas de evento */
+        .fc .fc-list-event:hover td {
+            background: rgba(212, 175, 55, 0.08) !important;
+        }
+        .fc .fc-list-event-title a {
+            color: var(--primary-dark) !important;
+            font-weight: 600;
+            text-decoration: none;
+        }
+        .fc .fc-list-event-time {
+            color: var(--text-muted) !important;
+            font-size: 0.8rem;
+        }
+        .fc .fc-list-event-dot {
+            border-color: var(--accent-gold) !important;
+        }
+
+        /* Mensaje sin eventos */
+        .fc .fc-list-empty {
+            background: #f8fafc;
+            color: var(--text-muted);
+        }
+
+        /* ===========================
+           RESPONSIVE MÓVIL (< 576px)
+        =========================== */
         @media (max-width: 576px) {
             .fc .fc-toolbar {
                 display: flex;
                 flex-direction: column;
                 align-items: center;
-                gap: 0.6rem;
+                gap: 0.5rem;
                 margin-bottom: 1rem;
             }
-
             .fc .fc-toolbar-chunk {
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                gap: 0.25rem;
+                gap: 0.2rem;
             }
-
-            /* Título del mes más pequeño */
             .fc .fc-toolbar-title {
-                font-size: 1.1rem !important;
+                font-size: 1.05rem !important;
                 text-align: center;
             }
-
-            /* Botones más pequeños */
             .fc .fc-button {
-                padding: 0.25rem 0.55rem !important;
-                font-size: 0.78rem !important;
+                padding: 0.22rem 0.5rem !important;
+                font-size: 0.76rem !important;
             }
-
-            /* Números de día pequeños */
-            .fc-daygrid-day-number {
-                font-size: 0.78rem;
-                padding: 2px 4px;
-            }
-
-            /* Cabecera días semana */
-            .fc-col-header-cell-cushion {
-                font-size: 0.72rem;
-                padding: 4px 2px;
-            }
-
-            /* Celdas más compactas */
-            .fc .fc-daygrid-day {
-                min-height: 2.5rem;
-            }
-
-        /* Contenedor del calendario sin overflow */
-            #calendar {
-                overflow: hidden;
-            }
-
-            /* === VISTA LISTA (móvil) === */
-            .fc .fc-list-table td {
-                padding: 0.6rem 0.8rem;
-            }
-
-            .fc .fc-list-day-cushion {
-                background: var(--primary-dark) !important;
-                color: #fff !important;
-                padding: 0.4rem 0.8rem;
-                border-radius: 6px;
-                font-size: 0.85rem;
-            }
-
-            .fc .fc-list-event:hover td {
-                background: rgba(212, 175, 55, 0.1);
-            }
-
-            .fc .fc-list-event-title a {
-                color: var(--primary-dark) !important;
-                font-weight: 600;
-                text-decoration: none;
-                font-size: 0.9rem;
-            }
-
-            .fc .fc-list-event-time {
-                color: var(--text-muted) !important;
-                font-size: 0.78rem;
-            }
-
-            .fc .fc-list-event-dot {
-                border-color: var(--accent-gold) !important;
-            }
+            .fc-daygrid-day-number { font-size: 0.75rem; padding: 2px 3px; }
+            .fc-col-header-cell-cushion { font-size: 0.7rem; padding: 3px 2px; }
+            .fc .fc-daygrid-day { min-height: 2.4rem; }
+            #calendar { overflow: hidden; }
         }
 
-        /* Tarjetas de eventos */
+        /* ===========================
+           TARJETAS DE EVENTOS
+        =========================== */
         .event-list-card {
             border-left: 4px solid var(--accent-gold);
             transition: transform 0.3s ease;
         }
-
-        .event-list-card:hover {
-            transform: translateX(5px);
-        }
+        .event-list-card:hover { transform: translateX(5px); }
     </style>
 </head>
 
