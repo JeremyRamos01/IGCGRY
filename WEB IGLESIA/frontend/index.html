@@ -558,7 +558,7 @@
 
                 if (ev.flyerUrl && ev.flyerUrl.trim() !== '') {
                     html += `
-                        <div class="carousel-item ${activeClass}" data-bs-interval="5000">
+                        <div class="carousel-item ${activeClass}" data-bs-interval="2000">
                             <div class="row justify-content-center px-2 px-md-4">
                                 <div class="col-lg-10 text-center">
                                     <img src="${ev.flyerUrl}" alt="${ev.title}" class="img-fluid rounded shadow-sm" style="max-height: 450px; object-fit: contain; cursor: pointer;" onclick="abrirFlyer('${ev.flyerUrl}')">
@@ -568,7 +568,7 @@
                     `;
                 } else {
                     html += `
-                        <div class="carousel-item ${activeClass}" data-bs-interval="5000">
+                        <div class="carousel-item ${activeClass}" data-bs-interval="2000">
                             <div class="row justify-content-center px-2 px-md-4">
                                 <div class="col-lg-10">
                                     <div class="event-card-clean card mx-auto overflow-hidden shadow-sm" style="max-width: 950px; border-radius: 0.5rem;">
@@ -617,7 +617,7 @@
             const carouselElement = document.getElementById('carrusel-novedades');
             if (carouselElement && especiales.length > 1) {
                 new bootstrap.Carousel(carouselElement, {
-                    interval: 4000,
+                    interval: 2000,
                     ride: 'carousel',
                     pause: 'hover'
                 });
