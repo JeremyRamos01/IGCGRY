@@ -63,8 +63,13 @@
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
         }
 
         .post-sidebar {
@@ -173,7 +178,7 @@
         .btn-send:hover {
             background: #1e293b;
         }
-        
+
         /* Ocultar el patrón sutil viejo */
         .chat-messages {
             background-image: none !important;
@@ -231,13 +236,15 @@
                         </div>
 
                     </div>
-                    
+
                     <!-- SIDEBAR COLUMN -->
                     <div class="col-lg-4" data-aos="fade-left">
                         <!-- Verse of the Day -->
-                        <div class="card border-0 shadow-sm rounded-4 mb-4" style="background: linear-gradient(135deg, var(--primary-dark) 0%, #1e293b 100%); color: white;">
+                        <div class="card border-0 shadow-sm rounded-4 mb-4"
+                            style="background: linear-gradient(135deg, var(--primary-dark) 0%, #1e293b 100%); color: white;">
                             <div class="card-body p-4">
-                                <h5 class="fw-bold mb-3 text-gold"><i class="fa-solid fa-book-bible me-2"></i> Versículo del Día</h5>
+                                <h5 class="fw-bold mb-3 text-gold"><i class="fa-solid fa-book-bible me-2"></i> Versículo
+                                    del Día</h5>
                                 <p class="fst-italic mb-2">"Todo lo puedo en Cristo que me fortalece."</p>
                                 <p class="mb-0 text-end fw-bold text-white-50">- Filipenses 4:13</p>
                             </div>
@@ -246,12 +253,17 @@
                         <!-- Forum Rules -->
                         <div class="card border-0 shadow-sm rounded-4 mb-4 bg-light">
                             <div class="card-body p-4">
-                                <h5 class="fw-bold mb-3 text-dark"><i class="fa-solid fa-scale-balanced text-primary me-2"></i> Normas del Foro</h5>
+                                <h5 class="fw-bold mb-3 text-dark"><i
+                                        class="fa-solid fa-scale-balanced text-primary me-2"></i> Normas del Foro</h5>
                                 <ul class="list-unstyled mb-0 small text-muted">
-                                    <li class="mb-2"><i class="fa-solid fa-check text-success me-2"></i> Sé respetuoso y amable con todos.</li>
-                                    <li class="mb-2"><i class="fa-solid fa-check text-success me-2"></i> Prohibido el spam o publicidad.</li>
-                                    <li class="mb-2"><i class="fa-solid fa-check text-success me-2"></i> Usa este espacio para edificar.</li>
-                                    <li><i class="fa-solid fa-check text-success me-2"></i> El moderador puede eliminar mensajes inapropiados.</li>
+                                    <li class="mb-2"><i class="fa-solid fa-check text-success me-2"></i> Sé respetuoso y
+                                        amable con todos.</li>
+                                    <li class="mb-2"><i class="fa-solid fa-check text-success me-2"></i> Prohibido el
+                                        spam o publicidad.</li>
+                                    <li class="mb-2"><i class="fa-solid fa-check text-success me-2"></i> Usa este
+                                        espacio para edificar.</li>
+                                    <li><i class="fa-solid fa-check text-success me-2"></i> El moderador puede eliminar
+                                        mensajes inapropiados.</li>
                                 </ul>
                             </div>
                         </div>
@@ -259,10 +271,13 @@
                         <!-- Useful Links -->
                         <div class="card border-0 shadow-sm rounded-4 bg-white">
                             <div class="card-body p-4">
-                                <h5 class="fw-bold mb-3 text-dark"><i class="fa-solid fa-link text-info me-2"></i> Enlaces Rápidos</h5>
+                                <h5 class="fw-bold mb-3 text-dark"><i class="fa-solid fa-link text-info me-2"></i>
+                                    Enlaces Rápidos</h5>
                                 <div class="d-grid gap-2">
-                                    <a href="contacto.html" class="btn btn-outline-dark text-start"><i class="fa-solid fa-envelope me-2"></i> Contactar al Pastor</a>
-                                    <a href="eventos.html" class="btn btn-outline-dark text-start"><i class="fa-solid fa-calendar-alt me-2"></i> Ver Eventos</a>
+                                    <a href="contacto.html" class="btn btn-outline-dark text-start"><i
+                                            class="fa-solid fa-envelope me-2"></i> Contactar al Pastor</a>
+                                    <a href="eventos.html" class="btn btn-outline-dark text-start"><i
+                                            class="fa-solid fa-calendar-alt me-2"></i> Ver Eventos</a>
                                 </div>
                             </div>
                         </div>
@@ -309,6 +324,14 @@
         import { db } from './js/firebase-config.js';
         import { collection, addDoc, onSnapshot, query, orderBy, where, serverTimestamp, getDocs, deleteDoc, doc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
+        // Función Helper para Encriptación SHA-256
+        async function sha256(message) {
+            const msgBuffer = new TextEncoder().encode(message);
+            const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
+            const hashArray = Array.from(new Uint8Array(hashBuffer));
+            return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+        }
+
         // Obtener elementos del DOM
         const chatMessages = document.getElementById('chat-messages');
         const messageInput = document.getElementById('message-input');
@@ -336,7 +359,7 @@
 
         // Referencia a la colección 'chatMessages' en Firestore
         const messagesRef = collection(db, "chatMessages");
-        
+
         // Obtener el inicio del día de hoy para reiniciar los mensajes diariamente
         const today = new Date();
         today.setHours(0, 0, 0, 0);
@@ -347,11 +370,11 @@
         // Escuchar cambios en tiempo real
         onSnapshot(q, (snapshot) => {
             chatMessages.innerHTML = '<div class="text-center my-3"><span class="badge bg-light text-muted border px-3 py-2 rounded-pill">Foro en vivo</span></div>';
-            
+
             snapshot.forEach((doc) => {
                 const data = doc.data();
                 const isSentByMe = data.sender === currentUser;
-                
+
                 let timeString = "";
                 if (data.timestamp) {
                     const date = data.timestamp.toDate();
@@ -388,12 +411,14 @@
         // Función para enviar mensaje a Firestore
         async function sendMessage() {
             const text = messageInput.value.trim();
-            
+
             // Comando secreto para borrar la BBDD
             if (text === '/clear') {
                 const pass = prompt("Introduce la clave de administrador para borrar la base de datos:");
-                if (pass === "Pastor123") {
-                    if(confirm("¿Estás seguro de que quieres borrar TODOS los mensajes de la base de datos?")) {
+                if (pass) {
+                    const hashedPass = await sha256(pass);
+                    if (hashedPass === "069d3cc49a4893dd7c34f8ed592d5d6058abe44ee7622687e0ad2c72046ec852") {
+                    if (confirm("¿Estás seguro de que quieres borrar TODOS los mensajes de la base de datos?")) {
                         messageInput.value = 'Borrando...';
                         try {
                             const snap = await getDocs(collection(db, "chatMessages"));
@@ -437,7 +462,7 @@
         });
 
         // Event listener para el botón de responder usando delegación de eventos
-        document.getElementById('chat-messages').addEventListener('click', function(e) {
+        document.getElementById('chat-messages').addEventListener('click', function (e) {
             const replyBtn = e.target.closest('.btn-reply');
             if (replyBtn) {
                 const usernameToReply = replyBtn.getAttribute('data-username');

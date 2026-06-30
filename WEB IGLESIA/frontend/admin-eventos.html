@@ -81,10 +81,23 @@
         import { db } from './js/firebase-config.js';
         import { collection, addDoc, getDocs, deleteDoc, doc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
+        // Función Helper para Encriptación SHA-256
+        async function sha256(message) {
+            const msgBuffer = new TextEncoder().encode(message);
+            const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
+            const hashArray = Array.from(new Uint8Array(hashBuffer));
+            return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+        }
+
         // ---- SEGURIDAD BÁSICA (Contraseña) ----
-        // Al entrar, pide contraseña. Si no es "admin123", esconde todo.
         const password = prompt("Introduce la contraseña de administrador:");
-        if(password !== "admin123") {
+        if(!password) {
+            document.body.innerHTML = "<div class='text-center mt-5'><h1 class='text-danger'>Acceso Cancelado</h1></div>";
+            throw new Error("Acceso denegado");
+        }
+        
+        const hashedPass = await sha256(password);
+        if(hashedPass !== "069d3cc49a4893dd7c34f8ed592d5d6058abe44ee7622687e0ad2c72046ec852") {
             document.body.innerHTML = "<div class='text-center mt-5'><h1 class='text-danger'>Acceso Denegado</h1><p>Contraseña incorrecta.</p></div>";
             throw new Error("Acceso denegado"); // Detiene la ejecución del script
         }
