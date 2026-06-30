@@ -54,65 +54,70 @@
         }
 
         .message {
-            max-width: 80%;
-            padding: 12px 18px;
-            border-radius: 20px;
+            width: 100%;
+            max-width: 100%;
+            padding: 15px;
+            border-radius: 8px;
             position: relative;
             animation: fadeIn 0.3s ease-out;
-        }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(10px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .message.received {
-            align-self: flex-start;
             background: white;
-            border-bottom-left-radius: 5px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+            display: flex;
+            flex-direction: column;
         }
 
         .message.sent {
-            align-self: flex-end;
-            background: var(--primary-dark);
-            color: white;
-            border-bottom-right-radius: 5px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            border-left: 4px solid var(--accent-gold);
+        }
+
+        .message.received {
+            border-left: 4px solid var(--primary-dark);
+        }
+
+        .message .sender-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+            border-bottom: 1px solid #f1f5f9;
+            padding-bottom: 8px;
         }
 
         .message .sender {
-            font-size: 0.8rem;
-            font-weight: bold;
-            margin-bottom: 3px;
-            display: block;
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: var(--primary-dark);
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
-
-        .message.received .sender {
-            color: var(--accent-gold);
-        }
-
-        .message.sent .sender {
-            color: #cbd5e1;
+        
+        .message .sender::before {
+            content: '\f007'; /* FontAwesome user icon */
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900;
+            color: #94a3b8;
+            background: #f1f5f9;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
         }
 
         .message .text {
-            font-size: 0.95rem;
+            font-size: 1rem;
+            color: #334155;
+            line-height: 1.5;
         }
 
         .message .time {
-            font-size: 0.7rem;
-            opacity: 0.7;
-            text-align: right;
-            margin-top: 5px;
-            display: block;
+            font-size: 0.75rem;
+            color: #94a3b8;
+            font-weight: 500;
         }
 
         .chat-input-area {
@@ -198,18 +203,22 @@
                                 </div>
 
                                 <div class="message received">
-                                    <span class="sender">Moderador (Pastor)</span>
+                                    <div class="sender-header">
+                                        <span class="sender">Moderador (Pastor)</span>
+                                        <span class="time">10:00 AM</span>
+                                    </div>
                                     <span class="text">¡Bienvenidos al foro libre de la Casa del Gran REY! Este es un
                                         espacio para compartir peticiones de oración, testimonios y charlar sanamente.
                                         Dios les bendiga.</span>
-                                    <span class="time">10:00 AM</span>
                                 </div>
 
                                 <div class="message received">
-                                    <span class="sender">Hermano Juan</span>
+                                    <div class="sender-header">
+                                        <span class="sender">Hermano Juan</span>
+                                        <span class="time">10:15 AM</span>
+                                    </div>
                                     <span class="text">Amén. Saludos a todos los hermanos. Pido oración por mi familia
                                         esta semana.</span>
-                                    <span class="time">10:15 AM</span>
                                 </div>
                             </div>
 
@@ -323,9 +332,11 @@
 
                 const messageHTML = `
                     <div class="message ${isSentByMe ? 'sent' : 'received'}">
-                        <span class="sender">${isSentByMe ? 'Tú (' + data.sender + ')' : data.sender}</span>
+                        <div class="sender-header">
+                            <span class="sender">${isSentByMe ? 'Tú (' + data.sender + ')' : data.sender}</span>
+                            <span class="time">${timeString}</span>
+                        </div>
                         <span class="text">${escapeHTML(data.text)}</span>
-                        <span class="time">${timeString}</span>
                     </div>
                 `;
                 chatMessages.insertAdjacentHTML('beforeend', messageHTML);
