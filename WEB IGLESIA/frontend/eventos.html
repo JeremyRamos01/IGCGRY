@@ -90,9 +90,42 @@
                 min-height: 2.5rem;
             }
 
-            /* Contenedor del calendario sin overflow */
+        /* Contenedor del calendario sin overflow */
             #calendar {
                 overflow: hidden;
+            }
+
+            /* === VISTA LISTA (móvil) === */
+            .fc .fc-list-table td {
+                padding: 0.6rem 0.8rem;
+            }
+
+            .fc .fc-list-day-cushion {
+                background: var(--primary-dark) !important;
+                color: #fff !important;
+                padding: 0.4rem 0.8rem;
+                border-radius: 6px;
+                font-size: 0.85rem;
+            }
+
+            .fc .fc-list-event:hover td {
+                background: rgba(212, 175, 55, 0.1);
+            }
+
+            .fc .fc-list-event-title a {
+                color: var(--primary-dark) !important;
+                font-weight: 600;
+                text-decoration: none;
+                font-size: 0.9rem;
+            }
+
+            .fc .fc-list-event-time {
+                color: var(--text-muted) !important;
+                font-size: 0.78rem;
+            }
+
+            .fc .fc-list-event-dot {
+                border-color: var(--accent-gold) !important;
             }
         }
 
@@ -216,7 +249,7 @@
             // 2. Inicializar calendario
             var isMobile = window.innerWidth < 576;
             var calendar = new FullCalendar.Calendar(calendarEl, {
-                initialView: 'dayGridMonth',
+                initialView: isMobile ? 'listMonth' : 'dayGridMonth',
                 locale: 'es',
                 headerToolbar: isMobile ? {
                     left: 'prev,next',
@@ -228,14 +261,16 @@
                     right: 'dayGridMonth,timeGridWeek,timeGridDay'
                 },
                 footerToolbar: isMobile ? {
-                    center: 'dayGridMonth,timeGridWeek,timeGridDay'
+                    center: 'listMonth,dayGridMonth'
                 } : false,
                 buttonText: {
                     today: 'Hoy',
                     month: 'Mes',
                     week: 'Semana',
-                    day: 'Día'
+                    day: 'Día',
+                    list: 'Lista'
                 },
+                noEventsText: 'No hay eventos este mes',
                 events: eventosDB,
                 eventClick: function (info) {
                     document.getElementById('modalEventTitle').textContent = info.event.title;
