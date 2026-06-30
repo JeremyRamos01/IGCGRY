@@ -131,7 +131,7 @@
         import { db } from './js/firebase-config.js';
         import { collection, getDocs } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
-        document.addEventListener('DOMContentLoaded', async function () {
+        async function initEventos() {
             var calendarEl = document.getElementById('calendar');
             var eventModal = new bootstrap.Modal(document.getElementById('eventModal'));
             
@@ -189,7 +189,10 @@
 
             // 3. Renderizar lista lateral
             renderEventList(eventosDB);
-        });
+        }
+
+        // Ejecutar inmediatamente
+        initEventos();
 
         function renderEventList(eventosDB) {
             const container = document.getElementById('event-agenda-container');

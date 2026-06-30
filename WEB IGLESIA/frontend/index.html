@@ -604,8 +604,8 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
-                `;
+                    `;
+                }
             });
             container.innerHTML = html;
 
@@ -620,8 +620,8 @@
             }
         }
 
-        // Ejecutar al cargar
-        document.addEventListener('DOMContentLoaded', renderNovedades);
+        // Ejecutar inmediatamente (los scripts type="module" ya esperan al DOM por defecto)
+        renderNovedades();
     </script>
 </body>
 
