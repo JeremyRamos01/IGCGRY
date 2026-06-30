@@ -23,140 +23,142 @@
 
     <style>
         .chat-container {
-            height: 60vh;
-            min-height: 400px;
+            min-height: 500px;
             display: flex;
             flex-direction: column;
-            background: #f8f9fa;
-            border-radius: 15px;
+            background: #eef2f5;
+            border-radius: 4px;
             overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            border: 1px solid #d1d9e0;
         }
 
         .chat-header {
             background: var(--primary-dark);
             color: white;
-            padding: 15px 20px;
-            border-bottom: 2px solid var(--accent-gold);
+            padding: 12px 20px;
             display: flex;
             align-items: center;
+            font-size: 1.1rem;
+            font-weight: 600;
         }
 
         .chat-messages {
             flex: 1;
-            padding: 20px;
             overflow-y: auto;
             display: flex;
             flex-direction: column;
-            gap: 15px;
-            background: url('https://www.transparenttextures.com/patterns/cubes.png') #f8f9fa;
-            /* Subtle pattern */
+            background: #eef2f5;
         }
 
-        .message {
-            width: 100%;
-            max-width: 100%;
-            padding: 15px;
-            border-radius: 8px;
-            position: relative;
-            animation: fadeIn 0.3s ease-out;
+        .forum-post {
+            display: flex;
             background: white;
-            border: 1px solid #e2e8f0;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+            border-bottom: 1px solid #d1d9e0;
+            padding: 15px;
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        .forum-post:nth-child(even) {
+            background: #f8fafc;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .post-sidebar {
+            width: 120px;
+            flex-shrink: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            border-right: 1px solid #f1f5f9;
+            padding-right: 15px;
+            margin-right: 15px;
+        }
+
+        .post-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 4px;
+            background: #cbd5e1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+
+        .post-sidebar .username {
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--primary-dark);
+            text-align: center;
+            word-break: break-word;
+        }
+
+        .post-content {
+            flex: 1;
             display: flex;
             flex-direction: column;
         }
 
-        .message.sent {
-            border-left: 4px solid var(--accent-gold);
-        }
-
-        .message.received {
-            border-left: 4px solid var(--primary-dark);
-        }
-
-        .message .sender-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 8px;
-            border-bottom: 1px solid #f1f5f9;
-            padding-bottom: 8px;
-        }
-
-        .message .sender {
-            font-size: 0.9rem;
-            font-weight: 700;
-            color: var(--primary-dark);
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        
-        .message .sender::before {
-            content: '\f007'; /* FontAwesome user icon */
-            font-family: "Font Awesome 6 Free";
-            font-weight: 900;
-            color: #94a3b8;
-            background: #f1f5f9;
-            width: 28px;
-            height: 28px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+        .post-meta {
             font-size: 0.75rem;
+            color: #94a3b8;
+            margin-bottom: 10px;
+            padding-bottom: 5px;
+            border-bottom: 1px dashed #e2e8f0;
+            text-align: right;
         }
 
-        .message .text {
-            font-size: 1rem;
+        .post-body {
+            font-size: 0.95rem;
             color: #334155;
-            line-height: 1.5;
-        }
-
-        .message .time {
-            font-size: 0.75rem;
-            color: #94a3b8;
-            font-weight: 500;
+            line-height: 1.6;
         }
 
         .chat-input-area {
-            background: white;
+            background: #eef2f5;
             padding: 15px;
-            border-top: 1px solid #eee;
+            border-top: 1px solid #d1d9e0;
             display: flex;
             gap: 10px;
         }
 
         .chat-input {
-            border-radius: 30px;
-            padding: 10px 20px;
-            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 12px 15px;
+            border: 1px solid #cbd5e1;
             flex: 1;
+            font-size: 0.95rem;
         }
 
         .chat-input:focus {
             outline: none;
-            border-color: var(--accent-gold);
-            box-shadow: 0 0 0 0.2rem rgba(212, 175, 55, 0.25);
+            border-color: var(--primary-dark);
+            box-shadow: 0 0 0 2px rgba(15, 23, 42, 0.1);
         }
 
         .btn-send {
-            background: var(--accent-gold);
+            background: var(--primary-dark);
             color: white;
             border: none;
-            border-radius: 50%;
-            width: 46px;
-            height: 46px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.2s;
+            border-radius: 4px;
+            padding: 0 25px;
+            font-weight: 600;
+            transition: background 0.2s;
         }
 
         .btn-send:hover {
-            background: #b5952f;
-            transform: scale(1.05);
+            background: #1e293b;
+        }
+        
+        /* Ocultar el patrón sutil viejo */
+        .chat-messages {
+            background-image: none !important;
         }
     </style>
 </head>
@@ -181,44 +183,37 @@
                     <div class="col-lg-8" data-aos="fade-up">
 
                         <!-- CHAT UI -->
-                        <div class="chat-container border">
+                        <div class="chat-container">
                             <div class="chat-header">
-                                <div class="d-flex align-items-center">
-                                    <div class="rounded-circle bg-white d-flex justify-content-center align-items-center me-3"
-                                        style="width: 40px; height: 40px;">
-                                        <i class="fa-solid fa-users text-dark"></i>
-                                    </div>
-                                    <div>
-                                        <h5 class="mb-0 fw-bold">Chat General</h5>
-                                        <small class="text-white-50"><i class="fa-solid fa-circle text-success me-1"
-                                                style="font-size: 8px;"></i> Online</small>
-                                    </div>
-                                </div>
+                                <i class="fa-solid fa-comments me-2"></i> Foro General
                             </div>
 
                             <div class="chat-messages" id="chat-messages">
                                 <!-- Mensajes cargados dinámicamente -->
-                                <div class="text-center my-3">
-                                    <span class="badge bg-light text-muted border px-3 py-2 rounded-pill">Hoy</span>
+                                <div class="forum-post">
+                                    <div class="post-sidebar">
+                                        <div class="post-avatar"><i class="fa-solid fa-user-tie"></i></div>
+                                        <span class="username">Moderador</span>
+                                    </div>
+                                    <div class="post-content">
+                                        <div class="post-meta"><i class="fa-regular fa-clock me-1"></i> 10:00 AM</div>
+                                        <div class="post-body">
+                                            ¡Bienvenidos al foro libre de la Casa del Gran REY! Este es un espacio para compartir, debatir sanamente y pedir oración. Dios les bendiga.
+                                        </div>
+                                    </div>
                                 </div>
 
-                                <div class="message received">
-                                    <div class="sender-header">
-                                        <span class="sender">Moderador (Pastor)</span>
-                                        <span class="time">10:00 AM</span>
+                                <div class="forum-post">
+                                    <div class="post-sidebar">
+                                        <div class="post-avatar"><i class="fa-solid fa-user"></i></div>
+                                        <span class="username">Hermano Juan</span>
                                     </div>
-                                    <span class="text">¡Bienvenidos al foro libre de la Casa del Gran REY! Este es un
-                                        espacio para compartir peticiones de oración, testimonios y charlar sanamente.
-                                        Dios les bendiga.</span>
-                                </div>
-
-                                <div class="message received">
-                                    <div class="sender-header">
-                                        <span class="sender">Hermano Juan</span>
-                                        <span class="time">10:15 AM</span>
+                                    <div class="post-content">
+                                        <div class="post-meta"><i class="fa-regular fa-clock me-1"></i> 10:15 AM</div>
+                                        <div class="post-body">
+                                            Amén. Saludos a todos los hermanos. Pido oración por mi familia esta semana.
+                                        </div>
                                     </div>
-                                    <span class="text">Amén. Saludos a todos los hermanos. Pido oración por mi familia
-                                        esta semana.</span>
                                 </div>
                             </div>
 
@@ -226,9 +221,9 @@
                                 <input type="text" id="username-input" class="form-control me-2 d-none"
                                     placeholder="Tu Nombre">
                                 <input type="text" id="message-input" class="chat-input"
-                                    placeholder="Escribe un mensaje aquí..." autocomplete="off">
+                                    placeholder="Escribe tu respuesta aquí..." autocomplete="off">
                                 <button class="btn-send" id="send-btn" aria-label="Enviar mensaje">
-                                    <i class="fa-solid fa-paper-plane"></i>
+                                    Enviar
                                 </button>
                             </div>
                         </div>
@@ -331,12 +326,17 @@
                 }
 
                 const messageHTML = `
-                    <div class="message ${isSentByMe ? 'sent' : 'received'}">
-                        <div class="sender-header">
-                            <span class="sender">${isSentByMe ? 'Tú (' + data.sender + ')' : data.sender}</span>
-                            <span class="time">${timeString}</span>
+                    <div class="forum-post">
+                        <div class="post-sidebar">
+                            <div class="post-avatar"><i class="fa-solid fa-user"></i></div>
+                            <span class="username">${isSentByMe ? 'Tú' : data.sender}</span>
                         </div>
-                        <span class="text">${escapeHTML(data.text)}</span>
+                        <div class="post-content">
+                            <div class="post-meta"><i class="fa-regular fa-clock me-1"></i> ${timeString}</div>
+                            <div class="post-body">
+                                ${escapeHTML(data.text)}
+                            </div>
+                        </div>
                     </div>
                 `;
                 chatMessages.insertAdjacentHTML('beforeend', messageHTML);
