@@ -7,9 +7,8 @@ const footerHTML = `
                     <img src="img/Logo.png" alt="Logo" style="width: 80px; margin-bottom: 20px;">
                     <p class="pe-lg-4">Iglesia Evangélica Casa del Gran REY. Un lugar para conocer a Dios y crecer en fe.</p>
                     <div class="social-icons mt-4">
-                        <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
-                        <a href="#"><i class="fa-brands fa-instagram"></i></a>
-                        <a href="#"><i class="fa-brands fa-youtube"></i></a>
+                        <a href="https://www.facebook.com/carlos.pinedaaraujo/" target="_blank"><i class="fa-brands fa-facebook-f"></i></a>
+                        <a href="https://www.tiktok.com/@casadelgranrey" target="_blank"><i class="fa-brands fa-tiktok"></i></a>
                     </div>
                 </div>
                 <div class="col-lg-4 mb-4 mb-lg-0">
