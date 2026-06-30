@@ -29,6 +29,10 @@ h1, h2, h3, h4, h5, h6 {
   color: var(--primary-dark);
 }
 
+.text-gold {
+  color: var(--accent-gold) !important;
+}
+
 /* Glassmorphism Navbar Dark */
 .glass-nav {
   background: rgba(30, 41, 59, 0.95);
