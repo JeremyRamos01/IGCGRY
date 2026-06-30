@@ -238,8 +238,8 @@
                             <div class="card-body p-4">
                                 <h5 class="fw-bold mb-3 text-gold"><i class="fa-solid fa-book-bible me-2"></i> Versículo
                                     del Día</h5>
-                                <p class="fst-italic mb-2">"Todo lo puedo en Cristo que me fortalece."</p>
-                                <p class="mb-0 text-end fw-bold text-white-50">- Filipenses 4:13</p>
+                                <p class="fst-italic mb-2" id="daily-verse-text">"Todo lo puedo en Cristo que me fortalece."</p>
+                                <p class="mb-0 text-end fw-bold text-white-50" id="daily-verse-ref">- Filipenses 4:13</p>
                             </div>
                         </div>
 
@@ -489,6 +489,55 @@
                 }[tag] || tag)
             );
         }
+
+        // --- LÓGICA DEL VERSÍCULO DEL DÍA (RV1960) ---
+        const versiculosMensuales = [
+            { texto: '"En el principio creó Dios los cielos y la tierra."', ref: "Génesis 1:1" },
+            { texto: '"Porque de tal manera amó Dios al mundo, que ha dado a su Hijo unigénito, para que todo aquel que en él cree, no se pierda, mas tenga vida eterna."', ref: "Juan 3:16" },
+            { texto: '"Todo lo puedo en Cristo que me fortalece."', ref: "Filipenses 4:13" },
+            { texto: '"Jehová es mi pastor; nada me faltará."', ref: "Salmos 23:1" },
+            { texto: '"Mas buscad primeramente el reino de Dios y su justicia, y todas estas cosas os serán añadidas."', ref: "Mateo 6:33" },
+            { texto: '"Clama a mí, y yo te responderé, y te enseñaré cosas grandes y ocultas que tú no conoces."', ref: "Jeremías 33:3" },
+            { texto: '"Y sabemos que a los que aman a Dios, todas las cosas les ayudan a bien, esto es, a los que conforme a su propósito son llamados."', ref: "Romanos 8:28" },
+            { texto: '"Fíate de Jehová de todo tu corazón, y no te apoyes en tu propia prudencia."', ref: "Proverbios 3:5" },
+            { texto: '"Venid a mí todos los que estáis trabajados y cargados, y yo os haré descansar."', ref: "Mateo 11:28" },
+            { texto: '"Mira que te mando que te esfuerces y seas valiente; no temas ni desmayes, porque Jehová tu Dios estará contigo en dondequiera que vayas."', ref: "Josué 1:9" },
+            { texto: '"Porque yo sé los pensamientos que tengo acerca de vosotros, dice Jehová, pensamientos de paz, y no de mal, para daros el fin que esperáis."', ref: "Jeremías 29:11" },
+            { texto: '"Si confesamos nuestros pecados, él es fiel y justo para perdonar nuestros pecados, y limpiarnos de toda maldad."', ref: "1 Juan 1:9" },
+            { texto: '"Pero los que esperan a Jehová tendrán nuevas fuerzas; levantarán alas como las águilas; correrán, y no se cansarán; caminarán, y no se fatigarán."', ref: "Isaías 40:31" },
+            { texto: '"El amor es sufrido, es benigno; el amor no tiene envidia, el amor no es jactancioso, no se envanece."', ref: "1 Corintios 13:4" },
+            { texto: '"Con Cristo estoy juntamente crucificado, y ya no vivo yo, mas vive Cristo en mí..."', ref: "Gálatas 2:20" },
+            { texto: '"No se turbe vuestro corazón; creéis en Dios, creed también en mí."', ref: "Juan 14:1" },
+            { texto: '"En la paz me acostaré, y asimismo dormiré; porque solo tú, Jehová, me haces vivir confiado."', ref: "Salmos 4:8" },
+            { texto: '"Lámpara es a mis pies tu palabra, y lumbrera a mi camino."', ref: "Salmos 119:105" },
+            { texto: '"Crea en mí, oh Dios, un corazón limpio, y renueva un espíritu recto dentro de mí."', ref: "Salmos 51:10" },
+            { texto: '"Por tanto, id, y haced discípulos a todas las naciones, bautizándolos en el nombre del Padre, y del Hijo, y del Espíritu Santo."', ref: "Mateo 28:19" },
+            { texto: '"Acerquémonos, pues, confiadamente al trono de la gracia, para alcanzar misericordia y hallar gracia para el oportuno socorro."', ref: "Hebreos 4:16" },
+            { texto: '"Echa sobre Jehová tu carga, y él te sustentará; no dejará para siempre caído al justo."', ref: "Salmos 55:22" },
+            { texto: '"Amados, amémonos unos a otros; porque el amor es de Dios. Todo aquel que ama, es nacido de Dios, y conoce a Dios."', ref: "1 Juan 4:7" },
+            { texto: '"En esto consiste el amor: no en que nosotros hayamos amado a Dios, sino en que él nos amó a nosotros, y envió a su Hijo en propiciación por nuestros pecados."', ref: "1 Juan 4:10" },
+            { texto: '"Por nada estéis afanosos, sino sean conocidas vuestras peticiones delante de Dios en toda oración y ruego, con acción de gracias."', ref: "Filipenses 4:6" },
+            { texto: '"Mas el fruto del Espíritu es amor, gozo, paz, paciencia, benignidad, bondad, fe, mansedumbre, templanza; contra tales cosas no hay ley."', ref: "Gálatas 5:22-23" },
+            { texto: '"Deléitate asimismo en Jehová, y él te concederá las peticiones de tu corazón."', ref: "Salmos 37:4" },
+            { texto: '"El que habita al abrigo del Altísimo morará bajo la sombra del Omnipotente."', ref: "Salmos 91:1" },
+            { texto: '"El ladrón no viene sino para hurtar y matar y destruir; yo he venido para que tengan vida, y para que la tengan en abundancia."', ref: "Juan 10:10" },
+            { texto: '"Porque por gracia sois salvos por medio de la fe; y esto no de vosotros, pues es don de Dios."', ref: "Efesios 2:8" },
+            { texto: '"Estas cosas os he hablado para que en mí tengáis paz. En el mundo tendréis aflicción; pero confiad, yo he vencido al mundo."', ref: "Juan 16:33" }
+        ];
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const hoy = new Date().getDate(); // 1 a 31
+            const indice = hoy - 1; // 0 a 30
+            const versiculo = versiculosMensuales[indice];
+            
+            const verseTextEl = document.getElementById('daily-verse-text');
+            const verseRefEl = document.getElementById('daily-verse-ref');
+            
+            if (verseTextEl && verseRefEl && versiculo) {
+                verseTextEl.textContent = versiculo.texto;
+                verseRefEl.textContent = "- " + versiculo.ref;
+            }
+        });
     </script>
 </body>
 
