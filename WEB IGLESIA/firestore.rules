@@ -22,7 +22,7 @@ service cloud.firestore {
     // COLECCIÓN: CHAT
     // Es un foro libre: cualquiera puede leer y escribir.
     // Nota: El contenido se borra periódicamente según las normas.
-    match /chat/{document=**} {
+    match /chatMessages/{document=**} {
       allow read, write: if true;
     }
   }

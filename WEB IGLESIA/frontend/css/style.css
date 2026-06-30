@@ -15,11 +15,13 @@ html {
   --bg-white: #ffffff;
 }
 
-body {
+html, body {
   font-family: 'Inter', sans-serif;
   background-color: var(--bg-white);
   color: var(--text-main);
   overflow-x: hidden;
+  max-width: 100%;
+  position: relative;
   line-height: 1.6;
 }
 
