@@ -366,11 +366,28 @@
         // Escuchar el estado de la sesión
         onAuthStateChanged(auth, (user) => {
             if (user) {
-                // Usuario validado
-                loginScreen.classList.add('d-none');
-                loginScreen.classList.remove('d-flex');
-                adminWrapper.classList.remove('d-none');
-                initAdmin(); // Cargar datos
+                // VERIFICACIÓN DE SEGURIDAD (ANTIBOMBAS FRONTEND)
+                const allowedEmails = [
+                    "iglesiaevangelicacasagranrey@gmail.com",
+                    "ramosjeremy023@gmail.com"
+                ];
+
+                if (allowedEmails.includes(user.email)) {
+                    // Usuario validado y autorizado
+                    loginScreen.classList.add('d-none');
+                    loginScreen.classList.remove('d-flex');
+                    adminWrapper.classList.remove('d-none');
+                    initAdmin(); // Cargar datos
+                } else {
+                    // Autenticado, pero NO autorizado
+                    signOut(auth).then(() => {
+                        loginError.textContent = "ACCESO DENEGADO: Tu correo (" + user.email + ") no tiene permisos de administrador.";
+                        loginError.classList.remove('d-none');
+                        loginScreen.classList.remove('d-none');
+                        loginScreen.classList.add('d-flex');
+                        adminWrapper.classList.add('d-none');
+                    });
+                }
             } else {
                 // No hay usuario
                 loginScreen.classList.remove('d-none');
