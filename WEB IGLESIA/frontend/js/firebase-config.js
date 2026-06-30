@@ -19,3 +19,7 @@ const app = initializeApp(firebaseConfig);
 
 // Inicializar Firestore (Base de datos) y exportarlo para usarlo en otros archivos
 export const db = getFirestore(app);
+
+// Inicializar Storage para subir imágenes
+import { getStorage } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-storage.js";
+export const storage = getStorage(app);
