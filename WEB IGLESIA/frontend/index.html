@@ -145,11 +145,11 @@
                         <!-- Las tarjetas se inyectarán aquí mediante JS -->
                     </div>
                     <button class="carousel-control-prev custom-btn custom-carousel-control" type="button" data-bs-target="#carrusel-novedades" data-bs-slide="prev">
-                        <i class="fa-solid fa-chevron-left" style="color: var(--accent-gold); font-size: 1.5rem;"></i>
+                        <i class="fa-solid fa-chevron-left"></i>
                         <span class="visually-hidden">Anterior</span>
                     </button>
                     <button class="carousel-control-next custom-btn custom-carousel-control" type="button" data-bs-target="#carrusel-novedades" data-bs-slide="next">
-                        <i class="fa-solid fa-chevron-right" style="color: var(--accent-gold); font-size: 1.5rem;"></i>
+                        <i class="fa-solid fa-chevron-right"></i>
                         <span class="visually-hidden">Siguiente</span>
                     </button>
                 </div>
@@ -417,28 +417,30 @@
             border-left: 4px solid var(--accent-gold);
         }
         
-        /* Controles premium del carrusel */
+        /* Controles simples del carrusel */
         .custom-carousel-control {
-            width: 55px !important;
-            height: 55px !important;
-            background: linear-gradient(45deg, var(--accent-gold), #f3e5ab) !important;
+            width: 45px !important;
+            height: 45px !important;
+            background: rgba(30, 41, 59, 0.6) !important; /* var(--primary-dark) con opacidad */
             border-radius: 50% !important;
             top: 50% !important;
             transform: translateY(-50%) !important;
-            opacity: 0.9 !important;
-            box-shadow: 0 5px 15px rgba(212, 175, 55, 0.5) !important;
-            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
+            opacity: 0.8 !important;
+            transition: all 0.2s ease !important;
             display: flex !important;
             align-items: center !important;
             justify-content: center !important;
             z-index: 10 !important;
-            border: 2px solid white !important;
+            border: none !important;
         }
         .custom-carousel-control:hover {
             opacity: 1 !important;
-            transform: translateY(-50%) scale(1.15) !important;
-            box-shadow: 0 8px 25px rgba(212, 175, 55, 0.7) !important;
-            background: linear-gradient(45deg, #f3e5ab, var(--accent-gold)) !important;
+            background: rgba(30, 41, 59, 0.9) !important;
+            transform: translateY(-50%) scale(1.05) !important;
+        }
+        .custom-carousel-control i {
+            color: white !important;
+            font-size: 1.2rem !important;
         }
         .carousel-control-prev.custom-btn {
             left: -10px;
