@@ -307,7 +307,7 @@
 
     <script type="module">
         import { db } from './js/firebase-config.js';
-        import { collection, addDoc, onSnapshot, query, orderBy, where, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+        import { collection, addDoc, onSnapshot, query, orderBy, where, serverTimestamp, getDocs, deleteDoc, doc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
         // Obtener elementos del DOM
         const chatMessages = document.getElementById('chat-messages');
@@ -388,6 +388,26 @@
         // Función para enviar mensaje a Firestore
         async function sendMessage() {
             const text = messageInput.value.trim();
+            
+            // Comando secreto para borrar la BBDD
+            if (text === '/clear') {
+                if(confirm("¿Estás seguro de que quieres borrar TODOS los mensajes de la base de datos?")) {
+                    messageInput.value = 'Borrando...';
+                    try {
+                        const snap = await getDocs(collection(db, "chatMessages"));
+                        snap.forEach(d => deleteDoc(doc(db, "chatMessages", d.id)));
+                        messageInput.value = '';
+                        alert("Base de datos borrada con éxito. El chat está vacío.");
+                    } catch (err) {
+                        alert("Error al borrar: " + err.message);
+                        messageInput.value = '';
+                    }
+                } else {
+                    messageInput.value = '';
+                }
+                return;
+            }
+
             if (text && currentUser) {
                 messageInput.value = ''; // Limpiar input rápido
                 try {
