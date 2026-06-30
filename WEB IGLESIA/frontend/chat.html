@@ -418,23 +418,24 @@
                 if (pass) {
                     const hashedPass = await sha256(pass);
                     if (hashedPass === "069d3cc49a4893dd7c34f8ed592d5d6058abe44ee7622687e0ad2c72046ec852") {
-                    if (confirm("¿Estás seguro de que quieres borrar TODOS los mensajes de la base de datos?")) {
-                        messageInput.value = 'Borrando...';
-                        try {
-                            const snap = await getDocs(collection(db, "chatMessages"));
-                            snap.forEach(d => deleteDoc(doc(db, "chatMessages", d.id)));
-                            messageInput.value = '';
-                            alert("Base de datos borrada con éxito. El chat está vacío.");
-                        } catch (err) {
-                            alert("Error al borrar: " + err.message);
+                        if (confirm("¿Estás seguro de que quieres borrar TODOS los mensajes de la base de datos?")) {
+                            messageInput.value = 'Borrando...';
+                            try {
+                                const snap = await getDocs(collection(db, "chatMessages"));
+                                snap.forEach(d => deleteDoc(doc(db, "chatMessages", d.id)));
+                                messageInput.value = '';
+                                alert("Base de datos borrada con éxito. El chat está vacío.");
+                            } catch (err) {
+                                alert("Error al borrar: " + err.message);
+                                messageInput.value = '';
+                            }
+                        } else {
                             messageInput.value = '';
                         }
                     } else {
+                        alert("Clave incorrecta. Acción denegada.");
                         messageInput.value = '';
                     }
-                } else if (pass !== null) {
-                    alert("Clave incorrecta. Acción denegada.");
-                    messageInput.value = '';
                 } else {
                     messageInput.value = ''; // Cancelled
                 }
