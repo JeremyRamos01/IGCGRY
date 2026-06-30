@@ -111,7 +111,25 @@
             margin-bottom: 10px;
             padding-bottom: 5px;
             border-bottom: 1px dashed #e2e8f0;
-            text-align: right;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .btn-reply {
+            background: none;
+            border: none;
+            color: var(--primary-dark);
+            font-size: 0.75rem;
+            font-weight: 600;
+            padding: 2px 8px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .btn-reply:hover {
+            background: #e2e8f0;
         }
 
         .post-body {
@@ -196,7 +214,10 @@
                                         <span class="username">Moderador</span>
                                     </div>
                                     <div class="post-content">
-                                        <div class="post-meta"><i class="fa-regular fa-clock me-1"></i> 10:00 AM</div>
+                                        <div class="post-meta">
+                                            <span><i class="fa-regular fa-clock me-1"></i> 10:00 AM</span>
+                                            <button class="btn-reply" data-username="Moderador"><i class="fa-solid fa-reply me-1"></i> Responder</button>
+                                        </div>
                                         <div class="post-body">
                                             ¡Bienvenidos al foro libre de la Casa del Gran REY! Este es un espacio para compartir, debatir sanamente y pedir oración. Dios les bendiga.
                                         </div>
@@ -209,7 +230,10 @@
                                         <span class="username">Hermano Juan</span>
                                     </div>
                                     <div class="post-content">
-                                        <div class="post-meta"><i class="fa-regular fa-clock me-1"></i> 10:15 AM</div>
+                                        <div class="post-meta">
+                                            <span><i class="fa-regular fa-clock me-1"></i> 10:15 AM</span>
+                                            <button class="btn-reply" data-username="Hermano Juan"><i class="fa-solid fa-reply me-1"></i> Responder</button>
+                                        </div>
                                         <div class="post-body">
                                             Amén. Saludos a todos los hermanos. Pido oración por mi familia esta semana.
                                         </div>
@@ -332,7 +356,10 @@
                             <span class="username">${isSentByMe ? 'Tú' : data.sender}</span>
                         </div>
                         <div class="post-content">
-                            <div class="post-meta"><i class="fa-regular fa-clock me-1"></i> ${timeString}</div>
+                            <div class="post-meta">
+                                <span><i class="fa-regular fa-clock me-1"></i> ${timeString}</span>
+                                <button class="btn-reply" data-username="${data.sender}"><i class="fa-solid fa-reply me-1"></i> Responder</button>
+                            </div>
                             <div class="post-body">
                                 ${escapeHTML(data.text)}
                             </div>
@@ -368,6 +395,18 @@
         sendBtn.addEventListener('click', sendMessage);
         messageInput.addEventListener('keypress', (e) => {
             if (e.key === 'Enter') sendMessage();
+        });
+
+        // Event listener para el botón de responder usando delegación de eventos
+        document.getElementById('chat-messages').addEventListener('click', function(e) {
+            const replyBtn = e.target.closest('.btn-reply');
+            if (replyBtn) {
+                const usernameToReply = replyBtn.getAttribute('data-username');
+                if (usernameToReply) {
+                    messageInput.value = `@${usernameToReply}, ` + messageInput.value;
+                    messageInput.focus();
+                }
+            }
         });
 
         function scrollToBottom() {
