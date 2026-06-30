@@ -32,7 +32,7 @@ export async function fetchEventos() {
                     end: '2026-06-28T14:00:00',
                     description: 'Reunión general. (Este es un dato de prueba porque tu base de datos en Firebase está vacía. Añade documentos a la colección "eventos" en Firestore).', 
                     color: '#d4af37', 
-                    image: 'img/carrusel/B.jpg'
+                    image: 'img/bienvenidos.png'
                 }
             ];
         }
@@ -47,7 +47,7 @@ export async function fetchEventos() {
                 end: data.end,
                 description: data.description,
                 color: data.color || '#d4af37',
-                image: data.image || 'img/carrusel/A.jpg'
+                image: data.image || 'img/hero_bg.png'
             };
         });
     } catch (error) {
