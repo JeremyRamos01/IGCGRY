@@ -557,7 +557,7 @@
                         <div class="carousel-item ${activeClass}" data-bs-interval="5000">
                             <div class="row justify-content-center px-2 px-md-4">
                                 <div class="col-lg-10 text-center">
-                                    <img src="${ev.flyerUrl}" alt="${ev.title}" class="img-fluid rounded shadow-sm" style="max-height: 450px; object-fit: contain; cursor: pointer;" onclick="window.location.href='eventos.html'">
+                                    <img src="${ev.flyerUrl}" alt="${ev.title}" class="img-fluid rounded shadow-sm" style="max-height: 450px; object-fit: contain; cursor: pointer;" onclick="abrirFlyer('${ev.flyerUrl}')">
                                 </div>
                             </div>
                         </div>
@@ -622,7 +622,28 @@
 
         // Ejecutar inmediatamente (los scripts type="module" ya esperan al DOM por defecto)
         renderNovedades();
+
+        // Función global para abrir el popup del volante
+        window.abrirFlyer = function(url) {
+            document.getElementById('flyerModalImage').src = url;
+            var myModal = new bootstrap.Modal(document.getElementById('flyerModal'));
+            myModal.show();
+        };
     </script>
+
+    <!-- Modal Flyer -->
+    <div class="modal fade" id="flyerModal" tabindex="-1" aria-labelledby="flyerModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content bg-transparent border-0">
+                <div class="modal-header border-0 pb-0 justify-content-end">
+                    <button type="button" class="btn-close btn-close-white fs-4" data-bs-dismiss="modal" aria-label="Close" style="filter: invert(1); text-shadow: 0 0 10px black;"></button>
+                </div>
+                <div class="modal-body text-center pt-0">
+                    <img id="flyerModalImage" src="" class="img-fluid rounded shadow-lg" style="max-height: 85vh; object-fit: contain;">
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 
 </html>

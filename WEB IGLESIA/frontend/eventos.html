@@ -194,6 +194,13 @@
         // Ejecutar inmediatamente
         initEventos();
 
+        // Función global para abrir el popup del volante
+        window.abrirFlyer = function(url) {
+            document.getElementById('flyerModalImage').src = url;
+            var myModal = new bootstrap.Modal(document.getElementById('flyerModal'));
+            myModal.show();
+        };
+
         function renderEventList(eventosDB) {
             const container = document.getElementById('event-agenda-container');
             container.innerHTML = ''; 
@@ -222,7 +229,7 @@
                 if (ev.flyerUrl && ev.flyerUrl.trim() !== '') {
                     html = `
                         <div class="col-md-6 col-lg-4">
-                            <div class="h-100 rounded-4 overflow-hidden shadow-sm" style="transition: transform 0.3s; cursor: pointer;" onmouseover="this.style.transform='translateY(-5px)'" onmouseout="this.style.transform='translateY(0)'">
+                            <div class="h-100 rounded-4 overflow-hidden shadow-sm" style="transition: transform 0.3s; cursor: pointer;" onmouseover="this.style.transform='translateY(-5px)'" onmouseout="this.style.transform='translateY(0)'" onclick="abrirFlyer('${ev.flyerUrl}')">
                                 <img src="${ev.flyerUrl}" alt="${ev.title}" class="img-fluid w-100 h-100" style="object-fit: cover;">
                             </div>
                         </div>
@@ -247,6 +254,20 @@
             });
         }
     </script>
+
+    <!-- Modal Flyer -->
+    <div class="modal fade" id="flyerModal" tabindex="-1" aria-labelledby="flyerModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content bg-transparent border-0">
+                <div class="modal-header border-0 pb-0 justify-content-end">
+                    <button type="button" class="btn-close btn-close-white fs-4" data-bs-dismiss="modal" aria-label="Close" style="filter: invert(1); text-shadow: 0 0 10px black;"></button>
+                </div>
+                <div class="modal-body text-center pt-0">
+                    <img id="flyerModalImage" src="" class="img-fluid rounded shadow-lg" style="max-height: 85vh; object-fit: contain;">
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 
 </html>
