@@ -13,6 +13,11 @@ const path = require('path');
 // Servir archivos estáticos del frontend
 app.use(express.static(path.join(__dirname, '../frontend')));
 
+// Rutas de Vistas
+app.get('/admin', (req, res) => {
+  res.sendFile(path.join(__dirname, '../frontend/admin.html'));
+});
+
 // Rutas básicas API
 app.get('/api', (req, res) => {
   res.json({ 

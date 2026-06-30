@@ -1,0 +1,428 @@
+<!doctype html>
+<html lang="es">
+
+<head>
+    <title>Panel de Control - Casa del Gran REY</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="css/style.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+
+        #admin-wrapper {
+            display: flex;
+            width: 100%;
+            align-items: stretch;
+            min-height: 100vh;
+        }
+
+        /* Sidebar Sidebar */
+        #sidebar {
+            min-width: 250px;
+            max-width: 250px;
+            background: var(--primary-dark);
+            color: #fff;
+            transition: all 0.3s;
+        }
+
+        #sidebar .sidebar-header {
+            padding: 20px;
+            background: #0d1627;
+            text-align: center;
+        }
+
+        #sidebar ul.components {
+            padding: 20px 0;
+        }
+
+        #sidebar ul li a {
+            padding: 15px 20px;
+            font-size: 1.1em;
+            display: block;
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            transition: 0.2s;
+        }
+
+        #sidebar ul li a:hover, #sidebar ul li.active > a {
+            color: #fff;
+            background: rgba(255, 255, 255, 0.1);
+            border-left: 4px solid var(--accent-gold);
+        }
+
+        /* Page Content */
+        #content {
+            width: 100%;
+            padding: 20px;
+            min-height: 100vh;
+            transition: all 0.3s;
+        }
+
+        .admin-section {
+            display: none;
+            animation: fadeIn 0.3s ease-out;
+        }
+        
+        .admin-section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 768px) {
+            #sidebar {
+                margin-left: -250px;
+                position: fixed;
+                height: 100vh;
+                z-index: 9999;
+            }
+            #sidebar.active {
+                margin-left: 0;
+            }
+            #sidebarCollapse i {
+                font-size: 1.5rem;
+            }
+        }
+        
+        /* Overlay for mobile */
+        .overlay {
+            display: none;
+            position: fixed;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 9998;
+            opacity: 0;
+            transition: all 0.5s ease-in-out;
+        }
+        .overlay.active {
+            display: block;
+            opacity: 1;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="overlay" id="overlay"></div>
+
+    <div id="admin-wrapper" class="d-none"> <!-- Oculto hasta poner contraseña -->
+        
+        <!-- Sidebar  -->
+        <nav id="sidebar">
+            <div class="sidebar-header">
+                <h4 class="mb-0 text-gold fw-bold">Casa del Gran REY</h4>
+                <small>Panel de Administración</small>
+            </div>
+
+            <ul class="list-unstyled components">
+                <li class="active">
+                    <a href="#" onclick="showSection('dashboard', this)"><i class="fa-solid fa-gauge-high me-2"></i> Dashboard</a>
+                </li>
+                <li>
+                    <a href="#" onclick="showSection('eventos', this)"><i class="fa-solid fa-calendar-alt me-2"></i> Eventos</a>
+                </li>
+                <li>
+                    <a href="#" onclick="showSection('foro', this)"><i class="fa-solid fa-comments me-2"></i> Foro Libre</a>
+                </li>
+                <li class="mt-5">
+                    <a href="/"><i class="fa-solid fa-arrow-left me-2"></i> Volver a la Web</a>
+                </li>
+            </ul>
+        </nav>
+
+        <!-- Page Content  -->
+        <div id="content">
+            
+            <!-- Navbar Mobile -->
+            <nav class="navbar navbar-expand-lg navbar-light bg-white rounded-3 shadow-sm mb-4">
+                <div class="container-fluid">
+                    <button type="button" id="sidebarCollapse" class="btn btn-gold d-md-none">
+                        <i class="fa-solid fa-bars"></i>
+                    </button>
+                    <span class="navbar-brand ms-3 fw-bold text-dark d-md-none">Panel Admin</span>
+                    <div class="ms-auto d-none d-md-block">
+                        <span class="text-muted"><i class="fa-solid fa-user-shield me-2"></i> Administrador Autorizado</span>
+                    </div>
+                </div>
+            </nav>
+
+            <!-- SECCIONES -->
+            <div class="container-fluid px-0 px-md-3">
+                
+                <!-- Dashboard Resumen -->
+                <div id="section-dashboard" class="admin-section active">
+                    <h2 class="fw-bold mb-4">Visión General</h2>
+                    <div class="row">
+                        <div class="col-md-6 mb-4">
+                            <div class="card border-0 shadow-sm rounded-4 h-100" style="background: linear-gradient(135deg, var(--primary-dark), #1e293b); color:white;">
+                                <div class="card-body p-4 d-flex align-items-center">
+                                    <div class="display-4 text-gold me-4"><i class="fa-solid fa-calendar-check"></i></div>
+                                    <div>
+                                        <h5 class="fw-bold mb-1">Módulo de Eventos</h5>
+                                        <p class="mb-0 text-white-50 small">Gestión del calendario eclesiástico</p>
+                                    </div>
+                                </div>
+                                <div class="card-footer bg-transparent border-0 text-end pb-3">
+                                    <button class="btn btn-outline-light btn-sm" onclick="document.querySelector('a[onclick*=\'eventos\']').click()">Ir a Eventos <i class="fa-solid fa-arrow-right"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-4">
+                            <div class="card border-0 shadow-sm rounded-4 h-100" style="background: linear-gradient(135deg, #0ea5e9, #0284c7); color:white;">
+                                <div class="card-body p-4 d-flex align-items-center">
+                                    <div class="display-4 text-white me-4"><i class="fa-solid fa-comments"></i></div>
+                                    <div>
+                                        <h5 class="fw-bold mb-1">Foro Libre</h5>
+                                        <p class="mb-0 text-white-50 small">Moderación de mensajes y chat</p>
+                                    </div>
+                                </div>
+                                <div class="card-footer bg-transparent border-0 text-end pb-3">
+                                    <button class="btn btn-outline-light btn-sm" onclick="document.querySelector('a[onclick*=\'foro\']').click()">Ir a Foro <i class="fa-solid fa-arrow-right"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Módulo: Eventos -->
+                <div id="section-eventos" class="admin-section">
+                    <h2 class="fw-bold mb-4">Gestión de Eventos</h2>
+                    <div class="card shadow-sm border-0 rounded-4 mb-4">
+                        <div class="card-body p-4">
+                            <h5 class="fw-bold text-dark mb-4"><i class="fa-solid fa-plus-circle text-gold me-2"></i> Añadir Nuevo Evento</h5>
+                            <form id="add-event-form">
+                                <div class="mb-3">
+                                    <label class="form-label fw-bold">Título del Evento</label>
+                                    <input type="text" class="form-control" id="event-title" required placeholder="Ej. Culto General de Alabanza">
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label fw-bold">Fecha y Hora de Inicio</label>
+                                        <input type="datetime-local" class="form-control" id="event-start" required>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label fw-bold">Fecha y Hora de Fin (Opcional)</label>
+                                        <input type="datetime-local" class="form-control" id="event-end">
+                                    </div>
+                                </div>
+                                <div class="mb-4">
+                                    <label class="form-label fw-bold">Descripción / Detalles</label>
+                                    <textarea class="form-control" id="event-description" rows="3" placeholder="Información adicional sobre el evento..."></textarea>
+                                </div>
+                                <button type="submit" class="btn btn-gold w-100 fw-bold py-2" id="submit-btn">
+                                    Guardar Evento
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+
+                    <div class="card shadow-sm border-0 rounded-4">
+                        <div class="card-body p-4">
+                            <h5 class="fw-bold text-danger mb-4"><i class="fa-solid fa-trash me-2"></i> Eliminar Eventos</h5>
+                            <div id="event-list" class="list-group">
+                                <div class="text-center text-muted p-3">Cargando eventos...</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Módulo: Foro Libre -->
+                <div id="section-foro" class="admin-section">
+                    <h2 class="fw-bold mb-4">Moderación del Foro</h2>
+                    
+                    <div class="card shadow-sm border-0 rounded-4 border-danger border-start border-4 mb-4">
+                        <div class="card-body p-4">
+                            <h5 class="fw-bold text-danger"><i class="fa-solid fa-triangle-exclamation me-2"></i> Zona de Peligro: Vaciar Foro</h5>
+                            <p class="text-muted mb-4">Esta acción eliminará de forma irreversible todos los mensajes actuales del Foro Libre en la base de datos de Firebase. Esta acción no se puede deshacer.</p>
+                            
+                            <button id="btn-clear-chat" class="btn btn-outline-danger fw-bold px-4 py-2">
+                                <i class="fa-solid fa-skull-crossbones me-2"></i> Vaciar Base de Datos del Chat Ahora
+                            </button>
+                        </div>
+                    </div>
+                    
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Sidebar & UI Script -->
+    <script>
+        const sidebar = document.getElementById('sidebar');
+        const overlay = document.getElementById('overlay');
+        const sidebarCollapse = document.getElementById('sidebarCollapse');
+
+        function toggleSidebar() {
+            sidebar.classList.toggle('active');
+            overlay.classList.toggle('active');
+        }
+
+        sidebarCollapse.addEventListener('click', toggleSidebar);
+        overlay.addEventListener('click', toggleSidebar);
+
+        function showSection(sectionId, element) {
+            // Update active link
+            document.querySelectorAll('#sidebar ul li').forEach(li => li.classList.remove('active'));
+            element.parentElement.classList.add('active');
+
+            // Show section
+            document.querySelectorAll('.admin-section').forEach(sec => sec.classList.remove('active'));
+            document.getElementById('section-' + sectionId).classList.add('active');
+            
+            // Close sidebar on mobile after click
+            if(window.innerWidth <= 768) {
+                toggleSidebar();
+            }
+        }
+    </script>
+
+    <!-- Firebase Script (Module) -->
+    <script type="module">
+        import { db } from './js/firebase-config.js';
+        import { collection, addDoc, getDocs, deleteDoc, doc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+        // Función Helper para Encriptación SHA-256
+        async function sha256(message) {
+            const msgBuffer = new TextEncoder().encode(message);
+            const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
+            const hashArray = Array.from(new Uint8Array(hashBuffer));
+            return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+        }
+
+        // ---- SEGURIDAD DE ACCESO (SHA-256) ----
+        async function checkAccess() {
+            const password = prompt("Panel Seguro: Introduce la clave de administrador");
+            if(!password) {
+                document.body.innerHTML = "<div class='text-center mt-5'><h1 class='text-danger'>Acceso Cancelado</h1></div>";
+                return false;
+            }
+            const hashedPass = await sha256(password);
+            // Hash de "Jeremyramos01"
+            if(hashedPass === "069d3cc49a4893dd7c34f8ed592d5d6058abe44ee7622687e0ad2c72046ec852") {
+                document.getElementById('admin-wrapper').classList.remove('d-none');
+                return true;
+            } else {
+                document.body.innerHTML = "<div class='text-center mt-5'><h1 class='text-danger'>Acceso Denegado</h1><p>Clave incorrecta.</p></div>";
+                return false;
+            }
+        }
+
+        // Inicializar
+        checkAccess().then(accessGranted => {
+            if(accessGranted) {
+                initAdmin();
+            }
+        });
+
+        // ---- LÓGICA DE ADMINISTRACIÓN ----
+        function initAdmin() {
+            // 1. EVENTOS
+            const eventsRef = collection(db, "eventos");
+            const eventListEl = document.getElementById("event-list");
+            const form = document.getElementById("add-event-form");
+            const submitBtn = document.getElementById("submit-btn");
+
+            async function loadEvents() {
+                eventListEl.innerHTML = '<div class="text-center p-2"><span class="spinner-border spinner-border-sm text-muted"></span></div>';
+                try {
+                    const snapshot = await getDocs(eventsRef);
+                    eventListEl.innerHTML = '';
+                    if(snapshot.empty) {
+                        eventListEl.innerHTML = '<div class="text-muted text-center p-3">No hay eventos creados.</div>';
+                        return;
+                    }
+                    snapshot.forEach(docSnap => {
+                        const data = docSnap.data();
+                        const date = new Date(data.start).toLocaleDateString('es-ES', { year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute:'2-digit' });
+                        const div = document.createElement('div');
+                        div.className = "list-group-item d-flex justify-content-between align-items-center border-0 shadow-sm mb-2 rounded-3";
+                        div.innerHTML = `
+                            <div>
+                                <strong class="text-primary-dark">${data.title}</strong><br>
+                                <small class="text-muted"><i class="fa-regular fa-calendar me-1"></i> ${date}</small>
+                            </div>
+                            <button class="btn btn-sm btn-outline-danger delete-btn" data-id="${docSnap.id}">
+                                <i class="fa-solid fa-trash"></i>
+                            </button>
+                        `;
+                        eventListEl.appendChild(div);
+                    });
+
+                    document.querySelectorAll('.delete-btn').forEach(btn => {
+                        btn.addEventListener('click', async (e) => {
+                            if(confirm("¿Seguro que quieres borrar este evento de forma permanente?")) {
+                                const id = e.currentTarget.getAttribute('data-id');
+                                await deleteDoc(doc(db, "eventos", id));
+                                loadEvents(); 
+                            }
+                        });
+                    });
+                } catch(e) {
+                    eventListEl.innerHTML = '<div class="text-danger p-2">Error al cargar eventos. Verifica Firebase.</div>';
+                }
+            }
+
+            form.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                submitBtn.disabled = true;
+                submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm"></span> Guardando...';
+                const title = document.getElementById('event-title').value;
+                const start = document.getElementById('event-start').value; 
+                const end = document.getElementById('event-end').value;
+                const description = document.getElementById('event-description').value;
+
+                try {
+                    const eventData = { title, start, description };
+                    if (end) eventData.end = end;
+                    await addDoc(eventsRef, eventData);
+                    form.reset();
+                    loadEvents(); 
+                    alert("¡Evento guardado con éxito!");
+                } catch (error) {
+                    alert("Error al guardar el evento.");
+                } finally {
+                    submitBtn.disabled = false;
+                    submitBtn.innerHTML = 'Guardar Evento';
+                }
+            });
+
+            loadEvents();
+
+            // 2. FORO LIBRE (Limpiar Chat)
+            const btnClearChat = document.getElementById('btn-clear-chat');
+            btnClearChat.addEventListener('click', async () => {
+                if(confirm("ALERTA: Vas a borrar toda la base de datos de mensajes del Foro. ¿Proceder?")) {
+                    btnClearChat.disabled = true;
+                    btnClearChat.innerHTML = '<span class="spinner-border spinner-border-sm"></span> Borrando...';
+                    try {
+                        const snap = await getDocs(collection(db, "chatMessages"));
+                        const deletePromises = [];
+                        snap.forEach(d => {
+                            deletePromises.push(deleteDoc(doc(db, "chatMessages", d.id)));
+                        });
+                        await Promise.all(deletePromises);
+                        alert("Base de datos del Foro vaciada completamente.");
+                    } catch(err) {
+                        alert("Error al borrar: " + err.message);
+                    } finally {
+                        btnClearChat.disabled = false;
+                        btnClearChat.innerHTML = '<i class="fa-solid fa-skull-crossbones me-2"></i> Vaciar Base de Datos del Chat Ahora';
+                    }
+                }
+            });
+        }
+    </script>
+</body>
+</html>
