@@ -473,14 +473,12 @@
             }
 
             const ahora = new Date();
-            // Filtrar eventos futuros, que NO sean de rutina, y ordenar por proximidad
+            // Filtrar eventos futuros que tengan la marca de Destacado, y ordenar por proximidad
             const especiales = eventosDB
                 .filter(e => {
                     if(!e.start || !e.title) return false;
-                    const titleLower = e.title.toLowerCase();
-                    const isRegular = titleLower.includes("oración") || titleLower.includes("oracion") || titleLower.includes("culto en el templo");
                     const isFuture = new Date(e.start) >= ahora;
-                    return isFuture && !isRegular;
+                    return isFuture && e.destacado === true;
                 })
                 .sort((a, b) => new Date(a.start) - new Date(b.start));
 
