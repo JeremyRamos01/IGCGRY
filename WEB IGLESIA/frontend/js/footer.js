@@ -27,7 +27,7 @@ const footerHTML = `
                 <div class="col-lg-4">
                     <h5>Contacto</h5>
                     <ul class="list-unstyled">
-                        <li class="mb-3"><i class="fa-solid fa-location-dot me-2 text-gold" style="color: var(--accent-gold);"></i> <a href="https://www.google.com/maps/search/?api=1&query=Iglesia+Evangélica+Casa+del+Gran+REY+Leganés" target="_blank" style="text-decoration: none; color: inherit;">C. del Priorato, 34, 28915 Leganés, Madrid</a></li>
+                        <li class="mb-3"><i class="fa-solid fa-location-dot me-2 text-gold" style="color: var(--accent-gold);"></i> <a href="https://www.google.com/maps/search/?api=1&query=Iglesia+Evangélica+Casa+del+Gran+REY+Leganés" target="_blank" style="text-decoration: none; color: inherit;">C. Priorato, 34, 28915 Leganés, Madrid</a></li>
                         <li class="mb-3"><i class="fa-brands fa-whatsapp me-2" style="color: var(--accent-gold);"></i> <a href="https://wa.me/34624480351" target="_blank" style="text-decoration: none; color: inherit;">624 48 03 51</a></li>
                         <li class="mb-3"><i class="fa-regular fa-clock me-2" style="color: var(--accent-gold);"></i> Horarios: Mar, Jue (19h-20h), Sáb (19h-21h), Dom (a partir de las 12h)</li>
                     </ul>
