@@ -143,6 +143,9 @@
                 <li>
                     <a href="#" onclick="showSection('foro', this)"><i class="fa-solid fa-comments me-2"></i> Foro Libre</a>
                 </li>
+                <li>
+                    <a href="#" onclick="showSection('transmision', this)"><i class="fa-solid fa-video me-2"></i> En Vivo</a>
+                </li>
                 <li class="mt-4">
                     <a href="#" id="btn-logout" class="text-danger"><i class="fa-solid fa-right-from-bracket me-2"></i> Cerrar Sesión</a>
                 </li>
@@ -334,7 +337,42 @@
                             </button>
                         </div>
                     </div>
-                    
+
+                <!-- Módulo: Transmisión en Vivo -->
+                <div id="section-transmision" class="admin-section">
+                    <h2 class="fw-bold mb-4">Control de En Vivo</h2>
+                    <div class="card shadow-sm border-0 rounded-4 p-4" style="max-width: 600px;">
+                        <h5 class="fw-bold mb-3 text-dark"><i class="fa-solid fa-tower-broadcast text-danger me-2"></i> Estado de la Transmisión</h5>
+                        <p class="text-muted mb-4">Activa esta alerta cuando la iglesia esté transmitiendo un culto en directo para avisar en tiempo real a todos los visitantes del sitio web.</p>
+                        
+                        <form id="live-stream-form">
+                            <div class="mb-4">
+                                <div class="form-check form-switch fs-5">
+                                    <input class="form-check-input" type="checkbox" id="live-active">
+                                    <label class="form-check-label fw-bold text-dark" for="live-active">🔴 Transmitiendo En Vivo</label>
+                                </div>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label class="form-label fw-bold">Plataforma</label>
+                                <select class="form-select" id="live-platform">
+                                    <option value="facebook">Facebook Live</option>
+                                    <option value="tiktok">TikTok Live</option>
+                                    <option value="youtube">YouTube</option>
+                                </select>
+                            </div>
+                            
+                            <div class="mb-4">
+                                <label class="form-label fw-bold">Enlace del Directo (URL)</label>
+                                <input type="url" class="form-control" id="live-url" placeholder="https://www.facebook.com/carlos.pinedaaraujo/live" required>
+                                <div class="form-text">Pega la dirección de la transmisión. Si transmites en Facebook, puedes usar el link de tu perfil o el de la sección de videos en vivo.</div>
+                            </div>
+                            
+                            <button type="submit" class="btn btn-gold w-100 py-3 rounded-pill fw-bold text-dark" id="btn-save-live">
+                                Guardar y Publicar Alerta
+                            </button>
+                        </form>
+                    </div>
                 </div>
 
             </div>
@@ -374,10 +412,9 @@
         }
     </script>
 
-    <!-- Firebase Script (Module) -->
     <script type="module">
         import { db, storage } from './js/firebase-config.js';
-        import { collection, addDoc, getDocs, deleteDoc, doc, updateDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+        import { collection, addDoc, getDocs, deleteDoc, doc, updateDoc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
         import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
         import { ref, uploadBytes, getDownloadURL, deleteObject } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-storage.js";
 
@@ -672,8 +709,56 @@
                         btnClearChat.disabled = false;
                         btnClearChat.innerHTML = '<i class="fa-solid fa-skull-crossbones me-2"></i> Vaciar Base de Datos del Chat Ahora';
                     }
+            // 3. CONTROL DE EN VIVO
+            const liveForm = document.getElementById('live-stream-form');
+            const liveActiveCheckbox = document.getElementById('live-active');
+            const livePlatformSelect = document.getElementById('live-platform');
+            const liveUrlInput = document.getElementById('live-url');
+            const btnSaveLive = document.getElementById('btn-save-live');
+
+            // Cargar estado inicial del En Vivo
+            async function loadLiveStatus() {
+                try {
+                    const docSnap = await getDoc(doc(db, "config", "live"));
+                    if (docSnap.exists()) {
+                        const data = docSnap.data();
+                        liveActiveCheckbox.checked = data.isLive === true;
+                        livePlatformSelect.value = data.platform || 'facebook';
+                        liveUrlInput.value = data.url || '';
+                    }
+                } catch (err) {
+                    console.error("Error al cargar estado del directo:", err);
+                }
+            }
+
+            // Guardar estado del En Vivo
+            liveForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                btnSaveLive.disabled = true;
+                btnSaveLive.innerHTML = '<span class="spinner-border spinner-border-sm"></span> Guardando...';
+
+                try {
+                    const isLive = liveActiveCheckbox.checked;
+                    const platform = livePlatformSelect.value;
+                    const url = liveUrlInput.value.trim();
+
+                    await setDoc(doc(db, "config", "live"), {
+                        isLive,
+                        platform,
+                        url,
+                        updatedAt: new Date()
+                    });
+
+                    alert("¡Estado del directo actualizado con éxito!");
+                } catch (err) {
+                    alert("Error al actualizar directo: " + err.message);
+                } finally {
+                    btnSaveLive.disabled = false;
+                    btnSaveLive.innerHTML = 'Guardar y Publicar Alerta';
                 }
             });
+
+            loadLiveStatus();
         }
     </script>
 </body>

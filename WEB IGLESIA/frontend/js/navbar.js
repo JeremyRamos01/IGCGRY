@@ -79,4 +79,10 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         });
     }
+
+    // Inject Live Stream Indicator Banner Script
+    const liveScript = document.createElement('script');
+    liveScript.type = 'module';
+    liveScript.src = 'js/live-banner.js';
+    document.body.appendChild(liveScript);
 });
