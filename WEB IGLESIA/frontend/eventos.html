@@ -269,6 +269,19 @@
                             id="modalEventLocation">Casa del Gran REY</span></p>
                     <hr>
                     <p id="modalEventDescription" class="text-muted"></p>
+                    
+                    <!-- Botones Añadir al Calendario -->
+                    <div class="mt-4 pt-3 border-top">
+                        <label class="form-label fw-bold text-muted small mb-2 d-block"><i class="fa-solid fa-file-export me-1"></i> Añadir a mi Calendario Personal:</label>
+                        <div class="d-flex gap-2 flex-wrap">
+                            <a id="btn-add-google" href="#" target="_blank" class="btn btn-outline-success btn-sm rounded-pill px-3">
+                                <i class="fa-brands fa-google me-1"></i> Google Calendar
+                            </a>
+                            <button id="btn-add-ics" class="btn btn-outline-primary btn-sm rounded-pill px-3">
+                                <i class="fa-regular fa-calendar-plus me-1"></i> Apple / Outlook (Descargar .ics)
+                            </button>
+                        </div>
+                    </div>
                 </div>
                 <div class="modal-footer border-0">
                     <button type="button" class="btn btn-secondary rounded-pill px-4"
@@ -345,20 +358,81 @@
                 noEventsText: 'No hay eventos este mes',
                 events: eventosDB,
                 eventClick: function (info) {
-                    document.getElementById('modalEventTitle').textContent = info.event.title;
-
-                    let dateStr = info.event.start.toLocaleDateString('es-ES', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
-                    let timeStr = info.event.start.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' });
-                    if(timeStr === "00:00") timeStr = "Todo el día";
-
-                    document.getElementById('modalEventTime').textContent = dateStr + (info.event.allDay ? '' : ' - ' + timeStr);
-                    document.getElementById('modalEventDescription').textContent = info.event.extendedProps.description || 'Sin descripción disponible.';
-
-                    eventModal.show();
+                    window.mostrarModalEvento(info.event.id);
                 }
             });
 
             calendar.render();
+
+            // Función global para mostrar el modal de detalles
+            window.mostrarModalEvento = function(id) {
+                const ev = eventosDB.find(e => e.id === id);
+                if (!ev) return;
+                
+                document.getElementById('modalEventTitle').textContent = ev.title;
+                
+                const start = new Date(ev.start);
+                const end = ev.end ? new Date(ev.end) : new Date(start.getTime() + 2 * 60 * 60 * 1000); // 2h por defecto
+                
+                let dateStr = start.toLocaleDateString('es-ES', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+                let timeStr = start.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' });
+                if(timeStr === "00:00") timeStr = "Todo el día";
+
+                document.getElementById('modalEventTime').textContent = dateStr + (ev.allDay ? '' : ' - ' + timeStr);
+                document.getElementById('modalEventDescription').textContent = ev.description || 'Sin descripción disponible.';
+
+                // Configurar botones de añadir a calendarios
+                const loc = "Iglesia Evangélica Casa del Gran REY, Calle del Priorato, 34, 28915 Leganés, Madrid";
+                
+                // Función para convertir fecha local a formato UTC ISO YYYYMMDDTHHmmssZ
+                function formatToUTC(date) {
+                    try {
+                        return date.toISOString().replace(/[-:]/g, "").split(".")[0] + "Z";
+                    } catch (e) {
+                        // Fallback si la fecha no es válida
+                        const now = new Date();
+                        return now.toISOString().replace(/[-:]/g, "").split(".")[0] + "Z";
+                    }
+                }
+                
+                const startUTC = formatToUTC(start);
+                const endUTC = formatToUTC(end);
+                
+                // 1. Google Calendar Link
+                const googleUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(ev.title)}&dates=${startUTC}/${endUTC}&details=${encodeURIComponent(ev.description || '')}&location=${encodeURIComponent(loc)}`;
+                document.getElementById('btn-add-google').href = googleUrl;
+                
+                // 2. Generación dinámica de archivo ICS (Apple, Android nativo, Outlook)
+                const btnAddIcs = document.getElementById('btn-add-ics');
+                const newBtnAddIcs = btnAddIcs.cloneNode(true);
+                btnAddIcs.parentNode.replaceChild(newBtnAddIcs, btnAddIcs);
+                
+                newBtnAddIcs.addEventListener('click', () => {
+                    const icsContent = [
+                        "BEGIN:VCALENDAR",
+                        "VERSION:2.0",
+                        "PRODID:-//Casa del Gran REY//Calendario//ES",
+                        "BEGIN:VEVENT",
+                        `SUMMARY:${ev.title.replace(/[,;]/g, '\\$&')}`,
+                        `DTSTART:${startUTC}`,
+                        `DTEND:${endUTC}`,
+                        `DESCRIPTION:${(ev.description || '').replace(/[,;]/g, '\\$&').replace(/\n/g, '\\n')}`,
+                        `LOCATION:${loc.replace(/[,;]/g, '\\$&')}`,
+                        "END:VEVENT",
+                        "END:VCALENDAR"
+                    ].join("\r\n");
+                    
+                    const blob = new Blob([icsContent], { type: 'text/calendar;charset=utf-8;' });
+                    const link = document.createElement('a');
+                    link.href = URL.createObjectURL(blob);
+                    link.download = `${ev.title.toLowerCase().replace(/\s+/g, "_")}.ics`;
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                });
+
+                eventModal.show();
+            };
 
             // 3. Renderizar lista lateral
             renderEventList(eventosDB);
@@ -410,7 +484,7 @@
                 } else {
                     html = `
                         <div class="col-md-6 col-lg-4">
-                            <div class="card h-100 border-0 shadow-sm rounded-4 overflow-hidden" style="transition: transform 0.3s; cursor: pointer;" onmouseover="this.style.transform='translateY(-5px)'" onmouseout="this.style.transform='translateY(0)'">
+                            <div class="card h-100 border-0 shadow-sm rounded-4 overflow-hidden" style="transition: transform 0.3s; cursor: pointer;" onmouseover="this.style.transform='translateY(-5px)'" onmouseout="this.style.transform='translateY(0)'" onclick="mostrarModalEvento('${ev.id}')">
                                 <div class="card-header border-0 text-white p-3 d-flex justify-content-between align-items-center" style="background: linear-gradient(135deg, var(--primary-dark), #1e293b);">
                                     <span class="badge bg-gold text-dark fs-6 rounded-pill"><i class="fa-regular fa-calendar"></i> ${dia} ${mes}</span>
                                     <small><i class="fa-regular fa-clock"></i> ${timeStr}</small>
