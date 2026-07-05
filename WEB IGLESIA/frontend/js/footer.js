@@ -6,6 +6,7 @@ const footerHTML = `
                 <div class="col-lg-4 mb-4 mb-lg-0">
                     <img src="img/Logo.png" alt="Logo" style="width: 80px; margin-bottom: 20px;">
                     <p class="pe-lg-4">Iglesia Evangélica Casa del Gran REY. Un lugar para conocer a Dios y crecer en fe.</p>
+                    <p class="mb-2" style="font-size: 0.82rem; color: rgba(255,255,255,0.45);"><i class="fa-solid fa-file-circle-check me-1"></i>Nº Registro: 024973</p>
                     <div class="social-icons mt-4">
                         <a href="https://www.facebook.com/carlos.pinedaaraujo/" target="_blank"><i class="fa-brands fa-facebook-f"></i></a>
                         <a href="https://www.tiktok.com/@casadelgranrey" target="_blank"><i class="fa-brands fa-tiktok"></i></a>
@@ -20,6 +21,7 @@ const footerHTML = `
                         <li class="mb-2"><a href="eventos.html">Eventos</a></li>
                         <li class="mb-2"><a href="chat.html">Foro Libre</a></li>
                         <li class="mb-2"><a href="contacto.html">Ubicaciones</a></li>
+                        <li class="mb-2"><a href="donar.html"><i class="fa-solid fa-hand-holding-heart me-1" style="color: var(--accent-gold);"></i>Donar</a></li>
                     </ul>
                 </div>
                 <div class="col-lg-4">

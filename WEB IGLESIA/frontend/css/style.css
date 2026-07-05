@@ -76,6 +76,28 @@ h1, h2, h3, h4, h5, h6 {
   color: var(--accent-color) !important;
 }
 
+/* Donate Button in Navbar */
+.btn-donate-nav {
+  display: inline-flex;
+  align-items: center;
+  padding: 8px 18px;
+  background: transparent;
+  color: var(--accent-gold) !important;
+  border: 1.5px solid var(--accent-gold);
+  border-radius: 8px;
+  font-weight: 700;
+  font-size: 0.8rem;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.btn-donate-nav:hover {
+  background: var(--accent-gold);
+  color: #fff !important;
+}
+
 /* Modern Hero Section */
 .hero-section {
   position: relative;

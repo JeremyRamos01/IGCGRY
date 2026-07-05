@@ -3,124 +3,427 @@
 
 <head>
     <title>Quiénes Somos - Casa del Gran REY</title>
-    <!-- Required meta tags -->
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-    <!-- SEO Meta Tags -->
-    <meta name="description" content="Conoce a la familia pastoral y a la congregación de la Iglesia Evangélica Casa del Gran REY en Leganés (Madrid). Somos una iglesia cristiana cercana y familiar.">
-    <meta name="keywords" content="Pastores evangélicos en Leganés, Iglesia evangélica en Leganés, Iglesia cristiana en Leganés, Casa del Gran REY Leganés, Iglesia evangélica Madrid sur, Sana doctrina evangélica">
+    <meta name="description" content="Conoce la historia de la Iglesia Evangélica Casa del Gran REY en Leganés (Madrid). Desde los primeros mártires hasta hoy, nuestra historia sigue escribiéndose.">
+    <meta name="keywords" content="Pastores evangélicos en Leganés, Iglesia evangélica en Leganés, Casa del Gran REY Leganés, Historia iglesia evangélica">
     <meta name="author" content="Iglesia Evangélica Casa del Gran REY">
     <meta name="robots" content="index, follow">
 
-    <!-- Bootstrap CSS v5.3.2 -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
-
-    <!-- AOS Animation CSS -->
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-
-    <!-- FontAwesome for Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
-    <!-- Custom CSS -->
-
     <link href="css/style.css" rel="stylesheet">
+    <link href="css/timeline.css" rel="stylesheet">
 </head>
 
 <body>
 
-    <!-- BARRA DE NAVEGACIÓN CENTRALIZADA -->
     <script src="js/navbar.js"></script>
 
-    <!-- PAGE HEADER -->
-    <header class="page-header" data-aos="fade-in" data-aos-duration="1500">
-        <div class="container">
-            <h1 class="mb-3">Quiénes Somos</h1>
-            <p class="lead text-white-50">Nuestra Familia en Cristo y Liderazgo Pastoral</p>
+    <!-- ============================== HERO ============================== -->
+    <header class="about-hero" id="about-hero">
+        <div class="particles-container" id="hero-particles"></div>
+        <div class="container position-relative" style="z-index: 2;">
+            <div class="hero-badge" id="hero-badge">Nuestra Historia</div>
+            <h1 id="hero-title">
+                <span class="d-block">La Historia que</span>
+                <span class="text-gold-gradient">Sigue Escribiéndose</span>
+            </h1>
+            <p class="hero-desc" id="hero-desc">
+                Más de 2000 años de fe, sacrificio y amor. Desde los primeros discípulos hasta nuestra congregación en Leganés, cada capítulo glorifica a Dios.
+            </p>
         </div>
     </header>
 
     <main>
-        <!-- PASTORAL TEAM SECTION -->
-        <section class="section-padding bg-white">
+
+        <!-- ============================== CAPÍTULO I ============================== -->
+        <div class="chapter-header" data-aos="fade-up">
+            <span class="chapter-badge"><i class="fa-solid fa-scroll me-2"></i>Capítulo I</span>
+            <h2>Historia de la Iglesia de Cristo</h2>
+            <p>Los pasos que ha dado la iglesia de Cristo a lo largo de más de 2000 años.</p>
+        </div>
+
+        <section class="road-map-section">
+            <div class="road-map">
+                <div class="road-row">
+                    <!-- Arrows on path -->
+                    <span class="road-arrow arrow-1"><i class="fa-solid fa-chevron-right"></i></span>
+                    <span class="road-arrow arrow-2"><i class="fa-solid fa-chevron-right"></i></span>
+
+                    <!-- Stop 1 -->
+                    <div class="road-stop" id="stop-1">
+                        <div class="stop-pin">1</div>
+                        <div class="stop-date">~2000 a.C. – 33 d.C.</div>
+                        <div class="stop-card">
+                            <span class="card-era"><i class="fa-solid fa-seedling me-1"></i>Orígenes</span>
+                            <h4>Los Comienzos</h4>
+                            <p>Algunos dicen que la iglesia comenzó con Abraham, otros con Israel, otros con los discípulos, y otros la sitúan el día de Pentecostés. Esta historia tiene más de 2000 años y todavía sigue escribiéndose.</p>
+                        </div>
+                    </div>
+
+                    <!-- Stop 2 -->
+                    <div class="road-stop" id="stop-2">
+                        <div class="stop-pin">2</div>
+                        <div class="stop-date">~62 d.C.</div>
+                        <div class="stop-card">
+                            <span class="card-era"><i class="fa-solid fa-book-open me-1"></i>Hechos</span>
+                            <h4>Un Libro sin "Amén"</h4>
+                            <p>Los libros del N.T. terminan con <em>amén</em>, pero Hechos no. Porque todavía se sigue escribiendo la historia de la iglesia de Cristo.</p>
+                            <span class="scripture-tag"><i class="fa-solid fa-book-bible"></i>Hechos 28:30-31</span>
+                        </div>
+                    </div>
+
+                    <!-- Stop 3 -->
+                    <div class="road-stop" id="stop-3">
+                        <div class="stop-pin">3</div>
+                        <div class="stop-date">~34 d.C. – Presente</div>
+                        <div class="stop-card">
+                            <span class="card-era"><i class="fa-solid fa-cross me-1"></i>Mártires</span>
+                            <h4>Vidas Entregadas</h4>
+                            <p>El primer mártir fue Esteban, luego el apóstol Jacobo. Desde entonces, muchos han dado su vida por el Señor antes que negarle.</p>
+                            <span class="scripture-tag"><i class="fa-solid fa-book-bible"></i>Hechos 6:1-7 · 12:1-5</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- ============================== CAPÍTULO II ============================== -->
+        <div class="chapter-header" data-aos="fade-up" style="background: linear-gradient(180deg, #fff, #fefcf7);">
+            <span class="chapter-badge"><i class="fa-solid fa-church me-2"></i>Capítulo II</span>
+            <h2>Historia de Nuestra Iglesia</h2>
+            <p>El camino que Dios trazó para formar Casa del Gran REY.</p>
+        </div>
+
+        <section class="road-map-section bg-warm">
+            <div class="road-map">
+
+                <!-- Row 1: Conversión → Primeros Pasos → La Rioja -->
+                <div class="road-row">
+                    <span class="road-arrow arrow-1"><i class="fa-solid fa-chevron-right"></i></span>
+                    <span class="road-arrow arrow-2"><i class="fa-solid fa-chevron-right"></i></span>
+
+                    <!-- Stop 4 -->
+                    <div class="road-stop" id="stop-4">
+                        <div class="stop-pin">4</div>
+                        <div class="stop-date">Rep. Dominicana</div>
+                        <div class="stop-card">
+                            <span class="card-era"><i class="fa-solid fa-heart me-1"></i>Conversión</span>
+                            <h4>Entregando la Vida al Señor</h4>
+                            <p>Fui un arduo trabajador en la iglesia Camino a Emaús II y buscador de la presencia del Señor. Eso me ayudó a asentar bases para los días difíciles.</p>
+                        </div>
+                    </div>
+
+                    <!-- Stop 5 -->
+                    <div class="road-stop" id="stop-5">
+                        <div class="stop-pin">5</div>
+                        <div class="stop-date">España – Primeros años</div>
+                        <div class="stop-card">
+                            <span class="card-era"><i class="fa-solid fa-shoe-prints me-1"></i>Primeros Pasos</span>
+                            <h4>Hermanos que Veían un Pastor</h4>
+                            <p>Los hermanos me llamaban <em>pastor</em>. Se soñaban conmigo pastoreando. El pastor pensó "entregarme la congregación", pero no era el tiempo.</p>
+                        </div>
+                    </div>
+
+                    <!-- Stop 6 -->
+                    <div class="road-stop" id="stop-6">
+                        <div class="stop-pin">6</div>
+                        <div class="stop-date">La Rioja – 4 años</div>
+                        <div class="stop-card">
+                            <span class="card-era"><i class="fa-solid fa-hourglass-half me-1"></i>Espera</span>
+                            <h4>No Era el Tiempo de Dios</h4>
+                            <p>Los hermanos sin querer me llamaban <em>pastor</em>. El pastor propuso darnos una obra, pero nada pasó.</p>
+                            <span class="scripture-tag"><i class="fa-solid fa-clock"></i>"En el Señor todo tiene su tiempo"</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Turn connector -->
+                <div class="road-turn turn-right">
+                    <div class="turn-line"></div>
+                </div>
+
+                <!-- Row 2 (R→L): Hoy ← Nace ← Visión -->
+                <div class="road-row reverse">
+                    <span class="road-arrow arrow-1"><i class="fa-solid fa-chevron-left"></i></span>
+                    <span class="road-arrow arrow-2"><i class="fa-solid fa-chevron-left"></i></span>
+
+                    <!-- Stop 9: HOY (visually LEFT) -->
+                    <div class="road-stop" id="stop-9">
+                        <div class="stop-pin active">9</div>
+                        <div class="stop-date"><i class="fa-solid fa-fire me-1"></i>Hoy</div>
+                        <div class="stop-card card-dark">
+                            <img src="img/iglesia_actual.png" alt="Iglesia Casa del Gran REY hoy" class="card-img">
+                            <span class="card-era">Presente</span>
+                            <h4>Creciendo para Su Gloria</h4>
+                            <p>Un local 3x más amplio, cuadruplicamos los hermanos, nuevos equipos. La misma visión del primer día, más experiencia en el ministerio junto a la familia.</p>
+                        </div>
+                    </div>
+
+                    <!-- Stop 8: LLEGÓ EL MOMENTO (visually CENTER) -->
+                    <div class="road-stop" id="stop-8">
+                        <div class="stop-pin">8</div>
+                        <div class="stop-date">Leganés, 2016</div>
+                        <div class="stop-card">
+                            <span class="card-era"><i class="fa-solid fa-church me-1"></i>Llegó el Momento</span>
+                            <!-- DOS FOTOS: Interior antiguo + Letrero -->
+                            <div class="card-img-row">
+                                <img src="img/local_antiguo_interior.png" alt="Interior local antiguo" class="card-img-half">
+                                <img src="img/letrero_camino_santidad.png" alt="Letrero Camino de Santidad" class="card-img-half">
+                            </div>
+                            <h4>Nace la Iglesia</h4>
+                            <p>Arreglamos el local e hicimos un culto de inauguración en 2016. La iglesia tenía por nombre <strong>Iglesia Evangélica Camino de Santidad</strong>.</p>
+                        </div>
+                    </div>
+
+                    <!-- Stop 7: VISIÓN (visually RIGHT) -->
+                    <div class="road-stop" id="stop-7">
+                        <div class="stop-pin">7</div>
+                        <div class="stop-date">Una Noche Especial</div>
+                        <div class="stop-card">
+                            <span class="card-era"><i class="fa-solid fa-eye me-1"></i>Visión</span>
+                            <h4>Un Sueño de Dios</h4>
+                            <p>Dios reveló a través de un sueño lo que vendría. El llamado pastoral estaba confirmado. Era tiempo de dar un paso de fe y obedecer.</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+
+        <!-- ============================== PASTORES ============================== -->
+        <section class="pastors-section" data-aos="fade-up">
             <div class="container">
-                <div class="section-title" data-aos="fade-up">
+                <div class="chapter-header" style="padding-top: 0;">
+                    <span class="chapter-badge"><i class="fa-solid fa-users me-2"></i>Liderazgo</span>
                     <h2>Nuestros Pastores</h2>
                 </div>
-                <div class="row align-items-center justify-content-center">
-                    <div class="col-lg-10">
-                        <div class="premium-card card flex-md-row align-items-center p-4 p-md-5" data-aos="fade-up"
-                            data-aos-delay="100">
-                            <!-- Placeholder image for pastors -->
-                            <img src="img/pastores.png" alt="Pastores Carlos e Isabel"
-                                class="rounded-circle shadow-lg mb-4 mb-md-0 me-md-5"
-                                style="width: 250px; height: 250px; object-fit: cover;">
-                            <div>
-                                <h3 class="fw-bold" style="color: var(--primary-dark);">Carlos Pineda e Isabel Riopedre
-                                </h3>
-                                <p class="text-uppercase mb-4"
-                                    style="color: var(--accent-gold); font-weight: 600; letter-spacing: 1px;">Pastores
-                                    Principales</p>
-                                <p class="text-muted lead">
-                                    "Servimos con amor y dedicación a nuestra comunidad en Leganés, buscando siempre que
-                                    el maravilloso amor de Cristo Jesús sea evidente entre nosotros."
-                                </p>
-                                <p class="text-muted">
-                                    Nuestra congregación se caracteriza por ser una familia unida, donde se fomenta la
-                                    solidaridad y se enseña la palabra de Dios con integridad. Damos gracias a Dios por
-                                    el respaldo hacia cada una de las familias que componen Casa del Gran REY.
-                                </p>
-                            </div>
+                <div class="pastor-card" data-aos="fade-up" data-aos-delay="100">
+                    <div class="pastor-img-wrapper">
+                        <img src="img/pastores.png" alt="Pastores Carlos e Isabel">
+                        <div class="pastor-img-overlay"></div>
+                    </div>
+                    <div class="pastor-info">
+                        <h3>Carlos Pineda e Isabel Riopedre</h3>
+                        <p class="pastor-role">Pastores Principales</p>
+                        <p class="pastor-quote">
+                            "Servimos con amor y dedicación a nuestra comunidad en Leganés, buscando siempre que el maravilloso amor de Cristo Jesús sea evidente entre nosotros."
+                        </p>
+                        <p style="color: var(--text-muted); margin-top: 14px; line-height: 1.7;">
+                            Nuestra congregación se caracteriza por ser una familia unida, donde se fomenta la solidaridad y se enseña la palabra de Dios con integridad.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- ============================== TESTIMONIOS ============================== -->
+        <section class="testimonials-section">
+            <div class="container">
+                <div class="chapter-header" data-aos="fade-up" style="padding-top: 0;">
+                    <span class="chapter-badge"><i class="fa-solid fa-quote-left me-2"></i>Testimonios</span>
+                    <h2>Una Iglesia de Cero Hipocresía</h2>
+                    <p>Los testimonios de nuestros miembros confirman nuestro mayor deseo: ser una iglesia auténtica.</p>
+                </div>
+                <div class="row g-4 justify-content-center">
+                    <div class="col-md-6 col-lg-5" data-aos="fade-up" data-aos-delay="100">
+                        <div class="testimonial-card">
+                            <p>"Le doy gloria a Dios pertenecer a Casa del Gran REY. Una congregación de cero chisme, donde el maravilloso amor de Cristo Jesús es evidente entre nosotros."</p>
+                            <span class="author">— Dominga A.</span>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-5" data-aos="fade-up" data-aos-delay="200">
+                        <div class="testimonial-card">
+                            <p>"Iglesia con mucho amor para dar. Ven, sé parte de ella, pero sobre todo que Jesucristo sea el centro de tu vida."</p>
+                            <span class="author">— Oneida N.</span>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- COMMUNITY SECTION -->
-        <section class="section-padding" style="background-color: var(--bg-color);">
-            <div class="container">
-                <div class="row g-5 align-items-center">
-                    <div class="col-lg-6 order-lg-2" data-aos="fade-left">
-                        <img src="img/hero_bg.png" alt="Congregación" class="img-fluid rounded-4 shadow">
-                    </div>
-                    <div class="col-lg-6 order-lg-1" data-aos="fade-right">
-                        <h2 class="display-6 fw-bold mb-4" style="color: var(--primary-dark);">Una Iglesia de Cero
-                            Hipocresía</h2>
-                        <p class="lead text-muted mb-4">
-                            Los testimonios de nuestros miembros confirman nuestro mayor deseo: ser una iglesia
-                            auténtica.
-                        </p>
-                        <div class="p-4 bg-white rounded-3 shadow-sm mb-3"
-                            style="border-left: 4px solid var(--accent-gold);">
-                            <p class="mb-0 fst-italic">"Le doy gloria a Dios pertenecer a Casa del Gran REY. Una
-                                congregación de cero chisme, donde el maravilloso amor de Cristo Jesús es evidente entre
-                                nosotros."</p>
-                            <p class="mb-0 mt-2 fw-bold text-end" style="color: var(--primary-dark);">- Dominga A.</p>
-                        </div>
-                        <div class="p-4 bg-white rounded-3 shadow-sm"
-                            style="border-left: 4px solid var(--accent-gold);">
-                            <p class="mb-0 fst-italic">"Iglesia con mucho amor para dar. Ven, sé parte de ella, pero
-                                sobre todo que Jesucristo sea el centro de tu vida."</p>
-                            <p class="mb-0 mt-2 fw-bold text-end" style="color: var(--primary-dark);">- Oneida N.</p>
-                        </div>
-                    </div>
+
+        <!-- ============================== CTA ============================== -->
+        <section class="cta-section" data-aos="fade-up">
+            <div class="container position-relative" style="z-index: 2;">
+                <h2>¿Aceptas el Compromiso?</h2>
+                <p>Ser parte de la iglesia de Cristo no es solo asistir a un servicio. Es comprometerse con una vida de fe, amor y servicio.</p>
+                <div class="cta-verse">
+                    "No que lo haya alcanzado ya, ni que ya sea perfecto; sino que prosigo, por ver si logro asir aquello para lo cual fui también asido por Cristo Jesús."
+                    <span class="verse-ref">— Filipenses 3:12</span>
+                </div>
+                <div>
+                    <a href="contacto.html" class="btn-primary-custom" id="cta-button">
+                        <i class="fa-solid fa-hands-praying me-2"></i>Contáctanos
+                    </a>
                 </div>
             </div>
         </section>
+
     </main>
 
-    <!-- FOOTER CENTRALIZADO -->
     <script src="js/footer.js"></script>
-
-    <!-- Bootstrap JavaScript -->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"></script>
-
-    <!-- AOS Animation Script -->
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.2/lib/anime.min.js"></script>
+
     <script>
-        AOS.init({ once: true, offset: 50 });
+        AOS.init({ once: true, offset: 50, duration: 800, easing: 'ease-out-cubic' });
+
+        document.addEventListener('DOMContentLoaded', () => {
+
+            // =============================================
+            // 1. HERO ENTRANCE
+            // =============================================
+            anime.timeline({ easing: 'easeOutExpo' })
+                .add({ targets: '#hero-badge', opacity: [0, 1], translateY: [25, 0], duration: 900 }, 300)
+                .add({ targets: '#hero-title', opacity: [0, 1], translateY: [40, 0], duration: 1100 }, 500)
+                .add({ targets: '#hero-desc', opacity: [0, 1], translateY: [30, 0], duration: 1000 }, 800);
+
+
+            // =============================================
+            // 2. PARTICLES
+            // =============================================
+            const pc = document.getElementById('hero-particles');
+            if (pc) {
+                for (let i = 0; i < 18; i++) {
+                    const p = document.createElement('div');
+                    p.classList.add('particle');
+                    p.style.left = Math.random() * 100 + '%';
+                    p.style.top = Math.random() * 100 + '%';
+                    const sz = (Math.random() * 3 + 2) + 'px';
+                    p.style.width = sz; p.style.height = sz;
+                    p.style.opacity = Math.random() * 0.3 + 0.1;
+                    pc.appendChild(p);
+                    anime({
+                        targets: p,
+                        translateX: () => anime.random(-50, 50),
+                        translateY: () => anime.random(-50, 50),
+                        opacity: [{ value: anime.random(0.1, 0.35), duration: anime.random(2000, 4000) },
+                                  { value: anime.random(0.05, 0.15), duration: anime.random(2000, 4000) }],
+                        duration: anime.random(5000, 9000),
+                        easing: 'easeInOutSine',
+                        loop: true,
+                        direction: 'alternate'
+                    });
+                }
+            }
+
+
+            // =============================================
+            // 3. ROAD STOPS — APPEAR ON SCROLL ROW BY ROW
+            // =============================================
+            const observedRows = new Set();
+
+            const rowObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (!entry.isIntersecting) return;
+                    const row = entry.target;
+                    if (observedRows.has(row)) return;
+                    observedRows.add(row);
+
+                    const stops = Array.from(row.querySelectorAll('.road-stop'));
+                    const isReverse = row.classList.contains('reverse');
+                    const ordered = isReverse ? [...stops].reverse() : stops;
+
+                    ordered.forEach((stop, i) => {
+                        // Card slide in
+                        anime({
+                            targets: stop,
+                            opacity: [0, 1],
+                            translateY: [35, 0],
+                            duration: 800,
+                            delay: i * 250,
+                            easing: 'easeOutCubic',
+                            begin: () => stop.classList.add('visible')
+                        });
+
+                        // Pin elastic pop
+                        anime({
+                            targets: stop.querySelector('.stop-pin'),
+                            scale: [0, 1.25, 1],
+                            duration: 700,
+                            delay: i * 250 + 150,
+                            easing: 'easeOutElastic(1, .5)'
+                        });
+
+                        // Card subtle slide from side
+                        anime({
+                            targets: stop.querySelector('.stop-card'),
+                            opacity: [0, 1],
+                            translateX: [isReverse ? -15 : 15, 0],
+                            duration: 600,
+                            delay: i * 250 + 200,
+                            easing: 'easeOutCubic'
+                        });
+                    });
+
+                    rowObserver.unobserve(row);
+                });
+            }, { threshold: 0.15, rootMargin: '0px 0px -8% 0px' });
+
+            document.querySelectorAll('.road-row').forEach(row => rowObserver.observe(row));
+
+
+            // =============================================
+            // 4. TURN CONNECTORS — ANIMATE IN
+            // =============================================
+            const turnObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        anime({
+                            targets: entry.target.querySelector('.turn-line'),
+                            scaleY: [0, 1],
+                            opacity: [0, 1],
+                            duration: 500,
+                            easing: 'easeOutCubic'
+                        });
+                        turnObserver.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.3 });
+
+            document.querySelectorAll('.road-turn').forEach(t => turnObserver.observe(t));
+
+
+            // =============================================
+            // 5. CTA HOVER
+            // =============================================
+            const ctaBtn = document.getElementById('cta-button');
+            if (ctaBtn) {
+                ctaBtn.addEventListener('mouseenter', () => {
+                    anime({ targets: ctaBtn, scale: 1.05, duration: 250, easing: 'easeOutBack' });
+                });
+                ctaBtn.addEventListener('mouseleave', () => {
+                    anime({ targets: ctaBtn, scale: 1, duration: 250, easing: 'easeOutExpo' });
+                });
+            }
+
+
+            // =============================================
+            // 6. NAVBAR SCROLL
+            // =============================================
+            window.addEventListener('scroll', function () {
+                const nav = document.querySelector('.glass-nav');
+                if (nav) {
+                    if (window.scrollY > 50) {
+                        nav.style.background = 'rgba(30, 41, 59, 0.98)';
+                        nav.style.boxShadow = '0 4px 20px rgba(0,0,0,0.2)';
+                    } else {
+                        nav.style.background = 'rgba(30, 41, 59, 0.95)';
+                        nav.style.boxShadow = 'none';
+                    }
+                }
+            });
+        });
     </script>
+
 </body>
 
 </html>

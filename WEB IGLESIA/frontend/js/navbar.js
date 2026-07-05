@@ -4,8 +4,15 @@ const navbarHTML = `
         <div class="container-fluid px-2">
             <a class="navbar-brand d-flex align-items-center" href="/">
                 <img class="logo img-fluid" src="img/Logo.png" alt="Logo Iglesia Del Gran REY">
-                <span class="ms-3 ps-3 border-start border-2 fw-bold d-none d-md-block fs-5 text-white"
-                    style="border-color: rgba(255,255,255,0.3) !important; letter-spacing: 1px;">Casa del Gran REY</span>
+                <div class="d-none d-md-flex flex-column ms-3 ps-3 border-start border-2" style="border-color: rgba(255,255,255,0.3) !important;">
+                    <span class="fw-bold fs-5 text-white" style="letter-spacing: 1px;">Casa del Gran REY</span>
+                    <span style="font-size: 0.7rem; color: rgba(255,255,255,0.75); letter-spacing: 0.5px; margin-top: 2px;">
+                        <i class="fa-solid fa-church me-1 text-gold"></i> Cultos: Sáb a partir de 19:00h | Dom a partir de 12:00h
+                    </span>
+                    <span style="font-size: 0.65rem; color: rgba(255,255,255,0.5); margin-top: 1px;">
+                        Nº Registro: 024973
+                    </span>
+                </div>
             </a>
             <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -28,7 +35,10 @@ const navbarHTML = `
                     <li class="nav-item">
                         <a class="nav-link" href="chat.html">Foro Libre</a>
                     </li>
-                    <li class="nav-item ms-lg-3 mt-3 mt-lg-0">
+                    <li class="nav-item ms-lg-2 mt-2 mt-lg-0">
+                        <a class="btn-donate-nav" href="donar.html"><i class="fa-solid fa-hand-holding-heart me-1"></i>Donar</a>
+                    </li>
+                    <li class="nav-item ms-lg-2 mt-2 mt-lg-0">
                         <a class="btn btn-primary-custom" href="contacto.html">Contáctanos</a>
                     </li>
                 </ul>
@@ -44,7 +54,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Update links if not on homepage
     if (!isHomePage) {
-        document.querySelectorAll('a.nav-link, a.btn').forEach(anchor => {
+        document.querySelectorAll('a.nav-link').forEach(anchor => {
             const href = anchor.getAttribute('href');
             if (href && href.startsWith('#')) {
                 anchor.setAttribute('href', 'index.html' + href);
@@ -52,7 +62,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     } else {
         // Smooth scrolling for navbar links only on homepage
-        document.querySelectorAll('a.nav-link, a.btn').forEach(anchor => {
+        document.querySelectorAll('a.nav-link').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 const href = this.getAttribute('href');
                 if (href && href.startsWith('#')) {
@@ -61,7 +71,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     const targetElement = document.getElementById(targetId);
                     if (targetElement) {
                         window.scrollTo({
-                            top: targetElement.offsetTop - 80, // Offset for fixed navbar
+                            top: targetElement.offsetTop - 90,
                             behavior: 'smooth'
                         });
                     }
