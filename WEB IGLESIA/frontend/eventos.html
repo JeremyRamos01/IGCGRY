@@ -89,13 +89,44 @@
             justify-content: center;
         }
 
-        /* Eventos: solo puntero */
+        /* Asegurar suficiente espacio vertical en las celdas del mes */
+        .fc .fc-daygrid-day-frame {
+            min-height: 85px !important;
+        }
+
+        /* Eventos: solo puntero y aspecto premium de bloque */
         .fc-event {
             cursor: pointer;
+            padding: 4px 6px !important;
+            border-radius: 6px !important;
+            border: none !important;
+            margin: 2px 3px !important;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.08) !important;
+            transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease !important;
         }
-        /* Solo cambiar color de texto de eventos, sin tocar el fondo */
-        .fc-event-title {
-            color: #fff !important;
+
+        .fc-event:hover {
+            transform: translateY(-1px) scale(1.02);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.12) !important;
+            filter: brightness(1.15);
+        }
+
+        /* Forzar visualización de textos en blanco y permitir saltos de línea */
+        .fc-event-title-container,
+        .fc-event-title,
+        .fc-event-main,
+        .fc-event-time {
+            color: #ffffff !important;
+            font-weight: 600 !important;
+            white-space: normal !important; /* Permite saltos de línea para que se lea todo */
+            font-size: 0.8rem !important;
+        }
+
+        /* Resaltar la hora del evento en dorado dentro del bloque */
+        .fc-event-time {
+            color: var(--accent-gold) !important;
+            font-weight: 700 !important;
+            margin-right: 5px;
         }
 
         /* ===========================
@@ -291,6 +322,7 @@
             var calendar = new FullCalendar.Calendar(calendarEl, {
                 initialView: isMobile ? 'listMonth' : 'dayGridMonth',
                 locale: 'es',
+                eventDisplay: 'block',
                 headerToolbar: isMobile ? {
                     left: 'prev,next',
                     center: 'title',

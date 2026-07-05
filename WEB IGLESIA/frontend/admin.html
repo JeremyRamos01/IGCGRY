@@ -215,6 +215,20 @@
                 <!-- Módulo: Eventos -->
                 <div id="section-eventos" class="admin-section">
                     <h2 class="fw-bold mb-4">Gestión de Eventos</h2>
+                    
+                    <!-- Tarjeta de Ajuste Rápido de Horarios -->
+                    <div class="card shadow-sm border-0 rounded-4 border-warning border-start border-4 mb-4 bg-white">
+                        <div class="card-body p-4 d-flex justify-content-between align-items-center flex-wrap gap-3">
+                            <div style="flex: 1; min-width: 280px;">
+                                <h5 class="fw-bold text-warning mb-2"><i class="fa-solid fa-clock-rotate-left me-2"></i> Sincronizar Horarios en la Base de Datos</h5>
+                                <p class="text-muted mb-0 small">¿Has cambiado los horarios de los cultos? Presiona este botón para corregir y renombrar automáticamente todos los cultos recurrentes registrados en el calendario (Martes 19:00h, Sábados 19:00h y Domingos 12:00h).</p>
+                            </div>
+                            <button id="btn-migrate-hours" class="btn btn-warning fw-bold text-dark px-4 py-2" style="background-color: var(--accent-gold); border: none; min-width: 200px;">
+                                <i class="fa-solid fa-sync me-2"></i> Actualizar en Calendario
+                            </button>
+                        </div>
+                    </div>
+
                     <div class="card shadow-sm border-0 rounded-4 mb-4">
                         <div class="card-body p-4">
                             <h5 class="fw-bold text-dark mb-4"><i class="fa-solid fa-plus-circle text-gold me-2"></i> Añadir Nuevo Evento</h5>
@@ -703,6 +717,64 @@
                 } finally {
                     saveBtn.disabled = false;
                     saveBtn.innerHTML = '<i class="fa-solid fa-floppy-disk me-2"></i> Guardar Cambios';
+                }
+            });
+
+            // Botón de Migración de Horarios en Calendario
+            const btnMigrateHours = document.getElementById('btn-migrate-hours');
+            btnMigrateHours.addEventListener('click', async () => {
+                if(confirm("¿Deseas actualizar automáticamente todos los eventos recurrentes de Cultos en la base de datos para ajustarlos al nuevo horario (Martes 19h, Sábados 19h y Domingos 12h)?")) {
+                    btnMigrateHours.disabled = true;
+                    btnMigrateHours.innerHTML = '<span class="spinner-border spinner-border-sm"></span> Actualizando...';
+                    try {
+                        const snap = await getDocs(collection(db, "eventos"));
+                        const updatePromises = [];
+                        let count = 0;
+                        
+                        snap.forEach(d => {
+                            const data = d.data();
+                            let changed = false;
+                            let updateData = {};
+                            
+                            // 1. Domingo: Culto Dominical a las 12:00
+                            if (data.start && (data.start.includes("T11:00:00") || (data.title && data.title.toLowerCase().includes("dominical")) || (data.title && data.title === "Culto en el Templo" && new Date(data.start).getDay() === 0))) {
+                                const datePart = data.start.split("T")[0];
+                                updateData.start = `${datePart}T12:00:00`;
+                                updateData.end = `${datePart}T14:00:00`;
+                                updateData.title = "Culto Dominical";
+                                changed = true;
+                            }
+                            
+                            // 2. Sábado: Cultos de Sociedades a las 19:00
+                            if (data.start && (data.start.includes("T18:00:00") || (data.title && data.title.toLowerCase().includes("ministerios")) || (data.title && data.title === "Culto en el Templo" && new Date(data.start).getDay() === 6))) {
+                                const datePart = data.start.split("T")[0];
+                                updateData.start = `${datePart}T19:00:00`;
+                                updateData.end = `${datePart}T21:00:00`;
+                                updateData.title = "Culto de Sociedades";
+                                changed = true;
+                            }
+                            
+                            // 3. Martes: Reunión de Oración a las 19:00
+                            if (data.start && (data.title && (data.title === "Oración" || data.title === "Reunión de Oración") && new Date(data.start).getDay() === 2)) {
+                                updateData.title = "Reunión de Oración";
+                                changed = true;
+                            }
+                            
+                            if (changed) {
+                                updatePromises.push(updateDoc(doc(db, "eventos", d.id), updateData));
+                                count++;
+                            }
+                        });
+                        
+                        await Promise.all(updatePromises);
+                        alert(`¡Horarios actualizados con éxito! Se corrigieron ${count} eventos en la base de datos.`);
+                        loadEvents(); // Recargar lista
+                    } catch(err) {
+                        alert("Error al actualizar: " + err.message);
+                    } finally {
+                        btnMigrateHours.disabled = false;
+                        btnMigrateHours.innerHTML = '<i class="fa-solid fa-sync me-2"></i> Actualizar en Calendario';
+                    }
                 }
             });
 

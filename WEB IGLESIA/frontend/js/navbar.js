@@ -7,7 +7,7 @@ const navbarHTML = `
                 <div class="d-flex flex-column ms-2 ms-md-3 ps-2 ps-md-3 border-start border-2" style="border-color: rgba(255,255,255,0.3) !important;">
                     <span class="fw-bold text-white brand-title" style="letter-spacing: 1px;">Casa del Gran REY</span>
                     <span class="brand-subtext" style="color: rgba(255,255,255,0.75); letter-spacing: 0.5px; margin-top: 2px;">
-                        <i class="fa-solid fa-church me-1 text-gold"></i> Cultos: Sáb 19:00h | Dom 12:00h
+                        <i class="fa-solid fa-church me-1 text-gold"></i> Cultos: Sáb 19:00h | Dom a partir de las 12:00h
                     </span>
                     <span class="brand-reg" style="color: rgba(255,255,255,0.5); margin-top: 1px;">
                         Nº Registro: 024973
