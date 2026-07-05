@@ -146,6 +146,9 @@
                 <li>
                     <a href="#" onclick="showSection('transmision', this)"><i class="fa-solid fa-video me-2"></i> En Vivo</a>
                 </li>
+                <li>
+                    <a href="#" onclick="showSection('mensajes', this)"><i class="fa-solid fa-envelope me-2"></i> Mensajes <span id="unread-count" class="badge bg-danger d-none">0</span></a>
+                </li>
                 <li class="mt-4">
                     <a href="#" id="btn-logout" class="text-danger"><i class="fa-solid fa-right-from-bracket me-2"></i> Cerrar Sesión</a>
                 </li>
@@ -376,6 +379,19 @@
                     </div>
                 </div>
 
+                <!-- Módulo: Mensajes de Contacto -->
+                <div id="section-mensajes" class="admin-section">
+                    <h2 class="fw-bold mb-4">Mensajes de Contacto</h2>
+                    <div class="card shadow-sm border-0 rounded-4">
+                        <div class="card-body p-4">
+                            <h5 class="fw-bold mb-4" style="color:var(--primary-dark);"><i class="fa-solid fa-inbox me-2 text-gold"></i> Bandeja de Entrada</h5>
+                            <div id="messages-list" class="list-group">
+                                <div class="text-center text-muted p-3">Cargando mensajes...</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </div>
     </div>
@@ -415,7 +431,7 @@
 
     <script type="module">
         import { db, storage } from './js/firebase-config.js';
-        import { collection, addDoc, getDocs, deleteDoc, doc, updateDoc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+        import { collection, addDoc, getDocs, deleteDoc, doc, updateDoc, setDoc, getDoc, onSnapshot, query, orderBy } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
         import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
         import { ref, uploadBytes, getDownloadURL, deleteObject } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-storage.js";
 
@@ -763,6 +779,97 @@
             });
 
             loadLiveStatus();
+
+            // 4. MENSAJES DE CONTACTO
+            const messagesRef = collection(db, "contactMessages");
+            const messagesListEl = document.getElementById("messages-list");
+            const unreadCountEl = document.getElementById("unread-count");
+
+            function loadMessages() {
+                const q = query(messagesRef, orderBy("fecha", "desc"));
+                onSnapshot(q, (snapshot) => {
+                    messagesListEl.innerHTML = '';
+                    let unread = 0;
+
+                    if (snapshot.empty) {
+                        messagesListEl.innerHTML = '<div class="text-muted text-center p-3">No hay mensajes de contacto.</div>';
+                        unreadCountEl.classList.add('d-none');
+                        return;
+                    }
+
+                    snapshot.forEach(docSnap => {
+                        const msg = docSnap.data();
+                        const id = docSnap.id;
+                        const date = msg.fecha ? new Date(msg.fecha).toLocaleDateString('es-ES', { 
+                            year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute:'2-digit' 
+                        }) : 'Fecha no disponible';
+
+                        if (!msg.leido) unread++;
+
+                        const div = document.createElement('div');
+                        div.className = `list-group-item border-0 shadow-sm mb-3 rounded-4 p-4 ${msg.leido ? 'bg-light' : 'border-start border-warning border-4 bg-white'}`;
+                        div.style.transition = 'all 0.3s';
+                        
+                        div.innerHTML = `
+                            <div class="d-flex justify-content-between align-items-start mb-2">
+                                <div>
+                                    <h6 class="fw-bold mb-1" style="color:var(--primary-dark)">${msg.nombre}</h6>
+                                    <small class="text-muted"><i class="fa-regular fa-envelope me-1"></i> ${msg.email}</small>
+                                </div>
+                                <div class="d-flex gap-2">
+                                    ${!msg.leido ? `
+                                        <button class="btn btn-sm btn-outline-success mark-read-btn" data-id="${id}" title="Marcar como leído">
+                                            <i class="fa-solid fa-check"></i>
+                                        </button>
+                                    ` : ''}
+                                    <button class="btn btn-sm btn-outline-danger delete-msg-btn" data-id="${id}" title="Eliminar mensaje">
+                                        <i class="fa-solid fa-trash"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <p class="mb-2 mt-3 text-dark bg-light p-3 rounded-3" style="white-space: pre-wrap; font-size:0.95rem; border: 1px solid rgba(0,0,0,0.05);">${msg.mensaje}</p>
+                            <div class="text-end">
+                                <small class="text-muted" style="font-size:0.78rem;"><i class="fa-regular fa-clock me-1"></i> Recibido: ${date}</small>
+                            </div>
+                        `;
+                        messagesListEl.appendChild(div);
+                    });
+
+                    if (unread > 0) {
+                        unreadCountEl.textContent = unread;
+                        unreadCountEl.classList.remove('d-none');
+                    } else {
+                        unreadCountEl.classList.add('d-none');
+                    }
+
+                    // Bind buttons
+                    document.querySelectorAll('.mark-read-btn').forEach(btn => {
+                        btn.addEventListener('click', async (e) => {
+                            const id = e.currentTarget.getAttribute('data-id');
+                            try {
+                                await updateDoc(doc(db, "contactMessages", id), { leido: true });
+                            } catch(err) {
+                                console.error("Error al marcar leído:", err);
+                            }
+                        });
+                    });
+
+                    document.querySelectorAll('.delete-msg-btn').forEach(btn => {
+                        btn.addEventListener('click', async (e) => {
+                            if(confirm("¿Seguro que quieres eliminar este mensaje?")) {
+                                const id = e.currentTarget.getAttribute('data-id');
+                                try {
+                                    await deleteDoc(doc(db, "contactMessages", id));
+                                } catch(err) {
+                                    console.error("Error al eliminar mensaje:", err);
+                                }
+                            }
+                        });
+                    });
+                });
+            }
+
+            loadMessages();
         }
     </script>
 </body>

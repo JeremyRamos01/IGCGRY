@@ -25,5 +25,21 @@ service cloud.firestore {
     match /chatMessages/{document=**} {
       allow read, write: if true;
     }
+
+    // COLECCIÓN: CONFIG (Estado en Vivo)
+    // Cualquiera puede leer el estado del En Vivo.
+    // Solo los administradores pueden modificarlo.
+    match /config/{document=**} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    // COLECCIÓN: MENSAJES DE CONTACTO
+    // Cualquiera puede enviar (crear) un mensaje de contacto.
+    // Solo los administradores pueden leerlos, marcarlos como leídos o eliminarlos.
+    match /contactMessages/{document} {
+      allow create: if true;
+      allow read, update, delete: if isAdmin();
+    }
   }
 }
