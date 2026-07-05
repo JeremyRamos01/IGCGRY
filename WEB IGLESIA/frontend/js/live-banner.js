@@ -106,10 +106,18 @@ function initLiveBanner() {
                 document.body.classList.add('has-live-banner');
                 
                 let platformName = 'Facebook';
-                if (data.platform === 'tiktok') platformName = 'TikTok';
-                if (data.platform === 'youtube') platformName = 'YouTube';
+                let defaultUrl = 'https://www.facebook.com/carlos.pinedaaraujo/';
+                
+                if (data.platform === 'tiktok') {
+                    platformName = 'TikTok';
+                    defaultUrl = 'https://www.tiktok.com/@casadelgranrey';
+                } else if (data.platform === 'youtube') {
+                    platformName = 'YouTube';
+                    defaultUrl = 'https://www.youtube.com/';
+                }
 
-                const targetUrl = data.url || 'https://www.facebook.com/carlos.pinedaaraujo/';
+                // If admin didn't specify a custom URL, use default profile/page URL
+                const targetUrl = data.url && data.url.trim() !== "" ? data.url : defaultUrl;
 
                 if (!activeBanner) {
                     const banner = document.createElement('a');
@@ -119,16 +127,16 @@ function initLiveBanner() {
                     banner.target = '_blank';
                     banner.innerHTML = `
                         <span class="live-pulse-dot"></span>
-                        <span>¡ESTAMOS TRANSMITIENDO EN VIVO EN ${platformName.toUpperCase()}!</span>
-                        <button class="live-btn-join">UNIRSE AL DIRECTO <i class="fa-solid fa-arrow-right ms-1"></i></button>
+                        <span>¡ESTAMOS EN VIVO EN ${platformName.toUpperCase()}!</span>
+                        <button class="live-btn-join">VER TRANSMISIÓN <i class="fa-solid fa-arrow-right ms-1"></i></button>
                     `;
                     document.body.insertBefore(banner, document.body.firstChild);
                 } else {
                     activeBanner.href = targetUrl;
                     activeBanner.innerHTML = `
                         <span class="live-pulse-dot"></span>
-                        <span>¡ESTAMOS TRANSMITIENDO EN VIVO EN ${platformName.toUpperCase()}!</span>
-                        <button class="live-btn-join">UNIRSE AL DIRECTO <i class="fa-solid fa-arrow-right ms-1"></i></button>
+                        <span>¡ESTAMOS EN VIVO EN ${platformName.toUpperCase()}!</span>
+                        <button class="live-btn-join">VER TRANSMISIÓN <i class="fa-solid fa-arrow-right ms-1"></i></button>
                     `;
                 }
             } else {
