@@ -1,0 +1,301 @@
+<!doctype html>
+<html lang="es">
+
+<head>
+    <title>Nuestra Fe - Casa del Gran REY</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    
+    <meta name="description" content="Declaración de Fe de la Iglesia Evangélica Casa del Gran REY.">
+    <meta name="robots" content="index, follow">
+
+    <!-- Bootstrap CSS v5.3.2 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <!-- AOS Animation CSS -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Custom CSS -->
+    <link href="css/style.css" rel="stylesheet">
+
+    <style>
+        .faith-hero {
+            padding: 140px 20px 80px;
+            background: linear-gradient(135deg, var(--primary-dark) 0%, #334155 100%);
+            color: white;
+            text-align: center;
+        }
+
+        .faith-title {
+            font-size: 3rem;
+            font-weight: 900;
+            margin-bottom: 15px;
+            color: var(--accent-gold);
+        }
+
+        .faith-subtitle {
+            font-size: 1.1rem;
+            color: rgba(255,255,255,0.8);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .faith-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .faith-item {
+            background: #fff;
+            padding: 30px 40px;
+            border-radius: 16px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.04);
+            display: flex;
+            gap: 20px;
+            align-items: flex-start;
+            border-left: 4px solid var(--accent-gold);
+            transition: transform 0.3s ease;
+        }
+
+        .faith-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+        }
+
+        .faith-number {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 900;
+            font-size: 2.2rem;
+            color: var(--accent-gold);
+            min-width: 55px;
+            line-height: 1;
+        }
+
+        .faith-text {
+            font-size: 1.05rem;
+            color: var(--text-main);
+            line-height: 1.7;
+            margin: 0;
+        }
+
+        .scripture-ref {
+            display: inline-block;
+            background: rgba(212, 175, 55, 0.1);
+            color: #b58d20;
+            padding: 2px 10px;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            margin-left: 8px;
+            white-space: nowrap;
+        }
+
+        @media (max-width: 768px) {
+            .faith-hero { padding: 110px 15px 50px; }
+            .faith-title { font-size: 2.2rem; }
+            .faith-item { padding: 20px; flex-direction: column; gap: 10px; }
+            .faith-number { font-size: 1.5rem; }
+            .faith-text { font-size: 0.95rem; }
+            .scripture-ref { display: block; width: fit-content; margin-left: 0; margin-top: 8px; }
+        }
+
+        /* Signature Animation */
+        .signature-container {
+            margin-top: 60px;
+            text-align: center;
+        }
+        
+        .signature-svg {
+            width: 150px;
+            height: auto;
+            margin-bottom: 10px;
+            fill: none;
+            stroke: var(--primary-dark);
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+        
+        .signature-path {
+            stroke-dasharray: 1000;
+            stroke-dashoffset: 1000;
+            animation: drawSignature 3s ease forwards;
+            animation-delay: 0.5s; /* starts slightly after scroll reveal */
+        }
+        
+        @keyframes drawSignature {
+            to {
+                stroke-dashoffset: 0;
+            }
+        }
+        
+        .pastor-name {
+            font-family: 'Inter', sans-serif;
+            font-weight: 600;
+            color: var(--text-main);
+            margin-bottom: 0;
+            font-size: 1.1rem;
+            margin-top: 10px;
+        }
+        
+        .pastor-title {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .pdf-download-container {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 40px;
+            border-top: 1px solid rgba(0,0,0,0.05);
+        }
+    </style>
+</head>
+
+<body class="bg-light">
+
+    <!-- NAVBAR INYECTADO -->
+    <script src="js/navbar.js"></script>
+
+    <header class="faith-hero">
+        <div class="container" data-aos="fade-up">
+            <h1 class="faith-title">Declaración de Fe</h1>
+            <p class="faith-subtitle">En lo que creemos firmemente y sobre lo cual edificamos nuestra congregación.</p>
+        </div>
+    </header>
+
+    <main class="py-5">
+        <div class="container">
+            <ul class="faith-list">
+                
+                <li class="faith-item" data-aos="fade-up">
+                    <div class="faith-number">01</div>
+                    <p class="faith-text">Creemos que somos hechos a imagen y semejanza de Dios. <span class="scripture-ref">Génesis 1:27</span></p>
+                </li>
+
+                <li class="faith-item" data-aos="fade-up">
+                    <div class="faith-number">02</div>
+                    <p class="faith-text">Creemos que todos estamos bajo la maldición del pecado. <span class="scripture-ref">Gálatas 3:10</span></p>
+                </li>
+
+                <li class="faith-item" data-aos="fade-up">
+                    <div class="faith-number">03</div>
+                    <p class="faith-text">Creemos en las Sagradas Escrituras, la Biblia, que como palabra inspirada de Dios mediante la cual se revela al ser humano, no contiene error en sus originales y constituye la única regla infalible de fe y conducta.</p>
+                </li>
+
+                <li class="faith-item" data-aos="fade-up">
+                    <div class="faith-number">04</div>
+                    <p class="faith-text">Creemos que Cristo Jesús murió y resucitó para libertarnos de esa maldición del pecado. <span class="scripture-ref">Gálatas 3:13</span></p>
+                </li>
+
+                <li class="faith-item" data-aos="fade-up">
+                    <div class="faith-number">05</div>
+                    <p class="faith-text">Creemos que solo creyendo en el Señor Jesucristo obtenemos la salvación de nuestras almas.</p>
+                </li>
+
+                <li class="faith-item" data-aos="fade-up">
+                    <div class="faith-number">06</div>
+                    <p class="faith-text">Creemos en un solo Dios de todos, existente en tres personas; Padre, Hijo y Espíritu Santo. <span class="scripture-ref">Mateo 28:19</span></p>
+                </li>
+
+                <li class="faith-item" data-aos="fade-up">
+                    <div class="faith-number">07</div>
+                    <p class="faith-text">Creemos en la promesa del Padre, el bautismo en el Espíritu Santo por el cual los creyentes son investidos de poder, para ser testigos de Jesucristo, servir a Dios y vivir en santidad.</p>
+                </li>
+
+                <li class="faith-item" data-aos="fade-up">
+                    <div class="faith-number">08</div>
+                    <p class="faith-text">Creemos en la vigencia actual de los dones espirituales, manifestaciones sobrenaturales del poder del Espíritu Santo, dados a la iglesia para su edificación.</p>
+                </li>
+
+                <li class="faith-item" data-aos="fade-up">
+                    <div class="faith-number">09</div>
+                    <p class="faith-text">Creemos que existe un cielo y un infierno, que en esta vida decidimos a donde queremos ir.</p>
+                </li>
+
+                <li class="faith-item" data-aos="fade-up">
+                    <div class="faith-number">10</div>
+                    <p class="faith-text">Creemos en el Arrebatamiento Inminente de la iglesia, que es el cuerpo de Cristo. <span class="scripture-ref">1 Tesalonicenses 4:13-18</span></p>
+                </li>
+
+                <li class="faith-item" data-aos="fade-up">
+                    <div class="faith-number">11</div>
+                    <p class="faith-text">Creemos en el poder de Dios, capaz de obrar prodigios, milagros y sanidades hoy día.</p>
+                </li>
+
+                <li class="faith-item" data-aos="fade-up">
+                    <div class="faith-number">12</div>
+                    <p class="faith-text">Creemos que habrá un periodo de Gran Tribulación. <span class="scripture-ref">Mateo 24:21</span></p>
+                </li>
+
+                <li class="faith-item" data-aos="fade-up">
+                    <div class="faith-number">13</div>
+                    <p class="faith-text">Creemos en el bautismo por inmersión y la cena del Señor como ordenanzas dadas por el Señor a su iglesia. El bautismo, como testimonio público de conversión al evangelio de Jesucristo en identificación con su muerte, sepultura y resurrección. La santa cena como recordatorio de su muerte, señal del Nuevo Pacto, y anuncio de su segunda venida.</p>
+                </li>
+
+                <li class="faith-item" data-aos="fade-up">
+                    <div class="faith-number">14</div>
+                    <p class="faith-text">Creemos en su Segunda Venida en Gloria para reinar sobre la tierra eternamente. <span class="scripture-ref">Apocalipsis 1:7</span></p>
+                </li>
+
+                <li class="faith-item" data-aos="fade-up">
+                    <div class="faith-number">15</div>
+                    <p class="faith-text">Creemos que estaremos con el Señor por la Eternidad, como lo dice su Palabra. <span class="scripture-ref">Daniel 12:3; 1 Juan 1:27</span></p>
+                </li>
+
+                <li class="faith-item" data-aos="fade-up">
+                    <div class="faith-number">16</div>
+                    <p class="faith-text">Creemos en la Iglesia, que es el cuerpo de Cristo, compuesta por todos los creyentes nacidos de nuevo, y cuya única cabeza es Jesucristo mismo.</p>
+                </li>
+
+                <li class="faith-item" data-aos="fade-up">
+                    <div class="faith-number">17</div>
+                    <p class="faith-text">Creemos que el matrimonio fue instituido por Dios y confirmado por Cristo, como la unión entre un hombre y una mujer, nacidos como tales hombre y mujer.</p>
+                </li>
+
+                <li class="faith-item" data-aos="fade-up">
+                    <div class="faith-number">18</div>
+                    <p class="faith-text">Creemos que un cristiano verdadero debe congregarse en una iglesia de sana Doctrina. <span class="scripture-ref">Hebreos 10:25</span></p>
+                </li>
+
+                <li class="faith-item" data-aos="fade-up">
+                    <div class="faith-number">19</div>
+                    <p class="faith-text">Creemos que cuando aceptamos el Sacrificio de Cristo en la Cruz del calvario, pasamos de muerte a Vida, de la esclavitud del pecado, al señorío de Cristo, pasamos de ser criaturas de Dios, a ser hijos del Dios. <span class="scripture-ref">Juan 1:12</span></p>
+                </li>
+
+            </ul>
+            <!-- Firma del Pastor y Sello (Imagen Original) -->
+            <div class="signature-container" data-aos="fade-up" data-aos-offset="0">
+                <img src="img/firma_pastor.png" alt="Firma Pastor Carlos Pineda y Sello" class="img-fluid" style="max-height: 120px; object-fit: contain;">
+            </div>
+
+            <!-- Botón para descargar el PDF Original -->
+            <div class="pdf-download-container" data-aos="fade-up">
+                <a href="https://firebasestorage.googleapis.com/v0/b/casa-del-gran-rey.firebasestorage.app/o/Declaracion%20de%20fe%20-%202026%20-%20Pagina%20Web.pdf?alt=media&token=ce158fcf-5863-4b1c-a0a1-831f029f999e" target="_blank" class="btn btn-outline-dark rounded-pill px-4 py-2 fw-bold" id="btnDownloadPdf">
+                    <i class="fa-solid fa-file-pdf me-2 text-danger"></i> Descargar Documento Original (PDF)
+                </a>
+            </div>
+        </div>
+    </main>
+
+    <!-- FOOTER INYECTADO -->
+    <script src="js/footer.js"></script>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"></script>
+    <!-- AOS -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({ once: true, offset: 50, duration: 600 });
+    </script>
+</body>
+</html>
