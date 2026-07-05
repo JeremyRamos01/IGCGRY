@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://www.iglesiacasadelgranreyleganes.es/sitemap.xml
+
+# Páginas no indexables
+Disallow: /admin
+Disallow: /chat
