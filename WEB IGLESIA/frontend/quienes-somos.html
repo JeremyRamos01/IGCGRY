@@ -146,10 +146,36 @@
                     <div class="turn-line"></div>
                 </div>
 
-                <!-- Row 2 (R→L): Hoy ← Nace ← Visión -->
+                <!-- Row 2 (R→L): Visión → Nace → Hoy -->
                 <div class="road-row reverse">
                     <span class="road-arrow arrow-1"><i class="fa-solid fa-chevron-left"></i></span>
                     <span class="road-arrow arrow-2"><i class="fa-solid fa-chevron-left"></i></span>
+
+                    <!-- Stop 7: VISIÓN (visually RIGHT) -->
+                    <div class="road-stop" id="stop-7">
+                        <div class="stop-pin">7</div>
+                        <div class="stop-date">Una Noche Especial</div>
+                        <div class="stop-card">
+                            <span class="card-era"><i class="fa-solid fa-eye me-1"></i>Visión</span>
+                            <h4>Un Sueño de Dios</h4>
+                            <p>Dios reveló a través de un sueño lo que vendría. El llamado pastoral estaba confirmado. Era tiempo de dar un paso de fe y obedecer.</p>
+                        </div>
+                    </div>
+
+                    <!-- Stop 8: LLEGÓ EL MOMENTO (visually CENTER) -->
+                    <div class="road-stop" id="stop-8">
+                        <div class="stop-pin">8</div>
+                        <div class="stop-date">Leganés, 2016</div>
+                        <div class="stop-card">
+                            <span class="card-era"><i class="fa-solid fa-church me-1"></i>Llegó el Momento</span>
+                            <div class="card-img-row">
+                                <img src="img/local_antiguo_interior.png" alt="Interior local antiguo" class="card-img-half">
+                                <img src="img/letrero_camino_santidad.png" alt="Letrero Camino de Santidad" class="card-img-half">
+                            </div>
+                            <h4>Nace la Iglesia</h4>
+                            <p>Arreglamos el local e hicimos un culto de inauguración en 2016. La iglesia tenía por nombre <strong>Iglesia Evangélica Camino de Santidad</strong>.</p>
+                        </div>
+                    </div>
 
                     <!-- Stop 9: HOY (visually LEFT) -->
                     <div class="road-stop" id="stop-9">
@@ -162,33 +188,6 @@
                             <p>Un local 3x más amplio, cuadruplicamos los hermanos, nuevos equipos. La misma visión del primer día, más experiencia en el ministerio junto a la familia.</p>
                         </div>
                     </div>
-
-                    <!-- Stop 8: LLEGÓ EL MOMENTO (visually CENTER) -->
-                    <div class="road-stop" id="stop-8">
-                        <div class="stop-pin">8</div>
-                        <div class="stop-date">Leganés, 2016</div>
-                        <div class="stop-card">
-                            <span class="card-era"><i class="fa-solid fa-church me-1"></i>Llegó el Momento</span>
-                            <!-- DOS FOTOS: Interior antiguo + Letrero -->
-                            <div class="card-img-row">
-                                <img src="img/local_antiguo_interior.png" alt="Interior local antiguo" class="card-img-half">
-                                <img src="img/letrero_camino_santidad.png" alt="Letrero Camino de Santidad" class="card-img-half">
-                            </div>
-                            <h4>Nace la Iglesia</h4>
-                            <p>Arreglamos el local e hicimos un culto de inauguración en 2016. La iglesia tenía por nombre <strong>Iglesia Evangélica Camino de Santidad</strong>.</p>
-                        </div>
-                    </div>
-
-                    <!-- Stop 7: VISIÓN (visually RIGHT) -->
-                    <div class="road-stop" id="stop-7">
-                        <div class="stop-pin">7</div>
-                        <div class="stop-date">Una Noche Especial</div>
-                        <div class="stop-card">
-                            <span class="card-era"><i class="fa-solid fa-eye me-1"></i>Visión</span>
-                            <h4>Un Sueño de Dios</h4>
-                            <p>Dios reveló a través de un sueño lo que vendría. El llamado pastoral estaba confirmado. Era tiempo de dar un paso de fe y obedecer.</p>
-                        </div>
-                    </div>
                 </div>
 
             </div>
@@ -198,229 +197,213 @@
         <!-- ============================== PASTORES ============================== -->
         <section class="pastors-section" data-aos="fade-up">
             <div class="container">
-                <div class="chapter-header" style="padding-top: 0;">
-                    <span class="chapter-badge"><i class="fa-solid fa-users me-2"></i>Liderazgo</span>
+                <div class="section-title text-center">
+                    <span class="chapter-badge">Liderazgo</span>
                     <h2>Nuestros Pastores</h2>
+                    <p class="text-muted">Guiando con amor, fe y dedicación a la congregación en su crecimiento espiritual.</p>
                 </div>
-                <div class="pastor-card" data-aos="fade-up" data-aos-delay="100">
-                    <div class="pastor-img-wrapper">
-                        <img src="img/pastores.png" alt="Pastores Carlos e Isabel">
-                        <div class="pastor-img-overlay"></div>
-                    </div>
-                    <div class="pastor-info">
-                        <h3>Carlos Pineda e Isabel Riopedre</h3>
-                        <p class="pastor-role">Pastores Principales</p>
-                        <p class="pastor-quote">
-                            "Servimos con amor y dedicación a nuestra comunidad en Leganés, buscando siempre que el maravilloso amor de Cristo Jesús sea evidente entre nosotros."
-                        </p>
-                        <p style="color: var(--text-muted); margin-top: 14px; line-height: 1.7;">
-                            Nuestra congregación se caracteriza por ser una familia unida, donde se fomenta la solidaridad y se enseña la palabra de Dios con integridad.
-                        </p>
+
+                <div class="row justify-content-center">
+                    <div class="col-md-8 col-lg-6">
+                        <div class="pastor-card">
+                            <div class="pastor-img-wrapper">
+                                <img src="img/pastor.png" alt="Pastor Carlos Pineda Araujo" class="img-fluid">
+                                <div class="pastor-social">
+                                    <a href="https://www.facebook.com/carlos.pinedaaraujo/" target="_blank"><i class="fa-brands fa-facebook-f"></i></a>
+                                </div>
+                            </div>
+                            <div class="pastor-info">
+                                <span class="pastor-tag">Pastor Principal</span>
+                                <h3>Carlos Pineda Araujo</h3>
+                                <p class="pastor-bio text-muted">Llamado por la gracia del Señor para guiar y edificar la iglesia con sana doctrina, promoviendo un discipulado bíblico y un amor práctico en la comunidad.</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </section>
-
 
         <!-- ============================== TESTIMONIOS ============================== -->
-        <section class="testimonials-section">
+        <section class="testimonials-section bg-warm">
             <div class="container">
-                <div class="chapter-header" data-aos="fade-up" style="padding-top: 0;">
-                    <span class="chapter-badge"><i class="fa-solid fa-quote-left me-2"></i>Testimonios</span>
-                    <h2>Una Iglesia de Cero Hipocresía</h2>
-                    <p>Los testimonios de nuestros miembros confirman nuestro mayor deseo: ser una iglesia auténtica.</p>
+                <div class="section-title text-center" data-aos="fade-up">
+                    <span class="chapter-badge">Testimonios</span>
+                    <h2>Lo que dice nuestra comunidad</h2>
+                    <p class="text-muted">Palabras de fe y gratitud de hermanos que forman parte de la familia Casa del Gran REY.</p>
                 </div>
+
                 <div class="row g-4 justify-content-center">
-                    <div class="col-md-6 col-lg-5" data-aos="fade-up" data-aos-delay="100">
+                    <!-- Testimonio 1 -->
+                    <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="100">
                         <div class="testimonial-card">
-                            <p>"Le doy gloria a Dios pertenecer a Casa del Gran REY. Una congregación de cero chisme, donde el maravilloso amor de Cristo Jesús es evidente entre nosotros."</p>
-                            <span class="author">— Dominga A.</span>
-                        </div>
-                    </div>
-                    <div class="col-md-6 col-lg-5" data-aos="fade-up" data-aos-delay="200">
-                        <div class="testimonial-card">
-                            <p>"Iglesia con mucho amor para dar. Ven, sé parte de ella, pero sobre todo que Jesucristo sea el centro de tu vida."</p>
-                            <span class="author">— Oneida N.</span>
+                            <p>"Esta muy bien la página, gloria al Señor, y gracias Jeremy que el Señor te lo premie. Poner el No. de Registro: 024973"</p>
+                            <div class="author mt-3">— Jeremy Ramos</div>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
-
 
         <!-- ============================== CTA ============================== -->
-        <section class="cta-section" data-aos="fade-up">
-            <div class="container position-relative" style="z-index: 2;">
-                <h2>¿Aceptas el Compromiso?</h2>
-                <p>Ser parte de la iglesia de Cristo no es solo asistir a un servicio. Es comprometerse con una vida de fe, amor y servicio.</p>
-                <div class="cta-verse">
-                    "No que lo haya alcanzado ya, ni que ya sea perfecto; sino que prosigo, por ver si logro asir aquello para lo cual fui también asido por Cristo Jesús."
-                    <span class="verse-ref">— Filipenses 3:12</span>
+        <section class="cta-section">
+            <div class="container" style="position: relative; z-index: 1;">
+                <h2 data-aos="fade-up">¿Deseas visitarnos?</h2>
+                <p data-aos="fade-up" data-aos-delay="100">Te invitamos a ser parte de nuestra familia y experimentar el amor de Dios en cada uno de nuestros servicios.</p>
+                <div class="cta-verse" data-aos="fade-up" data-aos-delay="150">
+                    "Yo me alegré con los que me decían: A la casa de Jehová iremos."
+                    <span class="verse-ref">Salmos 122:1</span>
                 </div>
-                <div>
-                    <a href="contacto.html" class="btn-primary-custom" id="cta-button">
-                        <i class="fa-solid fa-hands-praying me-2"></i>Contáctanos
-                    </a>
+                <div data-aos="fade-up" data-aos-delay="200">
+                    <a href="contacto.html" class="btn btn-primary-custom px-5 py-3 rounded-pill fw-bold"><i class="fa-solid fa-location-dot me-2"></i>Cómo llegar</a>
                 </div>
             </div>
         </section>
-
     </main>
 
+    <!-- FOOTER CENTRALIZADO -->
     <script src="js/footer.js"></script>
+
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"></script>
+
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.2/lib/anime.min.js"></script>
-
     <script>
-        AOS.init({ once: true, offset: 50, duration: 800, easing: 'ease-out-cubic' });
+        AOS.init({ once: true, offset: 50 });
+    </script>
 
+    <script type="module">
+        import anime from 'https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.es.js';
+
+        // 1. ANIMACIÓN DE ENTRADA HERO
         document.addEventListener('DOMContentLoaded', () => {
+            anime({
+                targets: '.about-hero .container',
+                opacity: [0, 1],
+                translateY: [30, 0],
+                duration: 1200,
+                easing: 'easeOutCubic'
+            });
+            createCtaParticles();
+        });
 
-            // =============================================
-            // 1. HERO ENTRANCE
-            // =============================================
-            anime.timeline({ easing: 'easeOutExpo' })
-                .add({ targets: '#hero-badge', opacity: [0, 1], translateY: [25, 0], duration: 900 }, 300)
-                .add({ targets: '#hero-title', opacity: [0, 1], translateY: [40, 0], duration: 1100 }, 500)
-                .add({ targets: '#hero-desc', opacity: [0, 1], translateY: [30, 0], duration: 1000 }, 800);
+        // 2. PARTÍCULAS DE FONDO EN EL CTA (Sutileza Premium)
+        function createCtaParticles() {
+            const cta = document.querySelector('.cta-section');
+            if (!cta) return;
+            const container = document.createElement('div');
+            container.className = 'particles-container';
+            cta.appendChild(container);
 
+            for (let i = 0; i < 20; i++) {
+                const p = document.createElement('div');
+                p.className = 'particle';
+                p.style.left = Math.random() * 100 + '%';
+                p.style.top = Math.random() * 100 + '%';
+                const sz = (Math.random() * 3 + 2) + 'px';
+                p.style.width = sz; p.style.height = sz;
+                p.style.opacity = Math.random() * 0.3 + 0.1;
+                container.appendChild(p);
+                anime({
+                    targets: p,
+                    translateX: () => anime.random(-50, 50),
+                    translateY: () => anime.random(-50, 50),
+                    opacity: [{ value: anime.random(0.1, 0.35), duration: anime.random(2000, 4000) },
+                              { value: anime.random(0.05, 0.15), duration: anime.random(2000, 4000) }],
+                    duration: anime.random(5000, 9000),
+                    easing: 'easeInOutSine',
+                    loop: true,
+                    direction: 'alternate'
+                });
+            }
+        }
 
-            // =============================================
-            // 2. PARTICLES
-            // =============================================
-            const pc = document.getElementById('hero-particles');
-            if (pc) {
-                for (let i = 0; i < 18; i++) {
-                    const p = document.createElement('div');
-                    p.classList.add('particle');
-                    p.style.left = Math.random() * 100 + '%';
-                    p.style.top = Math.random() * 100 + '%';
-                    const sz = (Math.random() * 3 + 2) + 'px';
-                    p.style.width = sz; p.style.height = sz;
-                    p.style.opacity = Math.random() * 0.3 + 0.1;
-                    pc.appendChild(p);
+        // =============================================
+        // 3. ROAD STOPS — APPEAR ON SCROLL ROW BY ROW
+        // =============================================
+        const observedRows = new Set();
+
+        const rowObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (!entry.isIntersecting) return;
+                const row = entry.target;
+                if (observedRows.has(row)) return;
+                observedRows.add(row);
+
+                const stops = Array.from(row.querySelectorAll('.road-stop'));
+                
+                stops.forEach((stop, i) => {
+                    // Card slide in
                     anime({
-                        targets: p,
-                        translateX: () => anime.random(-50, 50),
-                        translateY: () => anime.random(-50, 50),
-                        opacity: [{ value: anime.random(0.1, 0.35), duration: anime.random(2000, 4000) },
-                                  { value: anime.random(0.05, 0.15), duration: anime.random(2000, 4000) }],
-                        duration: anime.random(5000, 9000),
-                        easing: 'easeInOutSine',
-                        loop: true,
-                        direction: 'alternate'
+                        targets: stop,
+                        opacity: [0, 1],
+                        translateY: [35, 0],
+                        duration: 800,
+                        delay: i * 250,
+                        easing: 'easeOutCubic',
+                        begin: () => stop.classList.add('visible')
                     });
-                }
-            }
 
+                    // Pin elastic pop
+                    anime({
+                        targets: stop.querySelector('.stop-pin'),
+                        scale: [0, 1.25, 1],
+                        duration: 700,
+                        delay: i * 250 + 150,
+                        easing: 'easeOutElastic(1, .5)'
+                    });
 
-            // =============================================
-            // 3. ROAD STOPS — APPEAR ON SCROLL ROW BY ROW
-            // =============================================
-            const observedRows = new Set();
-
-            const rowObserver = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (!entry.isIntersecting) return;
-                    const row = entry.target;
-                    if (observedRows.has(row)) return;
-                    observedRows.add(row);
-
-                    const stops = Array.from(row.querySelectorAll('.road-stop'));
+                    // Card subtle slide from side
                     const isReverse = row.classList.contains('reverse');
-                    const ordered = isReverse ? [...stops].reverse() : stops;
-
-                    ordered.forEach((stop, i) => {
-                        // Card slide in
-                        anime({
-                            targets: stop,
-                            opacity: [0, 1],
-                            translateY: [35, 0],
-                            duration: 800,
-                            delay: i * 250,
-                            easing: 'easeOutCubic',
-                            begin: () => stop.classList.add('visible')
-                        });
-
-                        // Pin elastic pop
-                        anime({
-                            targets: stop.querySelector('.stop-pin'),
-                            scale: [0, 1.25, 1],
-                            duration: 700,
-                            delay: i * 250 + 150,
-                            easing: 'easeOutElastic(1, .5)'
-                        });
-
-                        // Card subtle slide from side
-                        anime({
-                            targets: stop.querySelector('.stop-card'),
-                            opacity: [0, 1],
-                            translateX: [isReverse ? -15 : 15, 0],
-                            duration: 600,
-                            delay: i * 250 + 200,
-                            easing: 'easeOutCubic'
-                        });
+                    anime({
+                        targets: stop.querySelector('.stop-card'),
+                        opacity: [0, 1],
+                        translateX: [isReverse ? -15 : 15, 0],
+                        duration: 600,
+                        delay: i * 250 + 200,
+                        easing: 'easeOutCubic'
                     });
-
-                    rowObserver.unobserve(row);
                 });
-            }, { threshold: 0.15, rootMargin: '0px 0px -8% 0px' });
 
-            document.querySelectorAll('.road-row').forEach(row => rowObserver.observe(row));
+                rowObserver.unobserve(row);
+            });
+        }, { threshold: 0.15, rootMargin: '0px 0px -8% 0px' });
 
+        document.querySelectorAll('.road-row').forEach(row => rowObserver.observe(row));
 
-            // =============================================
-            // 4. TURN CONNECTORS — ANIMATE IN
-            // =============================================
-            const turnObserver = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        anime({
-                            targets: entry.target.querySelector('.turn-line'),
-                            scaleY: [0, 1],
-                            opacity: [0, 1],
-                            duration: 500,
-                            easing: 'easeOutCubic'
-                        });
-                        turnObserver.unobserve(entry.target);
-                    }
-                });
-            }, { threshold: 0.3 });
-
-            document.querySelectorAll('.road-turn').forEach(t => turnObserver.observe(t));
-
-
-            // =============================================
-            // 5. CTA HOVER
-            // =============================================
-            const ctaBtn = document.getElementById('cta-button');
-            if (ctaBtn) {
-                ctaBtn.addEventListener('mouseenter', () => {
-                    anime({ targets: ctaBtn, scale: 1.05, duration: 250, easing: 'easeOutBack' });
-                });
-                ctaBtn.addEventListener('mouseleave', () => {
-                    anime({ targets: ctaBtn, scale: 1, duration: 250, easing: 'easeOutExpo' });
-                });
-            }
-
-
-            // =============================================
-            // 6. NAVBAR SCROLL
-            // =============================================
-            window.addEventListener('scroll', function () {
-                const nav = document.querySelector('.glass-nav');
-                if (nav) {
-                    if (window.scrollY > 50) {
-                        nav.style.background = 'rgba(30, 41, 59, 0.98)';
-                        nav.style.boxShadow = '0 4px 20px rgba(0,0,0,0.2)';
-                    } else {
-                        nav.style.background = 'rgba(30, 41, 59, 0.95)';
-                        nav.style.boxShadow = 'none';
-                    }
+        // =============================================
+        // 4. TURN CONNECTORS — ANIMATE IN
+        // =============================================
+        const turnObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    anime({
+                        targets: entry.target.querySelector('.turn-line'),
+                        scaleY: [0, 1],
+                        opacity: [0, 1],
+                        duration: 500,
+                        easing: 'easeOutCubic'
+                    });
+                    turnObserver.unobserve(entry.target);
                 }
             });
+        }, { threshold: 0.3 });
+
+        document.querySelectorAll('.road-turn').forEach(t => turnObserver.observe(t));
+
+        // =============================================
+        // 5. NAVBAR SCROLL
+        // =============================================
+        window.addEventListener('scroll', function () {
+            const nav = document.querySelector('.glass-nav');
+            if (nav) {
+                if (window.scrollY > 50) {
+                    nav.style.background = 'rgba(30, 41, 59, 0.98)';
+                    nav.style.boxShadow = '0 4px 20px rgba(0,0,0,0.2)';
+                } else {
+                    nav.style.background = 'rgba(30, 41, 59, 0.95)';
+                    nav.style.boxShadow = 'none';
+                }
+            }
         });
     </script>
 

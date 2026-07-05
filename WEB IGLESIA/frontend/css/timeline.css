@@ -140,6 +140,12 @@
     padding: 10px 0;
 }
 
+@media (min-width: 992px) {
+    .road-row.reverse #stop-7 { order: 3; }
+    .road-row.reverse #stop-8 { order: 2; }
+    .road-row.reverse #stop-9 { order: 1; }
+}
+
 /* Horizontal path line — THICK AND VISIBLE */
 .road-row::before {
     content: '';

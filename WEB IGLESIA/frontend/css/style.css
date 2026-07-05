@@ -61,6 +61,35 @@ h1, h2, h3, h4, h5, h6 {
   transition: transform 0.3s ease;
 }
 
+@media (max-width: 768px) {
+  .navbar-brand .logo {
+    width: 55px;
+  }
+}
+
+/* Brand Text Responsive Sizing */
+.brand-title {
+  font-size: 0.9rem;
+}
+.brand-subtext {
+  font-size: 0.58rem;
+}
+.brand-reg {
+  font-size: 0.52rem;
+}
+
+@media (min-width: 768px) {
+  .brand-title {
+    font-size: 1.25rem;
+  }
+  .brand-subtext {
+    font-size: 0.7rem;
+  }
+  .brand-reg {
+    font-size: 0.65rem;
+  }
+}
+
 .nav-link {
   color: rgba(255, 255, 255, 0.9) !important;
   font-weight: 500;

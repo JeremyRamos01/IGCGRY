@@ -4,12 +4,12 @@ const navbarHTML = `
         <div class="container-fluid px-2">
             <a class="navbar-brand d-flex align-items-center" href="/">
                 <img class="logo img-fluid" src="img/Logo.png" alt="Logo Iglesia Del Gran REY">
-                <div class="d-none d-md-flex flex-column ms-3 ps-3 border-start border-2" style="border-color: rgba(255,255,255,0.3) !important;">
-                    <span class="fw-bold fs-5 text-white" style="letter-spacing: 1px;">Casa del Gran REY</span>
-                    <span style="font-size: 0.7rem; color: rgba(255,255,255,0.75); letter-spacing: 0.5px; margin-top: 2px;">
-                        <i class="fa-solid fa-church me-1 text-gold"></i> Cultos: Sáb a partir de 19:00h | Dom a partir de 12:00h
+                <div class="d-flex flex-column ms-2 ms-md-3 ps-2 ps-md-3 border-start border-2" style="border-color: rgba(255,255,255,0.3) !important;">
+                    <span class="fw-bold text-white brand-title" style="letter-spacing: 1px;">Casa del Gran REY</span>
+                    <span class="brand-subtext" style="color: rgba(255,255,255,0.75); letter-spacing: 0.5px; margin-top: 2px;">
+                        <i class="fa-solid fa-church me-1 text-gold"></i> Cultos: Sáb 19:00h | Dom 12:00h
                     </span>
-                    <span style="font-size: 0.65rem; color: rgba(255,255,255,0.5); margin-top: 1px;">
+                    <span class="brand-reg" style="color: rgba(255,255,255,0.5); margin-top: 1px;">
                         Nº Registro: 024973
                     </span>
                 </div>
