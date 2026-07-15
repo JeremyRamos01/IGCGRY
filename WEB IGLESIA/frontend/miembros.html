@@ -90,7 +90,7 @@
     <script src="js/navbar.js"></script>
 
     <header class="members-hero">
-        <div class="container" data-aos="fade-up">
+        <div class="container">
             <h1 class="fw-bold" style="color: var(--accent-gold);">Área de Miembros</h1>
             <p style="opacity: 0.8;">Acceso exclusivo a documentos internos y recursos de la iglesia.</p>
         </div>
@@ -98,7 +98,7 @@
 
     <main class="container">
         <!-- ZONA DE LOGIN -->
-        <div class="auth-container" id="loginArea" data-aos="zoom-in" data-aos-delay="100">
+        <div class="auth-container" id="loginArea">
             <i class="fa-solid fa-lock auth-icon"></i>
             <h3 class="mb-3 fw-bold">Acceso Restringido</h3>
             <p class="text-muted mb-4">Por favor, introduce la clave de acceso para ver los documentos importantes.</p>
@@ -132,11 +132,25 @@
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"></script>
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    <script type="module">
-        import { storage } from './js/firebase-config.js';
-        import { ref, listAll, getDownloadURL, getMetadata } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-storage.js";
-
+    <!-- Firebase Compat SDK (Permite ejecutar en local sin servidor web) -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-storage-compat.js"></script>
+    
+    <script>
         AOS.init({ once: true, offset: 50 });
+
+        // Inicializar Firebase Compat para que funcione con archivo local (file://)
+        const firebaseConfig = {
+            apiKey: "AIzaSyCCTbCCB551dIlPpInrUPKb8L9qLrgHORg",
+            authDomain: "casa-del-gran-rey.firebaseapp.com",
+            projectId: "casa-del-gran-rey",
+            storageBucket: "casa-del-gran-rey.firebasestorage.app",
+            messagingSenderId: "346085992467",
+            appId: "1:346085992467:web:28fd5e3d3ce95a3796f7e6",
+            measurementId: "G-1VLJEHWB3M"
+        };
+        firebase.initializeApp(firebaseConfig);
+        const storage = firebase.storage();
 
         // SISTEMA SIMPLE DE CONTRASEÑA
         const SECRET_KEY = "Rey2026"; 
@@ -205,8 +219,8 @@
             container.innerHTML = '<div class="text-center py-5"><div class="spinner-border text-warning" role="status"></div><p class="mt-2 text-muted">Cargando documentos desde Firebase...</p></div>';
             
             try {
-                const listRef = ref(storage, 'documentos');
-                const res = await listAll(listRef);
+                const listRef = storage.ref('documentos');
+                const res = await listRef.listAll();
                 
                 container.innerHTML = ''; // Clear loading
                 
@@ -217,8 +231,8 @@
 
                 for (const itemRef of res.items) {
                     try {
-                        const url = await getDownloadURL(itemRef);
-                        const metadata = await getMetadata(itemRef);
+                        const url = await itemRef.getDownloadURL();
+                        const metadata = await itemRef.getMetadata();
                         
                         const title = metadata.customMetadata?.title || itemRef.name;
                         const description = metadata.customMetadata?.description || `Tamaño: ${formatBytes(metadata.size)}`;
