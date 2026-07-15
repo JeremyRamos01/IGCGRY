@@ -621,76 +621,110 @@
    PASTORS SECTION
    ============================================= */
 .pastors-section {
-    padding: 90px 0;
-    background: #fff;
+    padding: 100px 0;
+    background: linear-gradient(to bottom, #f8fafc, #ffffff);
 }
 
 .pastor-card {
-    max-width: 850px;
+    max-width: 1050px;
     margin: 0 auto;
     background: #fff;
-    border-radius: 20px;
+    border-radius: 24px;
     overflow: hidden;
-    box-shadow: 0 8px 30px -8px rgba(0, 0, 0, 0.1);
-    border: 1px solid rgba(0,0,0,0.04);
-    transition: all 0.5s ease;
+    box-shadow: 0 15px 45px -10px rgba(0, 0, 0, 0.08);
+    border: 1px solid rgba(0,0,0,0.03);
+    transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    display: flex;
+    flex-direction: column;
+}
+
+@media (min-width: 900px) {
+    .pastor-card {
+        flex-direction: row;
+        align-items: stretch;
+    }
 }
 
 .pastor-card:hover {
-    box-shadow: 0 16px 40px -12px rgba(0, 0, 0, 0.15);
-    transform: translateY(-4px);
+    box-shadow: 0 25px 55px -12px rgba(0, 0, 0, 0.12);
+    transform: translateY(-5px);
 }
 
 .pastor-img-wrapper {
     position: relative;
     overflow: hidden;
+    flex: 1;
+    min-height: 380px;
+}
+
+@media (min-width: 900px) {
+    .pastor-img-wrapper {
+        flex: 0 0 45%;
+        min-height: auto;
+    }
 }
 
 .pastor-img-wrapper img {
     width: 100%;
-    height: 320px;
+    height: 100%;
     object-fit: cover;
-    transition: transform 0.6s ease;
+    object-position: center 20%;
+    transition: transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
 .pastor-card:hover .pastor-img-wrapper img {
-    transform: scale(1.03);
+    transform: scale(1.05);
 }
 
 .pastor-img-overlay {
     position: absolute;
     bottom: 0; left: 0; right: 0;
-    height: 40%;
-    background: linear-gradient(to top, rgba(30, 41, 59, 0.5), transparent);
+    height: 35%;
+    background: linear-gradient(to top, rgba(15, 23, 42, 0.6), transparent);
     pointer-events: none;
 }
 
 .pastor-info {
-    padding: 32px 36px 36px;
+    flex: 1;
+    padding: 40px 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background: #fff;
+}
+
+@media (min-width: 900px) {
+    .pastor-info {
+        padding: 50px 60px;
+    }
 }
 
 .pastor-info h3 {
-    font-size: 1.5rem;
+    font-size: 1.8rem;
     font-weight: 800;
-    margin-bottom: 4px;
+    margin-bottom: 8px;
+    color: #1e293b;
 }
 
 .pastor-info .pastor-role {
     color: var(--accent-gold);
     font-weight: 700;
-    letter-spacing: 2px;
+    letter-spacing: 2.5px;
     text-transform: uppercase;
-    font-size: 0.78rem;
-    margin-bottom: 16px;
+    font-size: 0.85rem;
+    margin-bottom: 24px;
 }
 
 .pastor-info .pastor-quote {
-    font-size: 1rem;
+    font-size: 1.05rem;
     color: var(--text-muted);
     font-style: italic;
-    line-height: 1.7;
-    padding-left: 18px;
-    border-left: 3px solid var(--accent-gold);
+    line-height: 1.8;
+    padding-left: 20px;
+    border-left: 4px solid var(--accent-gold);
+    background: linear-gradient(to right, rgba(212, 175, 55, 0.05), transparent);
+    padding: 15px 15px 15px 20px;
+    border-radius: 0 12px 12px 0;
 }
 
 

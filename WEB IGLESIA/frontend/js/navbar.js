@@ -23,20 +23,36 @@ const navbarHTML = `
                     <li class="nav-item">
                         <a class="nav-link" href="#inicio">Inicio</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="quienes-somos.html">Conócenos</a>
+                    
+                    <!-- Dropdown La Iglesia -->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="iglesiaDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            La Iglesia
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="iglesiaDropdown" style="background: rgba(30, 41, 59, 0.95); border: 1px solid rgba(255,255,255,0.1);">
+                            <li><a class="dropdown-item" href="quienes-somos.html">Conócenos</a></li>
+                            <li><a class="dropdown-item" href="declaracion-de-fe.html">Nuestra Fe</a></li>
+                            <li><a class="dropdown-item" href="programa.html">Programa Semanal</a></li>
+                        </ul>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="biblioteca.html">Biblioteca</a>
+
+                    <!-- Dropdown Recursos -->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="recursosDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Recursos
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="recursosDropdown" style="background: rgba(30, 41, 59, 0.95); border: 1px solid rgba(255,255,255,0.1);">
+                            <li><a class="dropdown-item" href="biblioteca.html">Biblioteca</a></li>
+                            <li><a class="dropdown-item" href="eventos.html">Eventos</a></li>
+                            <li><a class="dropdown-item" href="chat.html">Foro Libre</a></li>
+                        </ul>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="eventos.html">Eventos</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="chat.html">Foro Libre</a>
-                    </li>
+
                     <li class="nav-item ms-lg-2 mt-2 mt-lg-0">
                         <a class="btn-donate-nav" href="donar.html"><i class="fa-solid fa-hand-holding-heart me-1"></i>Donar</a>
+                    </li>
+                    <li class="nav-item ms-lg-2 mt-2 mt-lg-0">
+                        <a class="btn btn-outline-light rounded-pill px-3 py-2" href="miembros.html" style="font-size: 0.85rem;"><i class="fa-solid fa-lock me-1"></i>Miembros</a>
                     </li>
                     <li class="nav-item ms-lg-2 mt-2 mt-lg-0">
                         <a class="btn btn-primary-custom" href="contacto.html">Contáctanos</a>

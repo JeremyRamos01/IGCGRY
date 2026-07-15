@@ -1,0 +1,435 @@
+<!doctype html>
+<html lang="es">
+
+<head>
+    <title>Programa Semanal | Casa del Gran REY</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="Programa semanal de la Iglesia Evangélica Casa del Gran REY en Leganés y otras misiones. Conoce nuestros horarios.">
+    <meta name="robots" content="index, follow">
+
+    <!-- Bootstrap CSS v5.3.2 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <!-- AOS Animation CSS -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Custom CSS -->
+    <link href="css/style.css" rel="stylesheet">
+    <style>
+        .program-hero {
+            padding: 140px 20px 70px;
+            background: linear-gradient(135deg, var(--primary-dark) 0%, #334155 100%);
+            color: white;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .program-hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at 50% 50%, rgba(212, 175, 55, 0.05) 0%, transparent 60%);
+            pointer-events: none;
+        }
+
+        .program-title {
+            font-size: 2.5rem;
+            font-weight: 900;
+            margin-bottom: 5px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .program-subtitle {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--accent-gold);
+            margin-bottom: 20px;
+        }
+
+        .program-grid {
+            margin-top: -30px;
+            position: relative;
+            z-index: 10;
+            padding-bottom: 60px;
+        }
+
+        .program-card {
+            background: #fff;
+            border-radius: 4px;
+            box-shadow: none;
+            border: 1px solid #aaa;
+            padding: 15px 20px;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            transition: all 0.3s ease;
+            opacity: 0; /* For anime.js */
+            transform: translateY(20px); /* For anime.js */
+        }
+
+        .program-card:hover {
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            transform: translateY(-2px) !important; 
+        }
+
+        .card-header-title {
+            text-align: center;
+            font-weight: normal;
+            color: #000;
+            font-size: 1rem;
+            margin-bottom: 2px;
+        }
+
+        .card-subtitle {
+            text-align: center;
+            font-size: 0.9rem;
+            color: #000;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .table-custom {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9rem;
+            margin-bottom: auto;
+        }
+
+        .table-custom th {
+            font-weight: bold;
+            color: #000;
+            padding-bottom: 8px;
+            text-transform: uppercase;
+        }
+
+        .table-custom td {
+            padding: 3px 2px;
+            color: #000;
+            vertical-align: top;
+        }
+
+        .table-custom td:first-child {
+            font-weight: normal;
+            color: #000;
+            width: 25%;
+        }
+
+        .table-custom td:last-child {
+            font-weight: normal;
+            text-align: right;
+            width: 15%;
+        }
+
+        .card-footer-title {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .card-footer-title h4 {
+            font-weight: normal;
+            color: #000;
+            font-size: 1.1rem;
+            margin: 0;
+            text-transform: uppercase;
+        }
+
+        .card-footer-title span {
+            display: block;
+            color: #000;
+            font-size: 1rem;
+            margin-top: 5px;
+        }
+
+        .contact-box {
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.1), rgba(212, 175, 55, 0.02));
+            border: 2px dashed var(--accent-gold);
+            border-radius: 16px;
+            padding: 25px;
+            text-align: center;
+            margin: 30px auto 60px;
+            max-width: 600px;
+        }
+
+        .contact-box i {
+            font-size: 2.5rem;
+            color: #25D366;
+            margin-bottom: 10px;
+        }
+
+        .contact-box h5 {
+            font-weight: 800;
+            color: var(--primary-dark);
+        }
+
+        .contact-box p {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin: 0;
+            color: var(--text-main);
+        }
+    </style>
+</head>
+
+<body class="bg-light">
+    <!-- Menú de Navegación -->
+    <script src="js/navbar.js"></script>
+
+    <header class="program-hero">
+        <div class="container" data-aos="fade-down">
+            <h2 class="program-title text-white-50 fs-5 mb-2">Ministerio Casa del Gran REY</h2>
+            <h1 class="program-subtitle">Iglesias Evangélicas Casa del Gran REY</h1>
+        </div>
+    </header>
+
+    <main>
+        <div class="container program-grid">
+            <div class="row g-4 justify-content-center">
+                
+                <!-- 1. Iglesia Central -->
+                <div class="col-lg-6 col-md-12">
+                    <div class="program-card anime-card">
+                        <div class="card-header-title">Iglesia Casa del Gran REY en Leganés</div>
+                        <div class="card-subtitle">- PROGRAMA -</div>
+                        
+                        <table class="table-custom">
+                            <thead>
+                                <tr>
+                                    <th>Días</th>
+                                    <th>Actividad</th>
+                                    <th style="text-align:right;">Hora</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Lunes</td>
+                                    <td>Hogar Manantial #3</td>
+                                    <td>19:00</td>
+                                </tr>
+                                <tr>
+                                    <td>Martes</td>
+                                    <td style="color: #c95c3f; font-weight:600;">Culto de Oración</td>
+                                    <td style="color: #c95c3f;">19:00</td>
+                                </tr>
+                                <tr>
+                                    <td>Miércoles</td>
+                                    <td>Doctrina</td>
+                                    <td>20:00</td>
+                                </tr>
+                                <tr>
+                                    <td>Sábado</td>
+                                    <td style="color: #c95c3f; font-weight:600;">Culto de Sociedades</td>
+                                    <td style="color: #c95c3f;">19:00</td>
+                                </tr>
+                                <tr>
+                                    <td>Domingo</td>
+                                    <td>Culto Dominical</td>
+                                    <td>12:00</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <div class="card-footer-title">
+                            <h4>Iglesia Central</h4>
+                            <span>~⚜~</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2. Iglesia Hija -->
+                <div class="col-lg-6 col-md-12">
+                    <div class="program-card anime-card">
+                        <div class="card-header-title">Iglesia Casa del Gran REY en Estrecho</div>
+                        <div class="card-subtitle">- PROGRAMA -</div>
+                        
+                        <table class="table-custom">
+                            <thead>
+                                <tr>
+                                    <th>Días</th>
+                                    <th>Actividad</th>
+                                    <th style="text-align:right;">Hora</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Lunes</td>
+                                    <td>Estudio Bíblico</td>
+                                    <td>19:00</td>
+                                </tr>
+                                <tr>
+                                    <td>Martes</td>
+                                    <td style="color: #c95c3f; font-weight:600;">Culto de Oración <br>Y Reflexión.</td>
+                                    <td style="color: #c95c3f;">19:00</td>
+                                </tr>
+                                <tr>
+                                    <td>Sábado</td>
+                                    <td style="color: #c95c3f; font-weight:600;">Culto de Normal</td>
+                                    <td style="color: #c95c3f;">18:30</td>
+                                </tr>
+                                <tr>
+                                    <td>Domingo</td>
+                                    <td>Culto Dominical</td>
+                                    <td>12:00</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <div class="card-footer-title">
+                            <h4>Iglesia Hija</h4>
+                            <span>~⚜~</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 3. Misión Alcorcón -->
+                <div class="col-lg-4 col-md-6">
+                    <div class="program-card anime-card">
+                        <div class="card-header-title">Hogar Manantial de Vida en ALCORCÓN</div>
+                        <div class="card-subtitle">- PROGRAMA -</div>
+                        
+                        <table class="table-custom">
+                            <thead>
+                                <tr>
+                                    <th>Días</th>
+                                    <th>Actividad</th>
+                                    <th style="text-align:right;">Hora</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Martes</td>
+                                    <td style="color: #c95c3f; font-weight:600;">Culto de Oración <br>Y Reflexión.</td>
+                                    <td style="color: #c95c3f;">19:00</td>
+                                </tr>
+                                <tr>
+                                    <td>Jueves</td>
+                                    <td>Culto Normal</td>
+                                    <td>19:00</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <div class="card-footer-title">
+                            <h4>Punto Misionero</h4>
+                            <span>~⚜~</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 4. Misión Urgel -->
+                <div class="col-lg-4 col-md-6">
+                    <div class="program-card anime-card">
+                        <div class="card-header-title">Hogar Manantial de Vida en URGEL</div>
+                        <div class="card-subtitle">- PROGRAMA -</div>
+                        
+                        <table class="table-custom">
+                            <thead>
+                                <tr>
+                                    <th>Días</th>
+                                    <th>Actividad</th>
+                                    <th style="text-align:right;">Hora</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Martes</td>
+                                    <td style="color: #c95c3f; font-weight:600;">Culto de Oración <br>Y Reflexión.</td>
+                                    <td style="color: #c95c3f;">20:00</td>
+                                </tr>
+                                <tr>
+                                    <td>Viernes</td>
+                                    <td>Culto Normal</td>
+                                    <td>20:00</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <div class="card-footer-title">
+                            <h4>Punto Misionero</h4>
+                            <span>~⚜~</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 5. Hogar Crecimiento Leganés -->
+                <div class="col-lg-4 col-md-6">
+                    <div class="program-card anime-card">
+                        <div class="card-header-title">Hogar Manantial de Vida en LEGANÉS</div>
+                        <div class="card-subtitle">- PROGRAMA -</div>
+                        
+                        <table class="table-custom">
+                            <thead>
+                                <tr>
+                                    <th>Días</th>
+                                    <th>Actividad</th>
+                                    <th style="text-align:right;">Hora</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Lunes</td>
+                                    <td style="color: #c95c3f; font-weight:600;">Culto de Oración <br>Y Estudio Bíblico.</td>
+                                    <td style="color: #c95c3f;">19:00</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <div class="card-footer-title">
+                            <h4>Hogar Crecimiento</h4>
+                            <span>~⚜~</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Contacto -->
+            <a href="https://wa.me/34624480351" target="_blank" style="text-decoration: none; color: inherit; display: block;" class="anime-card" data-aos-delay="400">
+                <div class="contact-box" style="transition: transform 0.3s; cursor: pointer;" onmouseover="this.style.transform='scale(1.03)'" onmouseout="this.style.transform='scale(1)'">
+                    <i class="fa-brands fa-whatsapp"></i>
+                    <h5>Para mejor información</h5>
+                    <p>comunícate con nosotros al WhatsApp</p>
+                    <h3 class="fw-bold mt-2 text-dark">624 480 351</h3>
+                </div>
+            </a>
+
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <script src="js/footer.js"></script>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    
+    <!-- Anime.js para animaciones chulas -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    
+    <script>
+        AOS.init({ once: true, offset: 50 });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // Animación en cascada de las tarjetas del programa
+            anime({
+                targets: '.anime-card',
+                translateY: [50, 0],
+                opacity: [0, 1],
+                delay: anime.stagger(150, {start: 300}), // 150ms delay between each card
+                duration: 1000,
+                easing: 'easeOutElastic(1, .8)',
+                complete: function(anim) {
+                    // Remover estilos inline de anime para que funcione el hover en CSS
+                    document.querySelectorAll('.anime-card').forEach(el => {
+                        el.style.transform = '';
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

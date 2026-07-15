@@ -350,11 +350,12 @@
         const messagesRef = collection(db, "chatMessages");
 
         // Obtener el inicio del día de hoy para reiniciar los mensajes diariamente
-        const today = new Date();
-        today.setHours(0, 0, 0, 0);
+        const timeLimit = new Date();
+        timeLimit.setDate(timeLimit.getDate() - 7); // Últimos 7 días
+        timeLimit.setHours(0, 0, 0, 0);
 
-        // Consulta ordenada por fecha, mostrando solo los de hoy
-        const q = query(messagesRef, where("timestamp", ">=", today), orderBy("timestamp", "asc"));
+        // Consulta: Mensajes de la última semana
+        const q = query(messagesRef, where("timestamp", ">=", timeLimit), orderBy("timestamp", "asc"));
 
         // Escuchar cambios en tiempo real
         onSnapshot(q, (snapshot) => {

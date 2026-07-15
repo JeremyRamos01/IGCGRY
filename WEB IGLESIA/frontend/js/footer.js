@@ -17,9 +17,12 @@ const footerHTML = `
                     <ul class="list-unstyled">
                         <li class="mb-2"><a href="#inicio">Inicio</a></li>
                         <li class="mb-2"><a href="quienes-somos.html">Conócenos</a></li>
+                        <li class="mb-2"><a href="declaracion-de-fe.html">Nuestra Fe</a></li>
+                        <li class="mb-2"><a href="programa.html">Programa Semanal</a></li>
                         <li class="mb-2"><a href="biblioteca.html">Biblioteca</a></li>
                         <li class="mb-2"><a href="eventos.html">Eventos</a></li>
                         <li class="mb-2"><a href="chat.html">Foro Libre</a></li>
+                        <li class="mb-2"><a href="miembros.html">Área de Miembros</a></li>
                         <li class="mb-2"><a href="contacto.html">Ubicaciones</a></li>
                         <li class="mb-2"><a href="donar.html"><i class="fa-solid fa-hand-holding-heart me-1" style="color: var(--accent-gold);"></i>Donar</a></li>
                     </ul>

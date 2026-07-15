@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="es">
+
+<head>
+    <title>Área de Miembros | Casa del Gran REY</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="Área exclusiva para miembros de la Iglesia Evangélica Casa del Gran REY en Leganés.">
+    <meta name="robots" content="noindex, nofollow">
+
+    <!-- Bootstrap CSS v5.3.2 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <!-- AOS Animation CSS -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Custom CSS -->
+    <link href="css/style.css" rel="stylesheet">
+    <style>
+        .members-hero {
+            padding: 120px 20px 60px;
+            background: linear-gradient(135deg, var(--primary-dark) 0%, #334155 100%);
+            color: white;
+            text-align: center;
+        }
+
+        .auth-container {
+            max-width: 500px;
+            margin: 40px auto 80px;
+            background: #fff;
+            padding: 40px 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+            border: 1px solid rgba(0,0,0,0.05);
+            text-align: center;
+        }
+
+        .auth-icon {
+            font-size: 3rem;
+            color: var(--accent-gold);
+            margin-bottom: 20px;
+        }
+
+        .content-container {
+            display: none; /* Oculto por defecto */
+            max-width: 800px;
+            margin: 40px auto 80px;
+        }
+
+        .doc-card {
+            background: #fff;
+            padding: 25px;
+            border-radius: 16px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            border-left: 4px solid var(--accent-gold);
+            transition: all 0.3s ease;
+        }
+
+        .doc-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        }
+
+        .doc-info h5 {
+            margin: 0 0 5px 0;
+            font-weight: 700;
+            color: var(--primary-dark);
+        }
+
+        .doc-info p {
+            margin: 0;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        @media (max-width: 768px) {
+            .doc-card { flex-direction: column; align-items: flex-start; gap: 15px; }
+            .doc-card .btn { width: 100%; }
+        }
+    </style>
+</head>
+
+<body class="bg-light">
+    <script src="js/navbar.js"></script>
+
+    <header class="members-hero">
+        <div class="container" data-aos="fade-up">
+            <h1 class="fw-bold" style="color: var(--accent-gold);">Área de Miembros</h1>
+            <p style="opacity: 0.8;">Acceso exclusivo a documentos internos y recursos de la iglesia.</p>
+        </div>
+    </header>
+
+    <main class="container">
+        <!-- ZONA DE LOGIN -->
+        <div class="auth-container" id="loginArea" data-aos="zoom-in" data-aos-delay="100">
+            <i class="fa-solid fa-lock auth-icon"></i>
+            <h3 class="mb-3 fw-bold">Acceso Restringido</h3>
+            <p class="text-muted mb-4">Por favor, introduce la clave de acceso para ver los documentos importantes.</p>
+            
+            <div class="input-group mb-3">
+                <span class="input-group-text bg-white"><i class="fa-solid fa-key text-muted"></i></span>
+                <input type="password" id="memberPassword" class="form-control form-control-lg" placeholder="Contraseña">
+            </div>
+            <p id="errorMsg" class="text-danger small fw-bold" style="display: none;">Contraseña incorrecta</p>
+            <button onclick="checkPassword()" class="btn btn-primary-custom w-100 py-2 rounded-pill mt-2 fw-bold">Entrar</button>
+        </div>
+
+        <!-- ZONA DE DOCUMENTOS (Oculta) -->
+        <div class="content-container" id="contentArea">
+            <div class="d-flex justify-content-between align-items-center mb-4 border-bottom pb-3">
+                <h2 class="fw-bold m-0"><i class="fa-solid fa-folder-open text-gold me-2"></i>Documentos Internos</h2>
+                <button onclick="logout()" class="btn btn-sm btn-outline-danger rounded-pill"><i class="fa-solid fa-arrow-right-from-bracket me-1"></i>Salir</button>
+            </div>
+
+            <div class="row">
+                <div class="col-12" data-aos="fade-up">
+                    
+                    <!-- Documento Ejemplo 1 -->
+                    <div class="doc-card">
+                        <div class="doc-info d-flex align-items-center">
+                            <i class="fa-solid fa-file-pdf fs-2 text-danger me-3"></i>
+                            <div>
+                                <h5>Estatutos Internos de la Iglesia</h5>
+                                <p>Reglamento y normativas para miembros activos.</p>
+                            </div>
+                        </div>
+                        <a href="#" class="btn btn-outline-primary rounded-pill px-4" download>
+                            <i class="fa-solid fa-download me-2"></i>Descargar
+                        </a>
+                    </div>
+
+                    <!-- Documento Ejemplo 2 -->
+                    <div class="doc-card">
+                        <div class="doc-info d-flex align-items-center">
+                            <i class="fa-solid fa-file-word fs-2 text-primary me-3"></i>
+                            <div>
+                                <h5>Formulario de Voluntariado</h5>
+                                <p>Plantilla para apuntarse a los ministerios.</p>
+                            </div>
+                        </div>
+                        <a href="#" class="btn btn-outline-primary rounded-pill px-4" download>
+                            <i class="fa-solid fa-download me-2"></i>Descargar
+                        </a>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="js/footer.js"></script>
+
+    <!-- Bootstrap y Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({ once: true, offset: 50 });
+
+        // SISTEMA SIMPLE DE CONTRASEÑA
+        // La contraseña por defecto es: "Rey2026" (puedes pedirme que la cambie)
+        const SECRET_KEY = "Rey2026"; 
+
+        function checkPassword() {
+            const input = document.getElementById('memberPassword').value;
+            if(input === SECRET_KEY) {
+                // Éxito
+                document.getElementById('loginArea').style.display = 'none';
+                document.getElementById('contentArea').style.display = 'block';
+                // Trigger animación
+                AOS.refresh();
+            } else {
+                // Error
+                document.getElementById('errorMsg').style.display = 'block';
+                document.getElementById('memberPassword').value = '';
+                // Shake effect
+                const loginBox = document.getElementById('loginArea');
+                loginBox.style.transform = 'translateX(10px)';
+                setTimeout(() => loginBox.style.transform = 'translateX(-10px)', 100);
+                setTimeout(() => loginBox.style.transform = 'translateX(10px)', 200);
+                setTimeout(() => loginBox.style.transform = 'translateX(0)', 300);
+            }
+        }
+
+        // Permite presionar Enter
+        document.getElementById('memberPassword').addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') {
+                checkPassword();
+            }
+        });
+
+        function logout() {
+            document.getElementById('contentArea').style.display = 'none';
+            document.getElementById('loginArea').style.display = 'block';
+            document.getElementById('memberPassword').value = '';
+            document.getElementById('errorMsg').style.display = 'none';
+        }
+    </script>
+</body>
+</html>
