@@ -119,36 +119,8 @@
             </div>
 
             <div class="row">
-                <div class="col-12" data-aos="fade-up">
-                    
-                    <!-- Documento Ejemplo 1 -->
-                    <div class="doc-card">
-                        <div class="doc-info d-flex align-items-center">
-                            <i class="fa-solid fa-file-pdf fs-2 text-danger me-3"></i>
-                            <div>
-                                <h5>Estatutos Internos de la Iglesia</h5>
-                                <p>Reglamento y normativas para miembros activos.</p>
-                            </div>
-                        </div>
-                        <a href="#" class="btn btn-outline-primary rounded-pill px-4" download>
-                            <i class="fa-solid fa-download me-2"></i>Descargar
-                        </a>
-                    </div>
-
-                    <!-- Documento Ejemplo 2 -->
-                    <div class="doc-card">
-                        <div class="doc-info d-flex align-items-center">
-                            <i class="fa-solid fa-file-word fs-2 text-primary me-3"></i>
-                            <div>
-                                <h5>Formulario de Voluntariado</h5>
-                                <p>Plantilla para apuntarse a los ministerios.</p>
-                            </div>
-                        </div>
-                        <a href="#" class="btn btn-outline-primary rounded-pill px-4" download>
-                            <i class="fa-solid fa-download me-2"></i>Descargar
-                        </a>
-                    </div>
-
+                <div class="col-12" data-aos="fade-up" id="docsContainer">
+                    <!-- Los documentos se cargarán aquí dinámicamente desde Firebase -->
                 </div>
             </div>
         </div>
@@ -160,14 +132,16 @@
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"></script>
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    <script>
+    <script type="module">
+        import { storage } from './js/firebase-config.js';
+        import { ref, listAll, getDownloadURL, getMetadata } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-storage.js";
+
         AOS.init({ once: true, offset: 50 });
 
         // SISTEMA SIMPLE DE CONTRASEÑA
-        // La contraseña por defecto es: "Rey2026" (puedes pedirme que la cambie)
         const SECRET_KEY = "Rey2026"; 
 
-        function checkPassword() {
+        window.checkPassword = function() {
             const input = document.getElementById('memberPassword').value;
             if(input === SECRET_KEY) {
                 // Éxito
@@ -175,6 +149,7 @@
                 document.getElementById('contentArea').style.display = 'block';
                 // Trigger animación
                 AOS.refresh();
+                loadDocuments();
             } else {
                 // Error
                 document.getElementById('errorMsg').style.display = 'block';
@@ -191,15 +166,87 @@
         // Permite presionar Enter
         document.getElementById('memberPassword').addEventListener('keypress', function (e) {
             if (e.key === 'Enter') {
-                checkPassword();
+                window.checkPassword();
             }
         });
 
-        function logout() {
+        window.logout = function() {
             document.getElementById('contentArea').style.display = 'none';
             document.getElementById('loginArea').style.display = 'block';
             document.getElementById('memberPassword').value = '';
             document.getElementById('errorMsg').style.display = 'none';
+        }
+
+        function getFileIcon(contentType, fileName) {
+            if (!contentType) {
+                if (fileName.endsWith('.pdf')) return 'fa-file-pdf text-danger';
+                if (fileName.endsWith('.doc') || fileName.endsWith('.docx')) return 'fa-file-word text-primary';
+                if (fileName.endsWith('.xls') || fileName.endsWith('.xlsx')) return 'fa-file-excel text-success';
+                return 'fa-file text-secondary';
+            }
+            if (contentType.includes('pdf')) return 'fa-file-pdf text-danger';
+            if (contentType.includes('word')) return 'fa-file-word text-primary';
+            if (contentType.includes('excel') || contentType.includes('spreadsheet')) return 'fa-file-excel text-success';
+            if (contentType.includes('image')) return 'fa-file-image text-info';
+            return 'fa-file text-secondary';
+        }
+
+        function formatBytes(bytes, decimals = 2) {
+            if (!+bytes) return '0 Bytes';
+            const k = 1024;
+            const dm = decimals < 0 ? 0 : decimals;
+            const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            return `${parseFloat((bytes / Math.pow(k, i)).toFixed(dm))} ${sizes[i]}`;
+        }
+
+        async function loadDocuments() {
+            const container = document.getElementById('docsContainer');
+            container.innerHTML = '<div class="text-center py-5"><div class="spinner-border text-warning" role="status"></div><p class="mt-2 text-muted">Cargando documentos desde Firebase...</p></div>';
+            
+            try {
+                const listRef = ref(storage, 'documentos');
+                const res = await listAll(listRef);
+                
+                container.innerHTML = ''; // Clear loading
+                
+                if (res.items.length === 0) {
+                    container.innerHTML = '<div class="alert alert-light text-center border">No hay documentos internos subidos en este momento. Sube archivos a la carpeta "documentos" en Firebase Storage.</div>';
+                    return;
+                }
+
+                for (const itemRef of res.items) {
+                    try {
+                        const url = await getDownloadURL(itemRef);
+                        const metadata = await getMetadata(itemRef);
+                        
+                        const title = metadata.customMetadata?.title || itemRef.name;
+                        const description = metadata.customMetadata?.description || `Tamaño: ${formatBytes(metadata.size)}`;
+                        const iconClass = getFileIcon(metadata.contentType, itemRef.name);
+
+                        const cardHTML = `
+                        <div class="doc-card" data-aos="fade-up">
+                            <div class="doc-info d-flex align-items-center">
+                                <i class="fa-solid ${iconClass} fs-2 me-3"></i>
+                                <div>
+                                    <h5>${title}</h5>
+                                    <p>${description}</p>
+                                </div>
+                            </div>
+                            <a href="${url}" target="_blank" class="btn btn-outline-primary rounded-pill px-4" download="${itemRef.name}">
+                                <i class="fa-solid fa-download me-2"></i>Descargar
+                            </a>
+                        </div>`;
+                        
+                        container.insertAdjacentHTML('beforeend', cardHTML);
+                    } catch (err) {
+                        console.error("Error cargando documento:", err);
+                    }
+                }
+            } catch (error) {
+                console.error("Error listando archivos:", error);
+                container.innerHTML = '<div class="alert alert-danger">Hubo un error al cargar los documentos. Asegúrate de que las reglas de Firebase Storage permitan lectura.</div>';
+            }
         }
     </script>
 </body>

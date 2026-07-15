@@ -134,7 +134,7 @@
 /* --- Road Row (3 stops per row) --- */
 .road-row {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 0;
     position: relative;
     padding: 10px 0;
@@ -150,9 +150,9 @@
 .road-row::before {
     content: '';
     position: absolute;
-    top: 28px;
-    left: 16.66%;
-    right: 16.66%;
+    top: 35px; /* Perfect center of the 54px pin with 10px row padding (10 + 27 - 2 = 35) */
+    left: 16.666%;
+    right: 16.666%;
     height: 4px;
     background: linear-gradient(90deg, var(--accent-gold), rgba(212, 175, 55, 0.6), var(--accent-gold));
     border-radius: 4px;
@@ -163,52 +163,58 @@
 /* Direction arrows on the path */
 .road-row .road-arrow {
     position: absolute;
-    top: 18px;
+    top: 37px; /* Exact vertical center of the line (35px top + 2px half-height) */
     color: var(--accent-gold);
-    font-size: 1rem;
+    font-size: 1.2rem;
     z-index: 1;
-    opacity: 0.7;
+    opacity: 0.9;
+    transform: translate(-50%, -50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
 }
 
-.road-row .road-arrow.arrow-1 { left: 36%; }
-.road-row .road-arrow.arrow-2 { left: 62%; }
+.road-row .road-arrow.arrow-1 { left: 33.333%; }
+.road-row .road-arrow.arrow-2 { left: 66.666%; }
 
 
 /* --- Turn Connectors — THICK AND VISIBLE --- */
 .road-turn {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
+    position: relative;
     height: 50px;
 }
 
 .road-turn .turn-line {
+    position: absolute;
     width: 4px;
     background: linear-gradient(180deg, var(--accent-gold), rgba(212, 175, 55, 0.7));
     border-radius: 4px;
     height: 100%;
-    margin: 0 auto;
-    position: relative;
     box-shadow: 0 1px 6px rgba(212, 175, 55, 0.25);
+}
+
+.road-turn.turn-right .turn-line {
+    right: 16.666%;
+    transform: translateX(50%);
+}
+
+.road-turn.turn-left .turn-line {
+    left: 16.666%;
+    transform: translateX(-50%);
 }
 
 .road-turn .turn-line::after {
     content: '↓';
     position: absolute;
-    bottom: -6px;
+    bottom: -12px;
     left: 50%;
     transform: translateX(-50%);
     color: var(--accent-gold);
-    font-size: 0.85rem;
-    font-weight: 700;
-    opacity: 0.7;
-}
-
-.road-turn.turn-right .turn-line {
-    grid-column: 3;
-}
-
-.road-turn.turn-left .turn-line {
-    grid-column: 1;
+    font-size: 1.2rem;
+    font-weight: 900;
+    opacity: 0.9;
+    background: transparent;
 }
 
 
@@ -220,6 +226,10 @@
     padding: 0 8px;
     opacity: 0;
     transform: translateY(30px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100%;
 }
 
 .road-stop.visible {
@@ -231,6 +241,7 @@
 .stop-pin {
     width: 54px;
     height: 54px;
+    flex-shrink: 0;
     border-radius: 50%;
     background: linear-gradient(145deg, var(--accent-gold), #c5a030);
     color: #fff;
@@ -282,6 +293,10 @@
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     position: relative;
     overflow: hidden;
+    width: 100%;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
 }
 
 .stop-card::before {
@@ -416,23 +431,22 @@
 @media (max-width: 991px) and (min-width: 601px) {
     /* Road map: 2 columns */
     .road-row {
-        grid-template-columns: 1fr 1fr;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
         gap: 24px 16px;
     }
 
     .road-row::before {
         left: 25%;
         right: 25%;
-        top: 30px;
+        top: 35px;
     }
 
     .road-turn {
-        grid-template-columns: 1fr 1fr;
         height: 40px;
     }
 
-    .road-turn.turn-right .turn-line { grid-column: 2; }
-    .road-turn.turn-left .turn-line { grid-column: 1; }
+    .road-turn.turn-right .turn-line { right: 25%; }
+    .road-turn.turn-left .turn-line { left: 25%; }
 
     /* Third item spans full width, centered */
     .road-stop:nth-child(n+4) ~ .road-arrow,
