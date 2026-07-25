@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Campaña Profética | Iglesia Casa del Gran Rey</title>
+    <link rel="icon" type="image/png" href="img/Logo.png">
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/style.css">
+
+    <style>
+        .campana-page {
+            min-height: 100vh;
+            background: linear-gradient(135deg, var(--primary-dark), #0f172a);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 120px 20px 60px;
+        }
+
+        .reserva-card {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 40px;
+            width: 100%;
+            max-width: 600px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
+
+        .header-title {
+            background: linear-gradient(90deg, #1e293b, #334155);
+            margin: -40px -40px 30px -40px;
+            padding: 25px;
+            border-radius: 20px 20px 0 0;
+            border-bottom: 2px solid var(--accent-gold);
+            text-align: center;
+        }
+
+        .header-title h1 {
+            color: #fff;
+            margin: 0;
+            font-size: 2rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .header-title h2 {
+            color: var(--accent-gold);
+            margin: 5px 0 0 0;
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
+        .form-section-title {
+            color: #fff;
+            font-size: 1.1rem;
+            text-align: center;
+            margin-bottom: 15px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 10px;
+        }
+
+        .custom-input {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #fff;
+            padding: 15px;
+            border-radius: 8px;
+            width: 100%;
+            margin-bottom: 30px;
+            font-size: 1.1rem;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .custom-input:focus {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: var(--accent-gold);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.2);
+            color: #fff;
+        }
+
+        .custom-input::placeholder {
+            color: rgba(255, 255, 255, 0.4);
+        }
+
+        .day-block {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+
+        .day-title {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 10px 15px;
+            color: #fff;
+            font-weight: 600;
+            font-size: 1.1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .time-slots {
+            display: flex;
+            padding: 15px;
+            gap: 15px;
+        }
+
+        @media (max-width: 500px) {
+            .time-slots {
+                flex-direction: column;
+            }
+        }
+
+        .checkbox-wrapper {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+        }
+
+        .checkbox-wrapper input[type="checkbox"] {
+            appearance: none;
+            width: 24px;
+            height: 24px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 4px;
+            cursor: pointer;
+            position: relative;
+            transition: all 0.2s;
+        }
+
+        .checkbox-wrapper input[type="checkbox"]:checked {
+            background: var(--accent-gold);
+            border-color: var(--accent-gold);
+        }
+
+        .checkbox-wrapper input[type="checkbox"]:checked::after {
+            content: '✓';
+            position: absolute;
+            color: #fff;
+            font-size: 16px;
+            font-weight: bold;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .checkbox-wrapper label {
+            color: #e2e8f0;
+            cursor: pointer;
+            font-size: 1rem;
+            margin: 0;
+        }
+
+        .btn-submit {
+            width: 100%;
+            background: #fff;
+            color: var(--primary-dark);
+            border: none;
+            padding: 15px;
+            font-size: 1.2rem;
+            font-weight: 700;
+            border-radius: 8px;
+            margin-top: 20px;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .btn-submit:hover {
+            background: var(--accent-gold);
+            color: #fff;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(212, 175, 55, 0.3);
+        }
+
+        .btn-submit:disabled {
+            background: #64748b;
+            color: #cbd5e1;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .progress-container {
+            margin-top: 25px;
+            text-align: center;
+        }
+
+        .progress-text {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.9rem;
+            margin-bottom: 8px;
+        }
+
+        .progress {
+            height: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+        }
+
+        .progress-bar {
+            background-color: var(--accent-gold);
+            transition: width 1s ease-in-out;
+        }
+
+        #message-alert {
+            display: none;
+            margin-top: 20px;
+            border-radius: 8px;
+        }
+
+        /* HISTÓRICO ANIMADO */
+        .historico-card {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 30px;
+            height: 700px;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
+
+        .historico-header {
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 15px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .historico-header h3 {
+            color: #fff;
+            font-size: 1.3rem;
+            margin: 0;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 700;
+        }
+
+        .historico-list-container {
+            flex: 1;
+            overflow-y: auto;
+            overflow-x: hidden;
+            position: relative;
+            /* Efecto difuminado arriba y abajo */
+            mask-image: linear-gradient(to bottom, transparent, black 10%, black 90%, transparent);
+            -webkit-mask-image: linear-gradient(to bottom, transparent, black 10%, black 90%, transparent);
+            /* Ocultar barra de scroll para mantener el estilo */
+            scrollbar-width: none; /* Firefox */
+            -ms-overflow-style: none;  /* IE and Edge */
+        }
+        .historico-list-container::-webkit-scrollbar {
+            display: none; /* Chrome, Safari and Opera */
+        }
+
+        .historico-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .historico-item {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 12px 20px;
+            border-radius: 8px;
+            color: #e2e8f0;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .historico-item:hover {
+            background: rgba(212, 175, 55, 0.1);
+            border-color: var(--accent-gold);
+            transform: translateX(5px);
+        }
+
+        .historico-item .avatar {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            background: var(--accent-gold);
+            color: var(--primary-dark);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.1rem;
+            flex-shrink: 0;
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <!-- El navbar se inyectará aquí a través de navbar.js -->
+    <section class="campana-page flex-column flex-lg-row gap-4">
+        <div class="reserva-card premium-card w-100" style="max-width: 600px;">
+            <div class="header-title">
+                <h1>Campaña Profética</h1>
+                <h2>RESERVA TU PLAZA</h2>
+            </div>
+
+            <form id="reservaForm">
+                <div class="form-section-title">Introduzca su Nombre</div>
+                <input type="text" id="nombreInput" class="custom-input" placeholder="Ej. Juan Pérez" required
+                    autocomplete="name">
+
+                <div class="form-section-title">Elija Día y Hora</div>
+
+                <!-- Viernes -->
+                <div class="day-block">
+                    <div class="day-title">VIERNES 31</div>
+                    <div class="time-slots">
+                        <div class="checkbox-wrapper">
+                            <input type="checkbox" id="v31-1" name="horarios" value="Viernes 31: 18:00 - 20:00">
+                            <label for="v31-1">De 18:00 a 20:00</label>
+                        </div>
+                        <div class="checkbox-wrapper">
+                            <input type="checkbox" id="v31-2" name="horarios" value="Viernes 31: 20:10 - 22:10">
+                            <label for="v31-2">De 20:10 a 22:10</label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sábado -->
+                <div class="day-block">
+                    <div class="day-title">SÁBADO 1</div>
+                    <div class="time-slots">
+                        <div class="checkbox-wrapper">
+                            <input type="checkbox" id="s1-1" name="horarios" value="Sábado 1: 18:00 - 20:00">
+                            <label for="s1-1">De 18:00 a 20:00</label>
+                        </div>
+                        <div class="checkbox-wrapper">
+                            <input type="checkbox" id="s1-2" name="horarios" value="Sábado 1: 20:10 - 22:10">
+                            <label for="s1-2">De 20:10 a 22:10</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="alert" id="message-alert" role="alert"></div>
+
+                <button type="submit" class="btn-submit" id="btnSubmit">Enviar</button>
+            </form>
+
+            <div class="progress-container">
+                <div class="progress-text">
+                    Plazas reservadas: <strong id="count-display" class="text-gold">--</strong> / 125
+                </div>
+                <div class="progress">
+                    <div class="progress-bar" id="progress-bar" role="progressbar" style="width: 0%" aria-valuenow="0"
+                        aria-valuemin="0" aria-valuemax="125"></div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Histórico Animado -->
+        <div class="historico-card premium-card w-100" style="max-width: 400px;">
+            <div class="historico-header">
+                <h3><i class="fa-solid fa-users text-gold me-2"></i>Ya tienen su plaza</h3>
+            </div>
+            <div class="historico-list-container">
+                <div class="historico-list" id="historicoList">
+                    <div class="text-center text-white-50 mt-4"><i class="fa-solid fa-spinner fa-spin"></i> Cargando...
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </section>
+
+    <!-- El footer se inyectará aquí -->
+    <div id="footer-container"></div>
+
+    <!-- Scripts de Bootstrap y utilidades -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/navbar.js"></script>
+    <script src="js/footer.js"></script>
+
+    <!-- Lógica de Firebase para la Reserva -->
+    <script type="module">
+        import { db } from './js/firebase-config.js';
+        import { collection, addDoc, getDocs, query, where, serverTimestamp, orderBy, deleteDoc, doc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+        const MAX_PLAZAS = 125;
+        const form = document.getElementById('reservaForm');
+        const btnSubmit = document.getElementById('btnSubmit');
+        const messageAlert = document.getElementById('message-alert');
+        const countDisplay = document.getElementById('count-display');
+        const progressBar = document.getElementById('progress-bar');
+        const nombreInput = document.getElementById('nombreInput');
+
+        // Comprobar si ya reservó desde este navegador
+        if (localStorage.getItem('campana_reservada')) {
+            showSuccess("Ya tienes una plaza reservada desde este dispositivo. ¡Te esperamos!");
+            form.querySelectorAll('input, button').forEach(el => el.disabled = true);
+        }
+
+        async function updateCount() {
+            try {
+                const q = query(collection(db, "reservas_campana"));
+                const querySnapshot = await getDocs(q);
+                const count = querySnapshot.size;
+
+                countDisplay.textContent = count;
+                const percentage = Math.min((count / MAX_PLAZAS) * 100, 100);
+                progressBar.style.width = percentage + '%';
+
+                if (count >= MAX_PLAZAS) {
+                    showError("Lo sentimos, se han agotado las " + MAX_PLAZAS + " plazas.");
+                    if (!localStorage.getItem('campana_reservada')) {
+                        form.querySelectorAll('input, button').forEach(el => el.disabled = true);
+                    }
+                    return false;
+                }
+                return true;
+            } catch (error) {
+                console.error("Error al obtener plazas:", error);
+                return true;
+            }
+        }
+
+        // Actualizar al cargar
+        updateCount();
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const nombre = nombreInput.value.trim();
+            if (nombre.length < 3) {
+                showError("Por favor, introduce un nombre válido.");
+                return;
+            }
+
+            // Validar que se haya seleccionado al menos un checkbox
+            const selectedHorarios = [];
+            document.querySelectorAll('input[name="horarios"]:checked').forEach(cb => {
+                selectedHorarios.push(cb.value);
+            });
+
+            if (selectedHorarios.length === 0) {
+                showError("Por favor, selecciona al menos un día y hora.");
+                return;
+            }
+
+            btnSubmit.disabled = true;
+            btnSubmit.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Procesando...';
+            messageAlert.style.display = 'none';
+
+            try {
+                // 1. Verificar si hay plazas
+                const isAvailable = await updateCount();
+                if (!isAvailable) {
+                    btnSubmit.innerHTML = 'Enviar';
+                    return;
+                }
+
+                // 2. Comprobar si el nombre ya existe (ignorando mayúsculas/minúsculas)
+                const qName = query(collection(db, "reservas_campana"), where("nombreLowerCase", "==", nombre.toLowerCase()));
+                const querySnapshot = await getDocs(qName);
+                if (!querySnapshot.empty) {
+                    showError("Ya existe una reserva con ese nombre. Usa tus apellidos o un distintivo.");
+                    btnSubmit.innerHTML = 'Enviar';
+                    btnSubmit.disabled = false;
+                    return;
+                }
+
+                // 3. Guardar en Firestore
+                await addDoc(collection(db, "reservas_campana"), {
+                    nombre: nombre,
+                    nombreLowerCase: nombre.toLowerCase(),
+                    horarios: selectedHorarios,
+                    fechaReserva: serverTimestamp()
+                });
+
+                // 4. Guardar en LocalStorage para no repetir
+                localStorage.setItem('campana_reservada', 'true');
+
+                // 5. Interfaz de éxito
+                showSuccess("¡Plaza reservada con éxito! Te esperamos.");
+                form.reset();
+                form.querySelectorAll('input, button').forEach(el => el.disabled = true);
+                updateCount();
+                loadHistorico(); // Recargar la lista
+
+            } catch (error) {
+                console.error("Error al guardar reserva: ", error);
+                showError("Ocurrió un error al guardar tu reserva. Revisa tu conexión o inténtalo más tarde.");
+                btnSubmit.innerHTML = 'Enviar';
+                btnSubmit.disabled = false;
+            }
+        });
+
+        function showSuccess(msg) {
+            messageAlert.className = 'alert alert-success';
+            messageAlert.innerHTML = '<i class="fa-solid fa-check-circle me-2"></i> ' + msg;
+            messageAlert.style.display = 'block';
+        }
+
+        function showError(msg) {
+            messageAlert.className = 'alert alert-danger';
+            messageAlert.innerHTML = '<i class="fa-solid fa-triangle-exclamation me-2"></i> ' + msg;
+            messageAlert.style.display = 'block';
+        }
+
+        // ==============================================
+        // LÓGICA DEL HISTÓRICO ANIMADO
+        // ==============================================
+        const historicoList = document.getElementById('historicoList');
+
+        async function loadHistorico() {
+            try {
+                // Ordenar por fecha de reserva descendente para ver los últimos
+                const q = query(collection(db, "reservas_campana"), orderBy("fechaReserva", "desc"));
+                const querySnapshot = await getDocs(q);
+                let html = '';
+
+                const reservas = [];
+                querySnapshot.forEach((doc) => {
+                    reservas.push(doc.data());
+                });
+
+                if (reservas.length === 0) {
+                    historicoList.innerHTML = '<div class="text-center text-white-50 mt-4">Aún no hay reservas. ¡Sé el primero!</div>';
+                    historicoList.style.animation = 'none';
+                    return;
+                }
+
+                reservas.forEach(reserva => {
+                    const nombre = reserva.nombre;
+                    const inicial = nombre.charAt(0).toUpperCase();
+                    
+                    // Formatear los horarios seleccionados (ej: Viernes 31: 18:00 - 20:00)
+                    let horariosStr = '';
+                    if(reserva.horarios && reserva.horarios.length > 0) {
+                        horariosStr = reserva.horarios.map(h => {
+                            // Limpiar un poco el string si es muy largo, o dejarlo
+                            return `<span class="badge bg-secondary me-1" style="font-size: 0.65rem;">${h.replace('Viernes 31:', 'Vie 31:').replace('Sábado 1:', 'Sáb 1:')}</span>`;
+                        }).join('');
+                    }
+
+                    html += `
+                        <div class="historico-item">
+                            <div class="avatar">${inicial}</div>
+                            <div class="name flex-grow-1">
+                                <div class="fw-bold">${nombre}</div>
+                                <div class="mt-1">${horariosStr}</div>
+                            </div>
+                        </div>
+                    `;
+                });
+
+                // Si hay pocos, no hace falta animar
+                if (reservas.length < 5) {
+                    historicoList.innerHTML = html;
+                } else {
+                    // Duplicamos la lista para hacer el scroll infinito impecable
+                    historicoList.innerHTML = html + html;
+                    setupAutoScroll(document.querySelector('.historico-list-container'));
+                }
+
+            } catch (error) {
+                console.error("Error cargando histórico:", error);
+                // Si falla por falta de índice compuesto, hacemos fallback sin order
+                if (error.message.includes('index')) {
+                    const fallbackQ = query(collection(db, "reservas_campana"));
+                    const fallbackSnap = await getDocs(fallbackQ);
+                    let html = '';
+                    let count = 0;
+                    fallbackSnap.forEach((doc) => {
+                        const reserva = doc.data();
+                        const nombre = reserva.nombre;
+                        const inicial = nombre.charAt(0).toUpperCase();
+                        
+                        let horariosStr = '';
+                        if(reserva.horarios && reserva.horarios.length > 0) {
+                            horariosStr = reserva.horarios.map(h => {
+                                return `<span class="badge bg-secondary me-1" style="font-size: 0.65rem;">${h.replace('Viernes 31:', 'Vie 31:').replace('Sábado 1:', 'Sáb 1:')}</span>`;
+                            }).join('');
+                        }
+
+                        html += `
+                            <div class="historico-item">
+                                <div class="avatar">${inicial}</div>
+                                <div class="name flex-grow-1">
+                                    <div class="fw-bold">${nombre}</div>
+                                    <div class="mt-1">${horariosStr}</div>
+                                </div>
+                            </div>
+                        `;
+                        count++;
+                    });
+                    if (count > 0) {
+                        historicoList.innerHTML = html + html;
+                        setupAutoScroll(document.querySelector('.historico-list-container'));
+                    }
+                }
+            }
+        }
+
+        // --- SCROLL AUTOMÁTICO JS ---
+        function setupAutoScroll(container) {
+            let scrollInterval;
+            const scrollSpeed = 1; // Píxeles por paso
+            const intervalTime = 40; // ms por paso
+            
+            function startScroll() {
+                if(scrollInterval) clearInterval(scrollInterval);
+                scrollInterval = setInterval(() => {
+                    container.scrollTop += scrollSpeed;
+                    // Si llegamos a la mitad (porque duplicamos el contenido), reseteamos para dar ilusión infinita
+                    if (container.scrollTop >= container.scrollHeight / 2) {
+                        container.scrollTop = 0;
+                    }
+                }, intervalTime);
+            }
+
+            // Iniciar scroll
+            startScroll();
+
+            // Pausar al pasar el ratón por encima (o tocar en móvil)
+            container.addEventListener('mouseenter', () => clearInterval(scrollInterval));
+            container.addEventListener('touchstart', () => clearInterval(scrollInterval));
+
+            // Reanudar al quitar el ratón (o soltar en móvil)
+            container.addEventListener('mouseleave', startScroll);
+            container.addEventListener('touchend', () => {
+                setTimeout(startScroll, 1000); // Reanuda tras 1 segundo
+            });
+        }
+
+        loadHistorico();
+
+    </script>
+</body>
+
+</html>

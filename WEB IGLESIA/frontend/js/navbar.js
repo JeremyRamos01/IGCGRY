@@ -55,7 +55,10 @@ const navbarHTML = `
                         <a class="btn btn-outline-light rounded-pill px-3 py-2" href="miembros.html" style="font-size: 0.85rem;"><i class="fa-solid fa-lock me-1"></i>Miembros</a>
                     </li>
                     <li class="nav-item ms-lg-2 mt-2 mt-lg-0">
-                        <a class="btn btn-primary-custom" href="contacto.html">Contáctanos</a>
+                        <a class="btn btn-primary-custom" href="campana.html" style="background-color: var(--accent-gold); color: #fff; border: none; padding: 10px 20px; text-transform: uppercase; letter-spacing: 1px; border-radius: 50px;"><i class="fa-solid fa-ticket me-1"></i>Reserva Campaña</a>
+                    </li>
+                    <li class="nav-item ms-lg-2 mt-2 mt-lg-0">
+                        <a class="btn btn-outline-custom" href="contacto.html" style="padding: 10px 20px;">Contáctanos</a>
                     </li>
                 </ul>
             </div>

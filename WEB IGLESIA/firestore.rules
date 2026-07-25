@@ -41,5 +41,14 @@ service cloud.firestore {
       allow create: if true;
       allow read, update, delete: if isAdmin();
     }
+
+    // COLECCIÓN: RESERVAS CAMPAÑA PROFÉTICA
+    // Cualquiera puede leer y crear reservas (hasta 125).
+    // Solo administradores pueden borrar o modificar después de creadas. (Excepción: borrar ejemplos)
+    match /reservas_campana/{document} {
+      allow create, read: if true;
+      allow update: if isAdmin();
+      allow delete: if isAdmin() || (resource.data.isExample == true);
+    }
   }
 }

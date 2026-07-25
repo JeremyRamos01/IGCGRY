@@ -106,6 +106,25 @@
             display: block;
             opacity: 1;
         }
+
+        /* Print Styles */
+        @media print {
+            body * {
+                visibility: hidden;
+            }
+            #print-area, #print-area * {
+                visibility: visible;
+            }
+            #print-area {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+            }
+            .d-print-none {
+                display: none !important;
+            }
+        }
     </style>
 </head>
 
@@ -148,6 +167,9 @@
                 </li>
                 <li>
                     <a href="#" onclick="showSection('mensajes', this)"><i class="fa-solid fa-envelope me-2"></i> Mensajes <span id="unread-count" class="badge bg-danger d-none">0</span></a>
+                </li>
+                <li>
+                    <a href="#" onclick="showSection('reservas', this)"><i class="fa-solid fa-ticket me-2"></i> Campaña</a>
                 </li>
                 <li class="mt-4">
                     <a href="#" id="btn-logout" class="text-danger"><i class="fa-solid fa-right-from-bracket me-2"></i> Cerrar Sesión</a>
@@ -401,6 +423,40 @@
                             <h5 class="fw-bold mb-4" style="color:var(--primary-dark);"><i class="fa-solid fa-inbox me-2 text-gold"></i> Bandeja de Entrada</h5>
                             <div id="messages-list" class="list-group">
                                 <div class="text-center text-muted p-3">Cargando mensajes...</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Módulo: Reservas Campaña -->
+                <div id="section-reservas" class="admin-section">
+                    <h2 class="fw-bold mb-4">Reservas: Campaña Profética</h2>
+                    <div class="card shadow-sm border-0 rounded-4">
+                        <div class="card-body p-4">
+                            <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-3">
+                                <h5 class="fw-bold mb-0" style="color:var(--primary-dark);"><i class="fa-solid fa-users me-2 text-gold"></i> Lista de Asistentes (<span id="reservas-count">0</span>/125)</h5>
+                                <button class="btn btn-gold fw-bold px-4" onclick="window.print()"><i class="fa-solid fa-file-pdf me-2"></i> Generar PDF / Imprimir</button>
+                            </div>
+                            <div id="print-area" class="table-responsive">
+                                <div class="text-center d-none d-print-block mb-4">
+                                    <h2 class="fw-bold">Iglesia Casa del Gran Rey</h2>
+                                    <h4>Lista Oficial de Asistentes - Campaña Profética</h4>
+                                    <hr>
+                                </div>
+                                <table class="table table-hover align-middle">
+                                    <thead class="table-light">
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Nombre Completo</th>
+                                            <th>Horarios Seleccionados</th>
+                                            <th>Fecha de Registro</th>
+                                            <th class="d-print-none text-end">Acciones</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="reservas-table-body">
+                                        <tr><td colspan="5" class="text-center text-muted">Cargando reservas...</td></tr>
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>
@@ -801,7 +857,83 @@
                 }
             });
 
-            // 3. CONTROL DE EN VIVO
+            // 3. RESERVAS CAMPAÑA
+            async function loadReservas() {
+                const tbody = document.getElementById('reservas-table-body');
+                const countDisplay = document.getElementById('reservas-count');
+                tbody.innerHTML = '<tr><td colspan="5" class="text-center text-muted"><span class="spinner-border spinner-border-sm"></span> Cargando...</td></tr>';
+                try {
+                    const q = query(collection(db, "reservas_campana"), orderBy("fechaReserva", "asc"));
+                    const snap = await getDocs(q);
+                    renderReservasTable(snap, tbody, countDisplay);
+                } catch(e) {
+                    console.warn("Falta índice o error, cargando sin orden:", e);
+                    try {
+                        const fallbackQ = query(collection(db, "reservas_campana"));
+                        const snap = await getDocs(fallbackQ);
+                        renderReservasTable(snap, tbody, countDisplay);
+                    } catch(err) {
+                        tbody.innerHTML = '<tr><td colspan="5" class="text-center text-danger">Error cargando reservas de la base de datos.</td></tr>';
+                    }
+                }
+            }
+
+            function renderReservasTable(snap, tbody, countDisplay) {
+                if(snap.empty) {
+                    tbody.innerHTML = '<tr><td colspan="5" class="text-center text-muted">No hay reservas todavía.</td></tr>';
+                    countDisplay.textContent = '0';
+                    return;
+                }
+
+                countDisplay.textContent = snap.size;
+                let html = '';
+                let index = 1;
+                
+                snap.forEach(docSnap => {
+                    const data = docSnap.data();
+                    
+                    let fechaStr = "Desconocida";
+                    if(data.fechaReserva) {
+                        fechaStr = data.fechaReserva.toDate().toLocaleDateString('es-ES', { year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute:'2-digit' });
+                    }
+
+                    // Formatear array a string legible
+                    let horariosStr = data.horarios ? data.horarios.join(', ') : 'Ninguno';
+
+                    html += `
+                        <tr>
+                            <td class="text-muted fw-bold">${index}</td>
+                            <td class="fw-bold">${data.nombre} ${data.isExample ? '<span class="badge bg-warning text-dark ms-2">Ejemplo</span>' : ''}</td>
+                            <td><span class="badge bg-secondary" style="font-size: 0.8rem; font-weight: 500;">${horariosStr}</span></td>
+                            <td class="text-muted small">${fechaStr}</td>
+                            <td class="d-print-none text-end">
+                                <button class="btn btn-sm btn-outline-danger delete-reserva-btn" data-id="${docSnap.id}">
+                                    <i class="fa-solid fa-trash"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    `;
+                    index++;
+                });
+                
+                tbody.innerHTML = html;
+
+                // Añadir listeners para borrar
+                document.querySelectorAll('.delete-reserva-btn').forEach(btn => {
+                    btn.addEventListener('click', async (e) => {
+                        if(confirm("¿Seguro que quieres borrar esta reserva permanentemente?")) {
+                            e.currentTarget.disabled = true;
+                            const id = e.currentTarget.getAttribute('data-id');
+                            await deleteDoc(doc(db, "reservas_campana", id));
+                            loadReservas(); 
+                        }
+                    });
+                });
+            }
+
+            loadReservas();
+
+            // 4. CONTROL DE EN VIVO
             const liveForm = document.getElementById('live-stream-form');
             const liveActiveCheckbox = document.getElementById('live-active');
             const livePlatformSelect = document.getElementById('live-platform');
