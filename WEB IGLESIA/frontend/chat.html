@@ -349,12 +349,12 @@
         // Referencia a la colección 'chatMessages' en Firestore
         const messagesRef = collection(db, "chatMessages");
 
-        // Obtener el inicio del día de hoy para reiniciar los mensajes diariamente
+        // Obtener el inicio del mes actual para reiniciar los mensajes mensualmente
         const timeLimit = new Date();
-        timeLimit.setDate(timeLimit.getDate() - 7); // Últimos 7 días
+        timeLimit.setDate(1); // Día 1 del mes actual
         timeLimit.setHours(0, 0, 0, 0);
 
-        // Consulta: Mensajes de la última semana
+        // Consulta: Mensajes de este mes
         const q = query(messagesRef, where("timestamp", ">=", timeLimit), orderBy("timestamp", "asc"));
 
         // Escuchar cambios en tiempo real
