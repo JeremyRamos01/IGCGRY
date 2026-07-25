@@ -189,7 +189,6 @@ h1, h2, h3, h4, h5, h6 {
   background-color: #b3932f;
   color: #fff;
   transform: translateY(-2px);
-  box-shadow: 0 10px 15px -3px rgba(212, 175, 55, 0.3);
 }
 
 .btn-outline-custom {
