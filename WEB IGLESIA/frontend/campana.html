@@ -196,27 +196,7 @@
             box-shadow: none;
         }
 
-        .progress-container {
-            margin-top: 25px;
-            text-align: center;
-        }
 
-        .progress-text {
-            color: rgba(255, 255, 255, 0.7);
-            font-size: 0.9rem;
-            margin-bottom: 8px;
-        }
-
-        .progress {
-            height: 8px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 4px;
-        }
-
-        .progress-bar {
-            background-color: var(--accent-gold);
-            transition: width 1s ease-in-out;
-        }
 
         #message-alert {
             display: none;
@@ -264,11 +244,15 @@
             mask-image: linear-gradient(to bottom, transparent, black 10%, black 90%, transparent);
             -webkit-mask-image: linear-gradient(to bottom, transparent, black 10%, black 90%, transparent);
             /* Ocultar barra de scroll para mantener el estilo */
-            scrollbar-width: none; /* Firefox */
-            -ms-overflow-style: none;  /* IE and Edge */
+            scrollbar-width: none;
+            /* Firefox */
+            -ms-overflow-style: none;
+            /* IE and Edge */
         }
+
         .historico-list-container::-webkit-scrollbar {
-            display: none; /* Chrome, Safari and Opera */
+            display: none;
+            /* Chrome, Safari and Opera */
         }
 
         .historico-list {
@@ -309,7 +293,6 @@
             font-size: 1.1rem;
             flex-shrink: 0;
         }
-
     </style>
 </head>
 
@@ -336,11 +319,13 @@
                     <div class="time-slots">
                         <div class="checkbox-wrapper">
                             <input type="checkbox" id="v31-1" name="horarios" value="Viernes 31: 18:00 - 20:00">
-                            <label for="v31-1">De 18:00 a 20:00</label>
+                            <label for="v31-1">De 18:00 a 20:00 <span class="slot-count ms-1 small"
+                                    style="color: var(--accent-gold);">(0/125)</span></label>
                         </div>
                         <div class="checkbox-wrapper">
                             <input type="checkbox" id="v31-2" name="horarios" value="Viernes 31: 20:10 - 22:10">
-                            <label for="v31-2">De 20:10 a 22:10</label>
+                            <label for="v31-2">De 20:10 a 22:10 <span class="slot-count ms-1 small"
+                                    style="color: var(--accent-gold);">(0/125)</span></label>
                         </div>
                     </div>
                 </div>
@@ -351,30 +336,20 @@
                     <div class="time-slots">
                         <div class="checkbox-wrapper">
                             <input type="checkbox" id="s1-1" name="horarios" value="Sábado 1: 18:00 - 20:00">
-                            <label for="s1-1">De 18:00 a 20:00</label>
+                            <label for="s1-1">De 18:00 a 20:00 <span class="slot-count ms-1 small"
+                                    style="color: var(--accent-gold);">(0/125)</span></label>
                         </div>
                         <div class="checkbox-wrapper">
                             <input type="checkbox" id="s1-2" name="horarios" value="Sábado 1: 20:10 - 22:10">
-                            <label for="s1-2">De 20:10 a 22:10</label>
+                            <label for="s1-2">De 20:10 a 22:10 <span class="slot-count ms-1 small"
+                                    style="color: var(--accent-gold);">(0/125)</span></label>
                         </div>
                     </div>
                 </div>
 
                 <div class="alert" id="message-alert" role="alert"></div>
-
                 <button type="submit" class="btn-submit" id="btnSubmit">Enviar</button>
             </form>
-
-            <div class="progress-container">
-                <div class="progress-text">
-                    Plazas reservadas: <strong id="count-display" class="text-gold">--</strong> / 125
-                </div>
-                <div class="progress">
-                    <div class="progress-bar" id="progress-bar" role="progressbar" style="width: 0%" aria-valuenow="0"
-                        aria-valuemin="0" aria-valuemax="125"></div>
-                </div>
-            </div>
-
         </div>
 
         <!-- Histórico Animado -->
@@ -389,9 +364,7 @@
                 </div>
             </div>
         </div>
-
     </section>
-
     <!-- El footer se inyectará aquí -->
     <div id="footer-container"></div>
 
@@ -405,46 +378,18 @@
         import { db } from './js/firebase-config.js';
         import { collection, addDoc, getDocs, query, where, serverTimestamp, orderBy, deleteDoc, doc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
-        const MAX_PLAZAS = 125;
         const form = document.getElementById('reservaForm');
         const btnSubmit = document.getElementById('btnSubmit');
         const messageAlert = document.getElementById('message-alert');
-        const countDisplay = document.getElementById('count-display');
-        const progressBar = document.getElementById('progress-bar');
         const nombreInput = document.getElementById('nombreInput');
+        const MAX_PER_SLOT = 125;
+        let globalCountBySlot = {};
 
         // Comprobar si ya reservó desde este navegador
         if (localStorage.getItem('campana_reservada')) {
-            showSuccess("Ya tienes una plaza reservada desde este dispositivo. ¡Te esperamos!");
+            showSuccess("Ya tienes una reserva realizada desde este dispositivo.");
             form.querySelectorAll('input, button').forEach(el => el.disabled = true);
         }
-
-        async function updateCount() {
-            try {
-                const q = query(collection(db, "reservas_campana"));
-                const querySnapshot = await getDocs(q);
-                const count = querySnapshot.size;
-
-                countDisplay.textContent = count;
-                const percentage = Math.min((count / MAX_PLAZAS) * 100, 100);
-                progressBar.style.width = percentage + '%';
-
-                if (count >= MAX_PLAZAS) {
-                    showError("Lo sentimos, se han agotado las " + MAX_PLAZAS + " plazas.");
-                    if (!localStorage.getItem('campana_reservada')) {
-                        form.querySelectorAll('input, button').forEach(el => el.disabled = true);
-                    }
-                    return false;
-                }
-                return true;
-            } catch (error) {
-                console.error("Error al obtener plazas:", error);
-                return true;
-            }
-        }
-
-        // Actualizar al cargar
-        updateCount();
 
         form.addEventListener('submit', async (e) => {
             e.preventDefault();
@@ -470,25 +415,33 @@
             btnSubmit.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Procesando...';
             messageAlert.style.display = 'none';
 
-            try {
-                // 1. Verificar si hay plazas
-                const isAvailable = await updateCount();
-                if (!isAvailable) {
-                    btnSubmit.innerHTML = 'Enviar';
-                    return;
+            // Comprobar si los seleccionados están llenos (usando la última cuenta global)
+            let overbooked = null;
+            for (let h of selectedHorarios) {
+                if ((globalCountBySlot[h] || 0) >= MAX_PER_SLOT) {
+                    overbooked = h;
+                    break;
                 }
+            }
+            if (overbooked) {
+                showError(`El horario "${overbooked}" se acaba de agotar. Por favor, elige otro.`);
+                btnSubmit.innerHTML = 'Enviar';
+                btnSubmit.disabled = false;
+                return;
+            }
 
-                // 2. Comprobar si el nombre ya existe (ignorando mayúsculas/minúsculas)
+            try {
+                // Comprobar si el nombre ya existe (ignorando mayúsculas/minúsculas)
                 const qName = query(collection(db, "reservas_campana"), where("nombreLowerCase", "==", nombre.toLowerCase()));
                 const querySnapshot = await getDocs(qName);
                 if (!querySnapshot.empty) {
-                    showError("Ya existe una reserva con ese nombre. Usa tus apellidos o un distintivo.");
+                    showError("Ya existe una reserva con ese nombre. Por favor, usa tus apellidos para diferenciarte.");
                     btnSubmit.innerHTML = 'Enviar';
                     btnSubmit.disabled = false;
                     return;
                 }
 
-                // 3. Guardar en Firestore
+                // Guardar en Firestore
                 await addDoc(collection(db, "reservas_campana"), {
                     nombre: nombre,
                     nombreLowerCase: nombre.toLowerCase(),
@@ -496,14 +449,13 @@
                     fechaReserva: serverTimestamp()
                 });
 
-                // 4. Guardar en LocalStorage para no repetir
+                // Guardar en LocalStorage para no repetir
                 localStorage.setItem('campana_reservada', 'true');
+                form.querySelectorAll('input, button').forEach(el => el.disabled = true);
 
-                // 5. Interfaz de éxito
+                // Interfaz de éxito
                 showSuccess("¡Plaza reservada con éxito! Te esperamos.");
                 form.reset();
-                form.querySelectorAll('input, button').forEach(el => el.disabled = true);
-                updateCount();
                 loadHistorico(); // Recargar la lista
 
             } catch (error) {
@@ -533,9 +485,15 @@
 
         async function loadHistorico() {
             try {
-                // Ordenar por fecha de reserva descendente para ver los últimos
-                const q = query(collection(db, "reservas_campana"), orderBy("fechaReserva", "desc"));
-                const querySnapshot = await getDocs(q);
+                let querySnapshot;
+                try {
+                    const q = query(collection(db, "reservas_campana"), orderBy("fechaReserva", "desc"));
+                    querySnapshot = await getDocs(q);
+                } catch (idxErr) {
+                    console.warn("Falta índice o error, cargando sin ordenar:", idxErr);
+                    const fallbackQ = query(collection(db, "reservas_campana"));
+                    querySnapshot = await getDocs(fallbackQ);
+                }
                 let html = '';
 
                 const reservas = [];
@@ -543,35 +501,85 @@
                     reservas.push(doc.data());
                 });
 
-                if (reservas.length === 0) {
+                const grupos = {
+                    "Viernes 31: 18:00 - 20:00": [],
+                    "Viernes 31: 20:10 - 22:10": [],
+                    "Sábado 1: 18:00 - 20:00": [],
+                    "Sábado 1: 20:10 - 22:10": []
+                };
+
+                globalCountBySlot = {};
+                let hayReservas = false;
+
+                reservas.forEach(reserva => {
+                    const nombre = reserva.nombre;
+                    if (reserva.horarios && reserva.horarios.length > 0) {
+                        reserva.horarios.forEach(h => {
+                            if (grupos[h]) {
+                                grupos[h].push(nombre);
+                                hayReservas = true;
+                            } else {
+                                grupos[h] = [nombre];
+                                hayReservas = true;
+                            }
+                            globalCountBySlot[h] = (globalCountBySlot[h] || 0) + 1;
+                        });
+                    }
+                });
+
+                // Actualizar interfaz de checkboxes
+                document.querySelectorAll('input[name="horarios"]').forEach(cb => {
+                    const count = globalCountBySlot[cb.value] || 0;
+                    const label = cb.nextElementSibling;
+                    const countSpan = label.querySelector('.slot-count');
+
+                    if (count >= MAX_PER_SLOT) {
+                        cb.disabled = true;
+                        if (countSpan) {
+                            countSpan.className = 'slot-count text-danger fw-bold ms-1';
+                            countSpan.style.color = '';
+                            countSpan.textContent = '(Agotado)';
+                        }
+                        cb.parentElement.style.opacity = '0.5';
+                        cb.parentElement.style.cursor = 'not-allowed';
+                    } else {
+                        cb.disabled = false;
+                        if (countSpan) {
+                            countSpan.className = 'slot-count ms-1 small';
+                            countSpan.style.color = 'var(--accent-gold)';
+                            countSpan.textContent = `(${count}/${MAX_PER_SLOT})`;
+                        }
+                        cb.parentElement.style.opacity = '1';
+                        cb.parentElement.style.cursor = 'pointer';
+                    }
+                });
+
+                if (!hayReservas) {
                     historicoList.innerHTML = '<div class="text-center text-white-50 mt-4">Aún no hay reservas. ¡Sé el primero!</div>';
                     historicoList.style.animation = 'none';
                     return;
                 }
 
-                reservas.forEach(reserva => {
-                    const nombre = reserva.nombre;
-                    const inicial = nombre.charAt(0).toUpperCase();
-                    
-                    // Formatear los horarios seleccionados (ej: Viernes 31: 18:00 - 20:00)
-                    let horariosStr = '';
-                    if(reserva.horarios && reserva.horarios.length > 0) {
-                        horariosStr = reserva.horarios.map(h => {
-                            // Limpiar un poco el string si es muy largo, o dejarlo
-                            return `<span class="badge bg-secondary me-1" style="font-size: 0.65rem;">${h.replace('Viernes 31:', 'Vie 31:').replace('Sábado 1:', 'Sáb 1:')}</span>`;
-                        }).join('');
-                    }
-
-                    html += `
-                        <div class="historico-item">
-                            <div class="avatar">${inicial}</div>
-                            <div class="name flex-grow-1">
-                                <div class="fw-bold">${nombre}</div>
-                                <div class="mt-1">${horariosStr}</div>
+                for (const [horario, nombres] of Object.entries(grupos)) {
+                    if (nombres.length > 0) {
+                        html += `
+                            <div class="mt-3 mb-2 px-2 py-1" style="background: rgba(212, 175, 55, 0.1); border-left: 3px solid var(--accent-gold); border-radius: 4px;">
+                                <h6 class="text-gold m-0 fw-bold" style="font-size: 0.9rem;">${horario.replace(':', ' -')}</h6>
                             </div>
-                        </div>
-                    `;
-                });
+                        `;
+                        nombres.forEach(nombre => {
+                            const inicial = nombre.charAt(0).toUpperCase();
+                            html += `
+                                <div class="historico-item" style="padding: 8px 15px; gap: 10px; margin-bottom: 5px;">
+                                    <div class="avatar" style="width: 28px; height: 28px; font-size: 0.9rem;">${inicial}</div>
+                                    <div class="name flex-grow-1">
+                                        <div class="fw-bold" style="font-size: 0.9rem;">${nombre}</div>
+                                    </div>
+                                </div>
+                            `;
+                        });
+                    }
+                }
 
                 // Si hay pocos, no hace falta animar
                 if (reservas.length < 5) {
@@ -584,40 +592,7 @@
 
             } catch (error) {
                 console.error("Error cargando histórico:", error);
-                // Si falla por falta de índice compuesto, hacemos fallback sin order
-                if (error.message.includes('index')) {
-                    const fallbackQ = query(collection(db, "reservas_campana"));
-                    const fallbackSnap = await getDocs(fallbackQ);
-                    let html = '';
-                    let count = 0;
-                    fallbackSnap.forEach((doc) => {
-                        const reserva = doc.data();
-                        const nombre = reserva.nombre;
-                        const inicial = nombre.charAt(0).toUpperCase();
-                        
-                        let horariosStr = '';
-                        if(reserva.horarios && reserva.horarios.length > 0) {
-                            horariosStr = reserva.horarios.map(h => {
-                                return `<span class="badge bg-secondary me-1" style="font-size: 0.65rem;">${h.replace('Viernes 31:', 'Vie 31:').replace('Sábado 1:', 'Sáb 1:')}</span>`;
-                            }).join('');
-                        }
-
-                        html += `
-                            <div class="historico-item">
-                                <div class="avatar">${inicial}</div>
-                                <div class="name flex-grow-1">
-                                    <div class="fw-bold">${nombre}</div>
-                                    <div class="mt-1">${horariosStr}</div>
-                                </div>
-                            </div>
-                        `;
-                        count++;
-                    });
-                    if (count > 0) {
-                        historicoList.innerHTML = html + html;
-                        setupAutoScroll(document.querySelector('.historico-list-container'));
-                    }
-                }
+                historicoList.innerHTML = '<div class="text-center text-danger mt-4">Error cargando lista.</div>';
             }
         }
 
@@ -626,9 +601,9 @@
             let scrollInterval;
             const scrollSpeed = 1; // Píxeles por paso
             const intervalTime = 40; // ms por paso
-            
             function startScroll() {
-                if(scrollInterval) clearInterval(scrollInterval);
+                if (scrollInterval) clearInterval(scrollInterval);
+
                 scrollInterval = setInterval(() => {
                     container.scrollTop += scrollSpeed;
                     // Si llegamos a la mitad (porque duplicamos el contenido), reseteamos para dar ilusión infinita
@@ -637,23 +612,18 @@
                     }
                 }, intervalTime);
             }
-
             // Iniciar scroll
             startScroll();
-
             // Pausar al pasar el ratón por encima (o tocar en móvil)
             container.addEventListener('mouseenter', () => clearInterval(scrollInterval));
             container.addEventListener('touchstart', () => clearInterval(scrollInterval));
-
             // Reanudar al quitar el ratón (o soltar en móvil)
             container.addEventListener('mouseleave', startScroll);
             container.addEventListener('touchend', () => {
                 setTimeout(startScroll, 1000); // Reanuda tras 1 segundo
             });
         }
-
         loadHistorico();
-
     </script>
 </body>
 
