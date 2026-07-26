@@ -376,7 +376,7 @@
     <!-- Lógica de Firebase para la Reserva -->
     <script type="module">
         import { db } from './js/firebase-config.js';
-        import { collection, addDoc, getDocs, query, where, serverTimestamp, orderBy, deleteDoc, doc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+        import { collection, addDoc, getDocs, query, where, serverTimestamp, orderBy, deleteDoc, doc, updateDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
         const form = document.getElementById('reservaForm');
         const btnSubmit = document.getElementById('btnSubmit');
@@ -385,10 +385,18 @@
         const MAX_PER_SLOT = 125;
         let globalCountBySlot = {};
 
-        // Comprobar si ya reservó desde este navegador
-        if (localStorage.getItem('campana_reservada')) {
+        // Estado local de reservas
+        let miReservaId = localStorage.getItem('mi_reserva_id');
+        let miNombre = localStorage.getItem('mi_reserva_nombre');
+        let misReservas = JSON.parse(localStorage.getItem('mis_reservas_horarios') || '[]');
+
+        // Compatibilidad con la versión anterior
+        if (localStorage.getItem('campana_reservada') && !miReservaId) {
             showSuccess("Ya tienes una reserva realizada desde este dispositivo.");
             form.querySelectorAll('input, button').forEach(el => el.disabled = true);
+        } else if (miReservaId) {
+            nombreInput.value = miNombre;
+            nombreInput.disabled = true;
         }
 
         form.addEventListener('submit', async (e) => {
@@ -406,8 +414,14 @@
                 selectedHorarios.push(cb.value);
             });
 
-            if (selectedHorarios.length === 0) {
-                showError("Por favor, selecciona al menos un día y hora.");
+            const nuevosSeleccionados = selectedHorarios.filter(h => !misReservas.includes(h));
+
+            if (nuevosSeleccionados.length === 0) {
+                if (selectedHorarios.length > 0) {
+                    showError("Ya tienes reservados estos horarios. Selecciona uno nuevo.");
+                } else {
+                    showError("Por favor, selecciona al menos un día y hora.");
+                }
                 return;
             }
 
@@ -415,9 +429,9 @@
             btnSubmit.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Procesando...';
             messageAlert.style.display = 'none';
 
-            // Comprobar si los seleccionados están llenos (usando la última cuenta global)
+            // Comprobar si los NUEVOS seleccionados están llenos
             let overbooked = null;
-            for (let h of selectedHorarios) {
+            for (let h of nuevosSeleccionados) {
                 if ((globalCountBySlot[h] || 0) >= MAX_PER_SLOT) {
                     overbooked = h;
                     break;
@@ -431,31 +445,53 @@
             }
 
             try {
-                // Comprobar si el nombre ya existe (ignorando mayúsculas/minúsculas)
-                const qName = query(collection(db, "reservas_campana"), where("nombreLowerCase", "==", nombre.toLowerCase()));
-                const querySnapshot = await getDocs(qName);
-                if (!querySnapshot.empty) {
-                    showError("Ya existe una reserva con ese nombre. Por favor, usa tus apellidos para diferenciarte.");
-                    btnSubmit.innerHTML = 'Enviar';
-                    btnSubmit.disabled = false;
-                    return;
+                if (miReservaId) {
+                    // Actualizar documento existente
+                    const docRef = doc(db, "reservas_campana", miReservaId);
+                    await updateDoc(docRef, {
+                        horarios: selectedHorarios,
+                        fechaActualizacion: serverTimestamp()
+                    });
+
+                    misReservas = selectedHorarios;
+                    localStorage.setItem('mis_reservas_horarios', JSON.stringify(misReservas));
+                    showSuccess("¡Reserva ampliada con éxito! Te esperamos.");
+                } else {
+                    // Crear nueva reserva
+                    const qName = query(collection(db, "reservas_campana"), where("nombreLowerCase", "==", nombre.toLowerCase()));
+                    const querySnapshot = await getDocs(qName);
+                    if (!querySnapshot.empty) {
+                        showError("Ya existe una reserva con ese nombre. Por favor, usa tus apellidos para diferenciarte.");
+                        btnSubmit.innerHTML = 'Enviar';
+                        btnSubmit.disabled = false;
+                        return;
+                    }
+
+                    const docRef = await addDoc(collection(db, "reservas_campana"), {
+                        nombre: nombre,
+                        nombreLowerCase: nombre.toLowerCase(),
+                        horarios: selectedHorarios,
+                        fechaReserva: serverTimestamp()
+                    });
+
+                    miReservaId = docRef.id;
+                    miNombre = nombre;
+                    misReservas = selectedHorarios;
+                    
+                    localStorage.setItem('mi_reserva_id', miReservaId);
+                    localStorage.setItem('mi_reserva_nombre', miNombre);
+                    localStorage.setItem('mis_reservas_horarios', JSON.stringify(misReservas));
+                    
+                    nombreInput.disabled = true;
+                    showSuccess("¡Plaza reservada con éxito! Te esperamos.");
                 }
 
-                // Guardar en Firestore
-                await addDoc(collection(db, "reservas_campana"), {
-                    nombre: nombre,
-                    nombreLowerCase: nombre.toLowerCase(),
-                    horarios: selectedHorarios,
-                    fechaReserva: serverTimestamp()
-                });
-
-                // Guardar en LocalStorage para no repetir
-                localStorage.setItem('campana_reservada', 'true');
-                form.querySelectorAll('input, button').forEach(el => el.disabled = true);
-
-                // Interfaz de éxito
-                showSuccess("¡Plaza reservada con éxito! Te esperamos.");
+                btnSubmit.innerHTML = 'Enviar';
+                btnSubmit.disabled = false;
+                
                 form.reset();
+                if(miNombre) nombreInput.value = miNombre;
+                
                 loadHistorico(); // Recargar la lista
 
             } catch (error) {
@@ -533,8 +569,19 @@
                     const label = cb.nextElementSibling;
                     const countSpan = label.querySelector('.slot-count');
 
-                    if (count >= MAX_PER_SLOT) {
+                    if (misReservas.includes(cb.value)) {
+                        cb.checked = true;
                         cb.disabled = true;
+                        if (countSpan) {
+                            countSpan.className = 'slot-count fw-bold ms-1';
+                            countSpan.style.color = '#4ade80';
+                            countSpan.textContent = '(Tu reserva)';
+                        }
+                        cb.parentElement.style.opacity = '0.8';
+                        cb.parentElement.style.cursor = 'not-allowed';
+                    } else if (count >= MAX_PER_SLOT) {
+                        cb.disabled = true;
+                        cb.checked = false;
                         if (countSpan) {
                             countSpan.className = 'slot-count text-danger fw-bold ms-1';
                             countSpan.style.color = '';
@@ -544,6 +591,7 @@
                         cb.parentElement.style.cursor = 'not-allowed';
                     } else {
                         cb.disabled = false;
+                        cb.checked = false;
                         if (countSpan) {
                             countSpan.className = 'slot-count ms-1 small';
                             countSpan.style.color = 'var(--accent-gold)';
