@@ -7,11 +7,15 @@ const navbarHTML = `
                 <div class="d-flex flex-column ms-2 ms-md-3 ps-2 ps-md-3 border-start border-2" style="border-color: rgba(255,255,255,0.3) !important;">
                     <span class="fw-bold text-white brand-title" style="letter-spacing: 1px;">Casa del Gran REY</span>
                     <span class="brand-subtext" style="color: rgba(255,255,255,0.75); letter-spacing: 0.5px; margin-top: 2px;">
-                        <i class="fa-solid fa-church me-1 text-gold"></i> Cultos: Sáb 19:00h | Dom a partir de las 12:00h
-                    </span>
-                    <span class="brand-reg" style="color: rgba(255,255,255,0.5); margin-top: 1px;">
                         Nº Registro: 024973
                     </span>
+                    <div class="d-flex align-items-start brand-reg mt-1" style="color: rgba(255,255,255,0.5);">
+                        <i class="fa-solid fa-church me-1 text-gold" style="margin-top: 3px;"></i>
+                        <div>
+                            <div>Cultos: Sáb 19:00h</div>
+                            <div>Dom 12:00h</div>
+                        </div>
+                    </div>
                 </div>
             </a>
             <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
@@ -53,9 +57,6 @@ const navbarHTML = `
                     </li>
                     <li class="nav-item ms-lg-2 mt-2 mt-lg-0">
                         <a class="btn btn-outline-light rounded-pill px-3 py-2" href="miembros.html" style="font-size: 0.85rem;"><i class="fa-solid fa-lock me-1"></i>Miembros</a>
-                    </li>
-                    <li class="nav-item ms-lg-2 mt-2 mt-lg-0">
-                        <a class="btn btn-primary-custom" href="campana.html" style="background-color: var(--accent-gold); color: #fff; border: none; padding: 10px 20px; text-transform: uppercase; letter-spacing: 1px; border-radius: 50px;"><i class="fa-solid fa-ticket me-1"></i>Reserva Campaña</a>
                     </li>
                     <li class="nav-item ms-lg-2 mt-2 mt-lg-0">
                         <a class="btn btn-outline-custom" href="contacto.html" style="padding: 10px 20px;">Contáctanos</a>

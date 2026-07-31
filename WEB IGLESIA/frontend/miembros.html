@@ -118,6 +118,27 @@
                 <button onclick="logout()" class="btn btn-sm btn-outline-danger rounded-pill"><i class="fa-solid fa-arrow-right-from-bracket me-1"></i>Salir</button>
             </div>
 
+            <!-- Zona de Subida de Archivos -->
+            <div class="card mb-4 border-0 shadow-sm rounded-4" style="background: #fff; border-left: 4px solid var(--accent-gold) !important;">
+                <div class="card-body p-4">
+                    <h5 class="fw-bold mb-3" style="color: var(--primary-dark);"><i class="fa-solid fa-cloud-arrow-up me-2" style="color: var(--accent-gold);"></i>Subir Nuevo Documento</h5>
+                    <div class="mb-3">
+                        <label class="form-label small text-muted fw-bold mb-1">Archivo</label>
+                        <input type="file" class="form-control" id="fileUploadInput">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label small text-muted fw-bold mb-1">Descripción del documento (opcional)</label>
+                        <input type="text" class="form-control" id="fileDescriptionInput" placeholder="Ej. Acta de reunión, Guía de lectura, etc.">
+                    </div>
+                    <button class="btn btn-primary-custom fw-bold px-4 py-2 rounded-pill" type="button" onclick="uploadDocument()"><i class="fa-solid fa-upload me-2"></i>Subir Documento</button>
+                    
+                    <div class="progress mt-3" style="display: none; height: 10px; border-radius: 10px;" id="uploadProgressContainer">
+                        <div class="progress-bar progress-bar-striped progress-bar-animated bg-success" role="progressbar" style="width: 0%;" id="uploadProgressBar"></div>
+                    </div>
+                    <p id="uploadStatus" class="mt-2 small mb-0 fw-bold" style="display: none;"></p>
+                </div>
+            </div>
+
             <div class="row">
                 <div class="col-12" data-aos="fade-up" id="docsContainer">
                     <!-- Los documentos se cargarán aquí dinámicamente desde Firebase -->
@@ -261,6 +282,62 @@
                 console.error("Error listando archivos:", error);
                 container.innerHTML = '<div class="alert alert-danger">Hubo un error al cargar los documentos. Asegúrate de que las reglas de Firebase Storage permitan lectura.</div>';
             }
+        }
+
+        async function uploadDocument() {
+            const fileInput = document.getElementById('fileUploadInput');
+            const descInput = document.getElementById('fileDescriptionInput');
+            const file = fileInput.files[0];
+            const progressContainer = document.getElementById('uploadProgressContainer');
+            const progressBar = document.getElementById('uploadProgressBar');
+            const statusText = document.getElementById('uploadStatus');
+
+            if (!file) {
+                alert("Por favor, selecciona un archivo primero.");
+                return;
+            }
+
+            const storageRef = storage.ref('documentos/' + file.name);
+            
+            const metadata = {
+                customMetadata: {}
+            };
+            
+            const description = descInput ? descInput.value.trim() : '';
+            if (description) {
+                metadata.customMetadata.description = description;
+            }
+
+            const uploadTask = storageRef.put(file, metadata);
+
+            progressContainer.style.display = 'flex';
+            statusText.style.display = 'block';
+            statusText.className = 'mt-2 small mb-0 text-primary';
+            statusText.innerText = 'Subiendo archivo...';
+
+            uploadTask.on('state_changed', 
+                (snapshot) => {
+                    const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                    progressBar.style.width = progress + '%';
+                }, 
+                (error) => {
+                    console.error("Error en la subida:", error);
+                    statusText.className = 'mt-2 small mb-0 text-danger';
+                    statusText.innerText = 'Error al subir el archivo: ' + error.message;
+                }, 
+                () => {
+                    statusText.className = 'mt-2 small mb-0 text-success';
+                    statusText.innerText = '¡Archivo subido con éxito!';
+                    fileInput.value = '';
+                    if (descInput) descInput.value = '';
+                    setTimeout(() => {
+                        progressContainer.style.display = 'none';
+                        progressBar.style.width = '0%';
+                        statusText.style.display = 'none';
+                        loadDocuments(); // Recargar la lista
+                    }, 3000);
+                }
+            );
         }
     </script>
 </body>
