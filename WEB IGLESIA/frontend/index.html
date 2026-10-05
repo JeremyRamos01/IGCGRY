@@ -765,10 +765,14 @@
                     
                     if (images.length === 1) {
                         mediaHtml = `
-                        <div class="col-md-5 d-flex">
-                            <img src="${images[0]}" class="img-fluid w-100 h-100" style="object-fit: cover; min-height: 300px;" alt="Post image">
-                        </div>
-                        <div class="col-md-7">
+                            <div class="position-relative overflow-hidden rounded-4 mt-3 shadow-sm" style="height: 450px; background-color: #0f172a; cursor: pointer;" onclick="abrirFlyer('${images[0]}')">
+                                <img src="${images[0]}" class="w-100 h-100 post-img-zoom" style="object-fit: cover; transition: transform 0.4s ease;" alt="Imagen del post">
+                                <div class="position-absolute bottom-0 end-0 m-3" style="z-index: 5; pointer-events: none;">
+                                    <span class="badge bg-dark bg-opacity-75 text-white px-3 py-2 rounded-pill shadow-sm" style="backdrop-filter: blur(4px);">
+                                        <i class="fa-solid fa-expand me-1"></i> Ver en grande
+                                    </span>
+                                </div>
+                            </div>
                         `;
                     } else if (images.length > 1) {
                         const carouselId = 'carousel-recent';
@@ -777,14 +781,18 @@
                         images.forEach((url, i) => {
                             indicators += `<button type="button" data-bs-target="#${carouselId}" data-bs-slide-to="${i}" class="${i===0?'active':''}"></button>`;
                             inner += `
-                                <div class="carousel-item ${i===0?'active':''} h-100">
-                                    <img src="${url}" class="d-block w-100 h-100" style="object-fit: cover; min-height: 300px;" alt="Post image">
+                                <div class="carousel-item ${i===0?'active':''} h-100 position-relative" style="cursor: pointer;" onclick="abrirFlyer('${url}')">
+                                    <img src="${url}" class="d-block w-100 h-100 post-img-zoom" style="object-fit: cover; transition: transform 0.4s ease;" alt="Imagen del post">
+                                    <div class="position-absolute bottom-0 end-0 m-3" style="z-index: 5; pointer-events: none;">
+                                        <span class="badge bg-dark bg-opacity-75 text-white px-3 py-2 rounded-pill shadow-sm" style="backdrop-filter: blur(4px);">
+                                            <i class="fa-solid fa-expand me-1"></i> Ver en grande (${i+1}/${images.length})
+                                        </span>
+                                    </div>
                                 </div>
                             `;
                         });
                         mediaHtml = `
-                        <div class="col-md-5 d-flex">
-                            <div id="${carouselId}" class="carousel slide w-100 h-100" data-bs-ride="carousel">
+                            <div id="${carouselId}" class="carousel slide rounded-4 overflow-hidden mt-3 shadow-sm" data-bs-ride="carousel" style="height: 450px; background-color: #0f172a;">
                                 <div class="carousel-indicators">${indicators}</div>
                                 <div class="carousel-inner h-100">${inner}</div>
                                 <button class="carousel-control-prev" type="button" data-bs-target="#${carouselId}" data-bs-slide="prev">
@@ -796,27 +804,25 @@
                                     <span class="visually-hidden">Siguiente</span>
                                 </button>
                             </div>
-                        </div>
-                        <div class="col-md-7">
                         `;
                     } else {
-                        mediaHtml = '<div class="col-12">';
+                        mediaHtml = '';
                     }
                     
                     recentPostContainer.innerHTML = `
-                        <div class="card border-0 shadow-sm rounded-4 overflow-hidden" data-aos="fade-up" style="transition: transform 0.3s;" onmouseover="this.style.transform='translateY(-5px)'" onmouseout="this.style.transform='translateY(0)'">
-                            <div class="row g-0 align-items-stretch">
-                                ${mediaHtml}
-                                    <div class="card-body p-4 p-md-5 h-100 d-flex flex-column justify-content-center">
-                                        <small class="text-muted mb-2 d-block"><i class="fa-regular fa-clock me-1 text-gold"></i> ${date}</small>
-                                        <h3 class="card-title fw-bold mb-3" style="color: var(--primary-dark);">${post.title}</h3>
-                                        <p class="card-text text-muted mb-4" style="display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden; white-space: pre-wrap;">${post.content}</p>
-                                        <div class="mt-auto">
-                                            <a href="posts.html" class="fw-bold" style="color: var(--accent-gold); text-decoration: none;">Leer más <i class="fa-solid fa-arrow-right ms-1"></i></a>
-                                        </div>
-                                    </div>
-                                </div>
+                        <div class="card border-0 shadow-sm rounded-4 p-4 p-md-4 bg-white" data-aos="fade-up">
+                            <div class="d-flex align-items-center justify-content-between mb-3">
+                                <span class="badge px-3 py-2 rounded-pill" style="background-color: var(--accent-gold); color: #000; font-weight: 600;">
+                                    <i class="fa-solid fa-newspaper me-1"></i> Última Publicación
+                                </span>
+                                <small class="text-muted"><i class="fa-regular fa-clock me-1 text-gold"></i> ${date}</small>
                             </div>
+                            <h3 class="card-title fw-bold mb-3" style="color: var(--primary-dark); font-size: 1.8rem;">${post.title}</h3>
+                            <p class="card-text text-secondary mb-3" style="white-space: pre-wrap; font-size: 1.05rem; line-height: 1.7; display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden;">${post.content}</p>
+                            <div class="mb-2">
+                                <a href="posts.html" class="fw-bold text-decoration-none" style="color: var(--accent-gold);">Leer más noticias <i class="fa-solid fa-arrow-right ms-1"></i></a>
+                            </div>
+                            ${mediaHtml}
                         </div>
                     `;
                 });

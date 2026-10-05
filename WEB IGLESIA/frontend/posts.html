@@ -43,6 +43,20 @@
         </section>
     </main>
 
+    <!-- Modal Lightbox para Ver Imagen en Grande -->
+    <div class="modal fade" id="imageLightboxModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-dialog-centered">
+            <div class="modal-content bg-transparent border-0">
+                <div class="modal-header border-0 pb-0 justify-content-end">
+                    <button type="button" class="btn-close btn-close-white fs-3 shadow-lg" data-bs-dismiss="modal" aria-label="Close" style="filter: drop-shadow(0px 0px 5px rgba(0,0,0,0.8));"></button>
+                </div>
+                <div class="modal-body text-center p-2">
+                    <img id="lightboxImage" src="" class="img-fluid rounded-4 shadow-lg" style="max-height: 85vh; object-fit: contain; width: auto;">
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- FOOTER CENTRALIZADO -->
     <script src="js/footer.js"></script>
 
@@ -60,6 +74,15 @@
         const container = document.getElementById('posts-container');
         const postsRef = collection(db, 'posts');
         const q = query(postsRef, orderBy('fecha', 'desc'));
+
+        window.openImageModal = function(url) {
+            const modalImg = document.getElementById('lightboxImage');
+            if (modalImg) {
+                modalImg.src = url;
+                const modal = new bootstrap.Modal(document.getElementById('imageLightboxModal'));
+                modal.show();
+            }
+        };
 
         onSnapshot(q, (snapshot) => {
             container.innerHTML = '';
@@ -79,7 +102,16 @@
                 const images = post.imageUrls || (post.imageUrl ? [post.imageUrl] : []);
                 
                 if (images.length === 1) {
-                    mediaHtml = `<img src="${images[0]}" class="card-img-top" alt="Imagen del post" style="height: 250px; object-fit: cover;">`;
+                    mediaHtml = `
+                        <div class="position-relative overflow-hidden rounded-4 mt-3 shadow-sm" style="height: 480px; background-color: #0f172a; cursor: pointer;" onclick="openImageModal('${images[0]}')">
+                            <img src="${images[0]}" class="w-100 h-100 post-img-zoom" style="object-fit: cover; transition: transform 0.4s ease;" alt="Imagen del post">
+                            <div class="position-absolute bottom-0 end-0 m-3" style="z-index: 5; pointer-events: none;">
+                                <span class="badge bg-dark bg-opacity-75 text-white px-3 py-2 rounded-pill shadow-sm" style="backdrop-filter: blur(4px);">
+                                    <i class="fa-solid fa-expand me-1"></i> Ver en grande
+                                </span>
+                            </div>
+                        </div>
+                    `;
                 } else if (images.length > 1) {
                     const carouselId = 'carousel-' + doc.id;
                     let indicators = '';
@@ -87,15 +119,20 @@
                     images.forEach((url, i) => {
                         indicators += `<button type="button" data-bs-target="#${carouselId}" data-bs-slide-to="${i}" class="${i===0?'active':''}"></button>`;
                         inner += `
-                            <div class="carousel-item ${i===0?'active':''}">
-                                <img src="${url}" class="d-block w-100" style="height: 250px; object-fit: cover;" alt="Imagen del post">
+                            <div class="carousel-item ${i===0?'active':''} h-100 position-relative" style="cursor: pointer;" onclick="openImageModal('${url}')">
+                                <img src="${url}" class="d-block w-100 h-100 post-img-zoom" style="object-fit: cover; transition: transform 0.4s ease;" alt="Imagen del post">
+                                <div class="position-absolute bottom-0 end-0 m-3" style="z-index: 5; pointer-events: none;">
+                                    <span class="badge bg-dark bg-opacity-75 text-white px-3 py-2 rounded-pill shadow-sm" style="backdrop-filter: blur(4px);">
+                                        <i class="fa-solid fa-expand me-1"></i> Ver en grande (${i+1}/${images.length})
+                                    </span>
+                                </div>
                             </div>
                         `;
                     });
                     mediaHtml = `
-                        <div id="${carouselId}" class="carousel slide" data-bs-ride="carousel">
+                        <div id="${carouselId}" class="carousel slide rounded-4 overflow-hidden mt-3 shadow-sm" data-bs-ride="carousel" style="height: 480px; background-color: #0f172a;">
                             <div class="carousel-indicators">${indicators}</div>
-                            <div class="carousel-inner">${inner}</div>
+                            <div class="carousel-inner h-100">${inner}</div>
                             <button class="carousel-control-prev" type="button" data-bs-target="#${carouselId}" data-bs-slide="prev">
                                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                                 <span class="visually-hidden">Anterior</span>
@@ -109,14 +146,20 @@
                 }
 
                 const html = `
-                    <div class="col-md-6 col-lg-4" data-aos="fade-up">
-                        <div class="card h-100 border-0 shadow-sm rounded-4 overflow-hidden" style="transition: transform 0.3s;" onmouseover="this.style.transform='translateY(-5px)'" onmouseout="this.style.transform='translateY(0)'">
-                            ${mediaHtml}
-                            <div class="card-body p-4 d-flex flex-column">
-                                <small class="text-muted mb-2 d-block"><i class="fa-regular fa-clock me-1 text-gold"></i> ${date}</small>
-                                <h4 class="card-title fw-bold mb-3" style="color: var(--primary-dark);">${post.title}</h4>
-                                <p class="card-text text-muted" style="white-space: pre-wrap; flex-grow: 1;">${post.content}</p>
+                    <div class="col-lg-9 col-xl-8 mx-auto" data-aos="fade-up">
+                        <div class="card border-0 shadow-sm rounded-4 p-4 p-md-4 bg-white mb-4">
+                            <!-- TEXTO ARRIBA -->
+                            <div class="d-flex align-items-center justify-content-between mb-3">
+                                <span class="badge px-3 py-2 rounded-pill" style="background-color: var(--accent-gold); color: #000; font-weight: 600;">
+                                    <i class="fa-solid fa-newspaper me-1"></i> Publicación
+                                </span>
+                                <small class="text-muted"><i class="fa-regular fa-clock me-1 text-gold"></i> ${date}</small>
                             </div>
+                            <h3 class="card-title fw-bold mb-3" style="color: var(--primary-dark); font-size: 1.8rem;">${post.title}</h3>
+                            <p class="card-text text-secondary mb-2" style="white-space: pre-wrap; font-size: 1.05rem; line-height: 1.7;">${post.content}</p>
+                            
+                            <!-- FOTOS DEBAJO EN UN CUADRADO GRANDE -->
+                            ${mediaHtml}
                         </div>
                     </div>
                 `;
@@ -127,5 +170,10 @@
             container.innerHTML = '<div class="col-12 text-center py-5 text-danger">Error al cargar los posts.</div>';
         });
     </script>
+    <style>
+        .post-img-zoom:hover {
+            transform: scale(1.02);
+        }
+    </style>
 </body>
 </html>
