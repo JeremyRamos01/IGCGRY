@@ -160,6 +160,9 @@
                     <a href="#" onclick="showSection('eventos', this)"><i class="fa-solid fa-calendar-alt me-2"></i> Eventos</a>
                 </li>
                 <li>
+                    <a href="#" onclick="showSection('posts', this)"><i class="fa-solid fa-newspaper me-2"></i> Noticias / Posts</a>
+                </li>
+                <li>
                     <a href="#" onclick="showSection('foro', this)"><i class="fa-solid fa-comments me-2"></i> Foro Libre</a>
                 </li>
                 <li>
@@ -357,6 +360,46 @@
 
                             <div id="event-list" class="list-group" style="max-height: 400px; overflow-y: auto;">
                                 <div class="text-center text-muted p-3">Cargando eventos...</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Módulo: Posts / Noticias -->
+                <div id="section-posts" class="admin-section">
+                    <h2 class="fw-bold mb-4">Noticias / Posts</h2>
+                    
+                    <div class="card shadow-sm border-0 rounded-4 mb-4">
+                        <div class="card-body p-4">
+                            <h5 class="fw-bold text-dark mb-4"><i class="fa-solid fa-plus-circle text-gold me-2"></i> Crear Nuevo Post</h5>
+                            <form id="add-post-form">
+                                <div class="mb-3">
+                                    <label class="form-label fw-bold">Título</label>
+                                    <input type="text" class="form-control" id="post-title" required placeholder="Ej. Hemos celebrado una hermosa boda...">
+                                </div>
+                                <div class="mb-4">
+                                    <label class="form-label fw-bold">Contenido</label>
+                                    <textarea class="form-control" id="post-content" rows="4" required placeholder="Escribe el contenido del post..."></textarea>
+                                </div>
+                                <div class="mb-4">
+                                    <label class="form-label fw-bold">Imagen (Opcional)</label>
+                                    <div class="input-group mb-2">
+                                        <input type="file" class="form-control" id="post-image-file" accept="image/*">
+                                    </div>
+                                    <div class="form-text">Puedes subir una imagen desde tu PC para acompañar el post.</div>
+                                </div>
+                                <button type="submit" class="btn btn-gold w-100 fw-bold py-2" id="submit-post-btn">
+                                    Publicar Post
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+
+                    <div class="card shadow-sm border-0 rounded-4">
+                        <div class="card-body p-4">
+                            <h5 class="fw-bold mb-4" style="color:var(--primary-dark);"><i class="fa-solid fa-list me-2 text-gold"></i> Posts Publicados</h5>
+                            <div id="post-list" class="list-group" style="max-height: 400px; overflow-y: auto;">
+                                <div class="text-center text-muted p-3">Cargando posts...</div>
                             </div>
                         </div>
                     </div>
@@ -1074,6 +1117,114 @@
             }
 
             loadMessages();
+
+            // 5. POSTS / NOTICIAS
+            const postsRef = collection(db, "posts");
+            const postListEl = document.getElementById("post-list");
+            const postForm = document.getElementById("add-post-form");
+            const submitPostBtn = document.getElementById("submit-post-btn");
+
+            async function loadPosts() {
+                postListEl.innerHTML = '<div class="text-center p-2"><span class="spinner-border spinner-border-sm text-muted"></span></div>';
+                try {
+                    const q = query(postsRef, orderBy("fecha", "desc"));
+                    onSnapshot(q, (snapshot) => {
+                        postListEl.innerHTML = '';
+                        if (snapshot.empty) {
+                            postListEl.innerHTML = '<div class="text-muted text-center p-3">No hay posts publicados.</div>';
+                            return;
+                        }
+
+                        snapshot.forEach(docSnap => {
+                            const post = docSnap.data();
+                            const date = post.fecha ? new Date(post.fecha).toLocaleDateString('es-ES', { 
+                                year: 'numeric', month: 'long', day: 'numeric'
+                            }) : 'Fecha desconocida';
+
+                            const div = document.createElement('div');
+                            div.className = "list-group-item border-0 shadow-sm mb-3 rounded-4 p-3 bg-white";
+                            div.innerHTML = `
+                                <div class="d-flex justify-content-between align-items-start">
+                                    <div class="w-100 me-3">
+                                        <h5 class="fw-bold mb-1" style="color:var(--primary-dark)">${post.title}</h5>
+                                        <small class="text-muted d-block mb-2"><i class="fa-regular fa-clock me-1"></i> ${date}</small>
+                                        <p class="mb-2 text-muted" style="font-size:0.9rem; overflow:hidden; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical;">${post.content}</p>
+                                    </div>
+                                    ${post.imageUrl ? \`<img src="\${post.imageUrl}" class="rounded-3" style="width: 80px; height: 80px; object-fit: cover;" alt="Imagen post">\` : ''}
+                                </div>
+                                <div class="text-end mt-2">
+                                    <button class="btn btn-sm btn-outline-danger delete-post-btn" data-id="${docSnap.id}" data-url="${post.imageUrl || ''}">
+                                        <i class="fa-solid fa-trash me-1"></i> Eliminar
+                                    </button>
+                                </div>
+                            `;
+                            postListEl.appendChild(div);
+                        });
+
+                        document.querySelectorAll('.delete-post-btn').forEach(btn => {
+                            btn.addEventListener('click', async (e) => {
+                                if(confirm("¿Seguro que quieres borrar este post permanentemente?")) {
+                                    const btnEl = e.currentTarget;
+                                    const id = btnEl.getAttribute('data-id');
+                                    const imageUrl = btnEl.getAttribute('data-url');
+                                    
+                                    if (imageUrl && imageUrl.includes('firebasestorage')) {
+                                        try {
+                                            const imageRef = ref(storage, imageUrl);
+                                            await deleteObject(imageRef);
+                                        } catch (err) {
+                                            console.warn("No se pudo borrar la imagen:", err);
+                                        }
+                                    }
+                                    
+                                    await deleteDoc(doc(db, "posts", id));
+                                }
+                            });
+                        });
+                    });
+                } catch(e) {
+                    postListEl.innerHTML = '<div class="text-danger p-2">Error al cargar posts. Verifica Firestore.</div>';
+                }
+            }
+
+            postForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                submitPostBtn.disabled = true;
+                submitPostBtn.innerHTML = '<span class="spinner-border spinner-border-sm"></span> Publicando...';
+                
+                const title = document.getElementById('post-title').value;
+                const content = document.getElementById('post-content').value;
+                const imageFile = document.getElementById('post-image-file').files[0];
+                let imageUrl = "";
+                
+                try {
+                    if (imageFile) {
+                        submitPostBtn.innerHTML = '<span class="spinner-border spinner-border-sm"></span> Subiendo imagen...';
+                        const storageRef = ref(storage, \`posts/\${Date.now()}_\${imageFile.name}\`);
+                        const snapshot = await uploadBytes(storageRef, imageFile);
+                        imageUrl = await getDownloadURL(snapshot.ref);
+                    }
+                    submitPostBtn.innerHTML = '<span class="spinner-border spinner-border-sm"></span> Guardando post...';
+
+                    await addDoc(postsRef, {
+                        title: title,
+                        content: content,
+                        imageUrl: imageUrl,
+                        fecha: new Date().toISOString()
+                    });
+                    
+                    postForm.reset();
+                    alert("¡Post publicado con éxito!");
+                } catch (error) {
+                    console.error("Error:", error);
+                    alert("Error al publicar post: " + error.message);
+                } finally {
+                    submitPostBtn.disabled = false;
+                    submitPostBtn.innerHTML = 'Publicar Post';
+                }
+            });
+
+            loadPosts();
         }
     </script>
 </body>

@@ -37,6 +37,8 @@ const navbarHTML = `
                             <li><a class="dropdown-item" href="quienes-somos.html">Conócenos</a></li>
                             <li><a class="dropdown-item" href="declaracion-de-fe.html">Nuestra Fe</a></li>
                             <li><a class="dropdown-item" href="programa.html">Programa Semanal</a></li>
+                            <li><hr class="dropdown-divider" style="border-color: rgba(255,255,255,0.1);"></li>
+                            <li><a class="dropdown-item" href="posts.html">Noticias y Posts</a></li>
                         </ul>
                     </li>
 

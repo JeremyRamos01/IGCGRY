@@ -303,6 +303,24 @@
             </div>
         </section>
 
+        <!-- RECENT POST SECTION (NEW) -->
+        <section id="recent-post" class="section-padding bg-light">
+            <div class="container">
+                <div class="section-title text-center" data-aos="fade-up">
+                    <h2 class="fw-bold" style="color: var(--primary-dark);">Última Publicación</h2>
+                    <p class="text-muted">Enteráte de lo más reciente en nuestra congregación.</p>
+                </div>
+                <div class="row justify-content-center">
+                    <div class="col-lg-10" id="recent-post-container">
+                        <div class="text-center text-muted p-4"><span class="spinner-border spinner-border-sm"></span> Cargando...</div>
+                    </div>
+                </div>
+                <div class="text-center mt-5" data-aos="fade-up">
+                    <a href="posts.html" class="btn-outline-custom">Ver Todas las Publicaciones <i class="fa-solid fa-newspaper ms-2"></i></a>
+                </div>
+            </div>
+        </section>
+
         <!-- ESQUEMA DE IGLESIAS (RAMIFICADO) -->
         <style>
             /* CSS para el esquema de iglesias */
@@ -600,7 +618,7 @@
     </style>
     <script type="module">
         import { db } from './js/firebase-config.js';
-        import { collection, getDocs } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+        import { collection, getDocs, query, orderBy, limit, onSnapshot } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
         // Renderizado dinámico de Últimos Eventos Especiales
         async function renderNovedades() {
@@ -723,6 +741,51 @@
 
         // Ejecutar inmediatamente (los scripts type="module" ya esperan al DOM por defecto)
         renderNovedades();
+
+        // Renderizado del Post Más Reciente
+        const recentPostContainer = document.getElementById('recent-post-container');
+        if (recentPostContainer) {
+            const postsRef = collection(db, 'posts');
+            const qPosts = query(postsRef, orderBy('fecha', 'desc'), limit(1));
+            
+            onSnapshot(qPosts, (snapshot) => {
+                if (snapshot.empty) {
+                    recentPostContainer.innerHTML = '<div class="text-center text-muted p-5 bg-white rounded-4 shadow-sm border">No hay publicaciones recientes.</div>';
+                    return;
+                }
+                
+                snapshot.forEach((doc) => {
+                    const post = doc.data();
+                    const date = post.fecha ? new Date(post.fecha).toLocaleDateString('es-ES', { 
+                        year: 'numeric', month: 'long', day: 'numeric' 
+                    }) : '';
+                    
+                    recentPostContainer.innerHTML = `
+                        <div class="card border-0 shadow-sm rounded-4 overflow-hidden" data-aos="fade-up" style="transition: transform 0.3s;" onmouseover="this.style.transform='translateY(-5px)'" onmouseout="this.style.transform='translateY(0)'">
+                            <div class="row g-0 align-items-stretch">
+                                ${post.imageUrl ? \`
+                                <div class="col-md-5 d-flex">
+                                    <img src="\${post.imageUrl}" class="img-fluid w-100 h-100" style="object-fit: cover; min-height: 300px;" alt="Post image">
+                                </div>
+                                <div class="col-md-7">
+                                \` : '<div class="col-12">'}
+                                    <div class="card-body p-4 p-md-5 h-100 d-flex flex-column justify-content-center">
+                                        <small class="text-muted mb-2 d-block"><i class="fa-regular fa-clock me-1 text-gold"></i> ${date}</small>
+                                        <h3 class="card-title fw-bold mb-3" style="color: var(--primary-dark);">${post.title}</h3>
+                                        <p class="card-text text-muted mb-4" style="display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden; white-space: pre-wrap;">${post.content}</p>
+                                        <div class="mt-auto">
+                                            <a href="posts.html" class="fw-bold" style="color: var(--accent-gold); text-decoration: none;">Leer más <i class="fa-solid fa-arrow-right ms-1"></i></a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                });
+            }, (error) => {
+                recentPostContainer.innerHTML = '<div class="text-center text-danger p-4">Error al cargar la publicación.</div>';
+            });
+        }
 
         // Función global para abrir el popup del volante
         window.abrirFlyer = function (url) {
