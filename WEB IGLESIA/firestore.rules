@@ -27,6 +27,14 @@ service cloud.firestore {
       allow write: if isAdmin();
     }
 
+    // SUBCOLECCIÓN: COMENTARIOS DE POSTS
+    // Cualquiera puede leer y crear comentarios.
+    // SOLO los administradores pueden borrar o editar comentarios.
+    match /posts/{postId}/comments/{commentId} {
+      allow read, create: if true;
+      allow delete, update: if isAdmin();
+    }
+
     // COLECCIÓN: CHAT
     // Es un foro libre: cualquiera puede leer y escribir.
     // Nota: El contenido se borra periódicamente según las normas.

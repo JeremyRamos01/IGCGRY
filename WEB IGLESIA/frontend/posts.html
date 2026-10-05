@@ -69,7 +69,7 @@
 
     <script type="module">
         import { db } from './js/firebase-config.js';
-        import { collection, query, orderBy, onSnapshot } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+        import { collection, query, orderBy, onSnapshot, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
         const container = document.getElementById('posts-container');
         const postsRef = collection(db, 'posts');
@@ -81,6 +81,119 @@
                 modalImg.src = url;
                 const modal = new bootstrap.Modal(document.getElementById('imageLightboxModal'));
                 modal.show();
+            }
+        };
+
+        // Filtro básico de palabras inapropiadas
+        const badWords = ['puta', 'mierda', 'cabron', 'joder', 'coño', 'polla', 'gilipollas', 'spam', 'viagra', 'casino', 'sexo'];
+        function containsBadWords(text) {
+            const lowerText = text.toLowerCase();
+            return badWords.some(word => lowerText.includes(word));
+        }
+
+        // Sanitización para evitar XSS
+        function sanitizeText(str) {
+            const temp = document.createElement('div');
+            temp.textContent = str;
+            return temp.innerHTML;
+        }
+
+        window.toggleComments = function(postId) {
+            const section = document.getElementById('comments-section-' + postId);
+            if (section.classList.contains('d-none')) {
+                section.classList.remove('d-none');
+                // Cargar comentarios solo cuando se abre por primera vez
+                if (!section.dataset.loaded) {
+                    section.dataset.loaded = 'true';
+                    loadComments(postId);
+                }
+            } else {
+                section.classList.add('d-none');
+            }
+        };
+
+        window.loadComments = function(postId) {
+            const list = document.getElementById('comments-list-' + postId);
+            const count = document.getElementById('comment-count-' + postId);
+            
+            const commentsRef = collection(db, 'posts', postId, 'comments');
+            const qComments = query(commentsRef, orderBy('fecha', 'asc'));
+            
+            onSnapshot(qComments, (snapshot) => {
+                count.innerText = snapshot.size;
+                list.innerHTML = '';
+                
+                if (snapshot.empty) {
+                    list.innerHTML = '<div class="text-center text-muted small py-2">No hay comentarios aún. ¡Sé el primero!</div>';
+                    return;
+                }
+
+                snapshot.forEach((doc) => {
+                    const data = doc.data();
+                    let dateStr = '';
+                    if (data.fecha) {
+                        const d = data.fecha.toDate ? data.fecha.toDate() : new Date(data.fecha);
+                        dateStr = d.toLocaleDateString('es-ES') + ' ' + d.toLocaleTimeString('es-ES', {hour: '2-digit', minute:'2-digit'});
+                    }
+                    
+                    list.innerHTML += `
+                        <div class="bg-white p-2 rounded border-bottom border-light mb-1">
+                            <div class="d-flex justify-content-between align-items-center mb-1">
+                                <strong class="text-dark" style="font-size: 0.85rem;"><i class="fa-solid fa-user-circle text-muted me-1"></i> ${data.nombre}</strong>
+                                <small class="text-muted" style="font-size: 0.7rem;">${dateStr}</small>
+                            </div>
+                            <p class="mb-0 text-secondary" style="font-size: 0.9rem; line-height: 1.4;">${data.texto}</p>
+                        </div>
+                    `;
+                });
+                
+                // Scroll al fondo de la lista
+                list.scrollTop = list.scrollHeight;
+            });
+        };
+
+        window.submitComment = async function(e, postId) {
+            e.preventDefault();
+            
+            const lastCommentTime = localStorage.getItem('last_comment_time');
+            const now = Date.now();
+            if (lastCommentTime && (now - parseInt(lastCommentTime)) < 20000) {
+                alert("Por favor, espera 20 segundos antes de enviar otro comentario.");
+                return;
+            }
+
+            const nameInput = document.getElementById('comment-name-' + postId);
+            const textInput = document.getElementById('comment-text-' + postId);
+            const btn = document.getElementById('btn-submit-' + postId);
+            
+            const nombre = sanitizeText(nameInput.value.trim());
+            const texto = sanitizeText(textInput.value.trim());
+
+            if (containsBadWords(nombre) || containsBadWords(texto)) {
+                alert("Tu comentario contiene palabras no permitidas. Por favor mantén un tono respetuoso.");
+                return;
+            }
+
+            try {
+                btn.disabled = true;
+                btn.innerHTML = 'Enviando...';
+                
+                const commentsRef = collection(db, 'posts', postId, 'comments');
+                await addDoc(commentsRef, {
+                    nombre: nombre,
+                    texto: texto,
+                    fecha: serverTimestamp()
+                });
+                
+                localStorage.setItem('last_comment_time', now.toString());
+                textInput.value = '';
+                
+            } catch (error) {
+                console.error("Error publicando comentario:", error);
+                alert("Ocurrió un error al enviar tu comentario.");
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = 'Publicar';
             }
         };
 
@@ -160,10 +273,48 @@
                             
                             <!-- FOTOS DEBAJO EN UN CUADRADO GRANDE -->
                             ${mediaHtml}
+
+                            <!-- COMENTARIOS -->
+                            <div class="border-top pt-3 mt-4">
+                                <button class="btn btn-sm btn-light border rounded-pill px-3 fw-bold text-dark" onclick="toggleComments('${doc.id}')">
+                                    <i class="fa-regular fa-comment-dots text-gold me-2"></i> Comentarios (<span id="comment-count-${doc.id}">...</span>) <i class="fa-solid fa-chevron-down ms-1 text-muted" style="font-size: 0.8rem;"></i>
+                                </button>
+                            </div>
+                            
+                            <div id="comments-section-${doc.id}" class="d-none mt-3 p-3 bg-light rounded-4 border">
+                                <h6 class="fw-bold mb-3 text-dark" style="font-size:0.9rem;"><i class="fa-solid fa-comments me-2 text-gold"></i>Comentarios</h6>
+                                <div id="comments-list-${doc.id}" class="mb-3 d-flex flex-column gap-2" style="max-height: 250px; overflow-y: auto;">
+                                    <div class="text-center text-muted small py-2">Cargando comentarios...</div>
+                                </div>
+                                
+                                <form onsubmit="submitComment(event, '${doc.id}')" class="bg-white p-3 rounded-3 shadow-sm border">
+                                    <div class="row g-2 mb-2">
+                                        <div class="col-sm-5">
+                                            <input type="text" class="form-control form-control-sm" id="comment-name-${doc.id}" placeholder="Tu nombre *" required minlength="2" maxlength="35">
+                                        </div>
+                                        <div class="col-sm-7">
+                                            <input type="text" class="form-control form-control-sm" id="comment-text-${doc.id}" placeholder="Escribe un comentario respetuoso... *" required minlength="2" maxlength="300">
+                                        </div>
+                                    </div>
+                                    <div class="d-flex justify-content-between align-items-center mt-2">
+                                        <small class="text-muted" style="font-size: 0.7rem;"><i class="fa-solid fa-shield-halved text-success me-1"></i> Protegido contra spam</small>
+                                        <button type="submit" class="btn btn-sm px-3 fw-bold text-dark" style="background-color: var(--accent-gold);" id="btn-submit-${doc.id}">Publicar</button>
+                                    </div>
+                                </form>
+                            </div>
                         </div>
                     </div>
                 `;
                 container.innerHTML += html;
+                
+                // Cargar inmediatamente el contador de comentarios (sin abrir el panel)
+                const countEl = document.getElementById('comment-count-' + doc.id);
+                if (countEl) {
+                    const commentsRef = collection(db, 'posts', doc.id, 'comments');
+                    onSnapshot(query(commentsRef), (snap) => {
+                        countEl.innerText = snap.size;
+                    });
+                }
             });
         }, (error) => {
             console.error("Error cargando posts:", error);
