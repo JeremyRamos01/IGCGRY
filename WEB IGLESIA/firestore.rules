@@ -19,6 +19,14 @@ service cloud.firestore {
       allow write: if isAdmin();
     }
 
+    // COLECCIÓN: POSTS
+    // Cualquiera puede leer (ver) los posts.
+    // SOLO los administradores pueden crear, editar o borrar posts.
+    match /posts/{document=**} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
     // COLECCIÓN: CHAT
     // Es un foro libre: cualquiera puede leer y escribir.
     // Nota: El contenido se borra periódicamente según las normas.

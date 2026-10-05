@@ -1,0 +1,32 @@
+rules_version = '2';
+
+service firebase.storage {
+  match /b/{bucket}/o {
+    
+    // Función para verificar admin
+    function isAdmin() {
+      return request.auth != null && (
+        request.auth.token.email == "iglesiaevangelicacasagranrey@gmail.com" || 
+        request.auth.token.email == "ramosjeremy023@gmail.com"
+      );
+    }
+
+    // Reglas para imágenes de eventos
+    match /flyers/{allPaths=**} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    // Reglas para imágenes de posts / noticias
+    match /posts/{allPaths=**} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    // Regla general de seguridad por defecto
+    match /{allPaths=**} {
+      allow read: if true;
+      allow write: if request.auth != null;
+    }
+  }
+}
