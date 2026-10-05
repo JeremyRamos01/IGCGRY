@@ -1150,7 +1150,7 @@
                                         <small class="text-muted d-block mb-2"><i class="fa-regular fa-clock me-1"></i> ${date}</small>
                                         <p class="mb-2 text-muted" style="font-size:0.9rem; overflow:hidden; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical;">${post.content}</p>
                                     </div>
-                                    ${post.imageUrl ? \`<img src="\${post.imageUrl}" class="rounded-3" style="width: 80px; height: 80px; object-fit: cover;" alt="Imagen post">\` : ''}
+                                    ${post.imageUrl ? `<img src="${post.imageUrl}" class="rounded-3" style="width: 80px; height: 80px; object-fit: cover;" alt="Imagen post">` : ''}
                                 </div>
                                 <div class="text-end mt-2">
                                     <button class="btn btn-sm btn-outline-danger delete-post-btn" data-id="${docSnap.id}" data-url="${post.imageUrl || ''}">
@@ -1200,7 +1200,7 @@
                 try {
                     if (imageFile) {
                         submitPostBtn.innerHTML = '<span class="spinner-border spinner-border-sm"></span> Subiendo imagen...';
-                        const storageRef = ref(storage, \`posts/\${Date.now()}_\${imageFile.name}\`);
+                        const storageRef = ref(storage, `posts/${Date.now()}_${imageFile.name}`);
                         const snapshot = await uploadBytes(storageRef, imageFile);
                         imageUrl = await getDownloadURL(snapshot.ref);
                     }
