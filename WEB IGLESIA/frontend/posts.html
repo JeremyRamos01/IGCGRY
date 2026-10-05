@@ -75,10 +75,43 @@
                     year: 'numeric', month: 'long', day: 'numeric' 
                 }) : '';
 
+                let mediaHtml = '';
+                const images = post.imageUrls || (post.imageUrl ? [post.imageUrl] : []);
+                
+                if (images.length === 1) {
+                    mediaHtml = `<img src="${images[0]}" class="card-img-top" alt="Imagen del post" style="height: 250px; object-fit: cover;">`;
+                } else if (images.length > 1) {
+                    const carouselId = 'carousel-' + doc.id;
+                    let indicators = '';
+                    let inner = '';
+                    images.forEach((url, i) => {
+                        indicators += `<button type="button" data-bs-target="#${carouselId}" data-bs-slide-to="${i}" class="${i===0?'active':''}"></button>`;
+                        inner += `
+                            <div class="carousel-item ${i===0?'active':''}">
+                                <img src="${url}" class="d-block w-100" style="height: 250px; object-fit: cover;" alt="Imagen del post">
+                            </div>
+                        `;
+                    });
+                    mediaHtml = `
+                        <div id="${carouselId}" class="carousel slide" data-bs-ride="carousel">
+                            <div class="carousel-indicators">${indicators}</div>
+                            <div class="carousel-inner">${inner}</div>
+                            <button class="carousel-control-prev" type="button" data-bs-target="#${carouselId}" data-bs-slide="prev">
+                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Anterior</span>
+                            </button>
+                            <button class="carousel-control-next" type="button" data-bs-target="#${carouselId}" data-bs-slide="next">
+                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Siguiente</span>
+                            </button>
+                        </div>
+                    `;
+                }
+
                 const html = `
                     <div class="col-md-6 col-lg-4" data-aos="fade-up">
                         <div class="card h-100 border-0 shadow-sm rounded-4 overflow-hidden" style="transition: transform 0.3s;" onmouseover="this.style.transform='translateY(-5px)'" onmouseout="this.style.transform='translateY(0)'">
-                            ${post.imageUrl ? \`<img src="\${post.imageUrl}" class="card-img-top" alt="Imagen del post" style="height: 250px; object-fit: cover;">\` : ''}
+                            ${mediaHtml}
                             <div class="card-body p-4 d-flex flex-column">
                                 <small class="text-muted mb-2 d-block"><i class="fa-regular fa-clock me-1 text-gold"></i> ${date}</small>
                                 <h4 class="card-title fw-bold mb-3" style="color: var(--primary-dark);">${post.title}</h4>

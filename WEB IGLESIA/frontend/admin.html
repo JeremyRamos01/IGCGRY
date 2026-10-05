@@ -382,11 +382,11 @@
                                     <textarea class="form-control" id="post-content" rows="4" required placeholder="Escribe el contenido del post..."></textarea>
                                 </div>
                                 <div class="mb-4">
-                                    <label class="form-label fw-bold">Imagen (Opcional)</label>
+                                    <label class="form-label fw-bold">Imágenes (Opcional)</label>
                                     <div class="input-group mb-2">
-                                        <input type="file" class="form-control" id="post-image-file" accept="image/*">
+                                        <input type="file" class="form-control" id="post-image-file" accept="image/*" multiple>
                                     </div>
-                                    <div class="form-text">Puedes subir una imagen desde tu PC para acompañar el post.</div>
+                                    <div class="form-text">Puedes subir una o varias imágenes desde tu PC para acompañar el post.</div>
                                 </div>
                                 <button type="submit" class="btn btn-gold w-100 fw-bold py-2" id="submit-post-btn">
                                     Publicar Post
@@ -1150,10 +1150,10 @@
                                         <small class="text-muted d-block mb-2"><i class="fa-regular fa-clock me-1"></i> ${date}</small>
                                         <p class="mb-2 text-muted" style="font-size:0.9rem; overflow:hidden; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical;">${post.content}</p>
                                     </div>
-                                    ${post.imageUrl ? `<img src="${post.imageUrl}" class="rounded-3" style="width: 80px; height: 80px; object-fit: cover;" alt="Imagen post">` : ''}
+                                    ${(post.imageUrls && post.imageUrls.length > 0) ? `<img src="${post.imageUrls[0]}" class="rounded-3" style="width: 80px; height: 80px; object-fit: cover;" alt="Imagen post">` : (post.imageUrl ? `<img src="${post.imageUrl}" class="rounded-3" style="width: 80px; height: 80px; object-fit: cover;" alt="Imagen post">` : '')}
                                 </div>
                                 <div class="text-end mt-2">
-                                    <button class="btn btn-sm btn-outline-danger delete-post-btn" data-id="${docSnap.id}" data-url="${post.imageUrl || ''}">
+                                    <button class="btn btn-sm btn-outline-danger delete-post-btn" data-id="${docSnap.id}" data-urls='${JSON.stringify(post.imageUrls || (post.imageUrl ? [post.imageUrl] : []))}'>
                                         <i class="fa-solid fa-trash me-1"></i> Eliminar
                                     </button>
                                 </div>
@@ -1166,14 +1166,19 @@
                                 if(confirm("¿Seguro que quieres borrar este post permanentemente?")) {
                                     const btnEl = e.currentTarget;
                                     const id = btnEl.getAttribute('data-id');
-                                    const imageUrl = btnEl.getAttribute('data-url');
+                                    let urls = [];
+                                    try {
+                                        urls = JSON.parse(btnEl.getAttribute('data-urls') || "[]");
+                                    } catch(err){}
                                     
-                                    if (imageUrl && imageUrl.includes('firebasestorage')) {
-                                        try {
-                                            const imageRef = ref(storage, imageUrl);
-                                            await deleteObject(imageRef);
-                                        } catch (err) {
-                                            console.warn("No se pudo borrar la imagen:", err);
+                                    for (let url of urls) {
+                                        if (url && url.includes('firebasestorage')) {
+                                            try {
+                                                const imageRef = ref(storage, url);
+                                                await deleteObject(imageRef);
+                                            } catch (err) {
+                                                console.warn("No se pudo borrar la imagen:", err);
+                                            }
                                         }
                                     }
                                     
@@ -1194,22 +1199,26 @@
                 
                 const title = document.getElementById('post-title').value;
                 const content = document.getElementById('post-content').value;
-                const imageFile = document.getElementById('post-image-file').files[0];
-                let imageUrl = "";
+                const imageFiles = document.getElementById('post-image-file').files;
+                let imageUrls = [];
                 
                 try {
-                    if (imageFile) {
-                        submitPostBtn.innerHTML = '<span class="spinner-border spinner-border-sm"></span> Subiendo imagen...';
-                        const storageRef = ref(storage, `posts/${Date.now()}_${imageFile.name}`);
-                        const snapshot = await uploadBytes(storageRef, imageFile);
-                        imageUrl = await getDownloadURL(snapshot.ref);
+                    if (imageFiles && imageFiles.length > 0) {
+                        submitPostBtn.innerHTML = '<span class="spinner-border spinner-border-sm"></span> Subiendo imágenes...';
+                        for (let i = 0; i < imageFiles.length; i++) {
+                            const file = imageFiles[i];
+                            const storageRef = ref(storage, `posts/${Date.now()}_${i}_${file.name}`);
+                            const snapshot = await uploadBytes(storageRef, file);
+                            const url = await getDownloadURL(snapshot.ref);
+                            imageUrls.push(url);
+                        }
                     }
                     submitPostBtn.innerHTML = '<span class="spinner-border spinner-border-sm"></span> Guardando post...';
 
                     await addDoc(postsRef, {
                         title: title,
                         content: content,
-                        imageUrl: imageUrl,
+                        imageUrls: imageUrls,
                         fecha: new Date().toISOString()
                     });
                     

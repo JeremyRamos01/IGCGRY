@@ -760,15 +760,53 @@
                         year: 'numeric', month: 'long', day: 'numeric' 
                     }) : '';
                     
+                    let mediaHtml = '';
+                    const images = post.imageUrls || (post.imageUrl ? [post.imageUrl] : []);
+                    
+                    if (images.length === 1) {
+                        mediaHtml = `
+                        <div class="col-md-5 d-flex">
+                            <img src="${images[0]}" class="img-fluid w-100 h-100" style="object-fit: cover; min-height: 300px;" alt="Post image">
+                        </div>
+                        <div class="col-md-7">
+                        `;
+                    } else if (images.length > 1) {
+                        const carouselId = 'carousel-recent';
+                        let indicators = '';
+                        let inner = '';
+                        images.forEach((url, i) => {
+                            indicators += `<button type="button" data-bs-target="#${carouselId}" data-bs-slide-to="${i}" class="${i===0?'active':''}"></button>`;
+                            inner += `
+                                <div class="carousel-item ${i===0?'active':''} h-100">
+                                    <img src="${url}" class="d-block w-100 h-100" style="object-fit: cover; min-height: 300px;" alt="Post image">
+                                </div>
+                            `;
+                        });
+                        mediaHtml = `
+                        <div class="col-md-5 d-flex">
+                            <div id="${carouselId}" class="carousel slide w-100 h-100" data-bs-ride="carousel">
+                                <div class="carousel-indicators">${indicators}</div>
+                                <div class="carousel-inner h-100">${inner}</div>
+                                <button class="carousel-control-prev" type="button" data-bs-target="#${carouselId}" data-bs-slide="prev">
+                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                    <span class="visually-hidden">Anterior</span>
+                                </button>
+                                <button class="carousel-control-next" type="button" data-bs-target="#${carouselId}" data-bs-slide="next">
+                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                    <span class="visually-hidden">Siguiente</span>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="col-md-7">
+                        `;
+                    } else {
+                        mediaHtml = '<div class="col-12">';
+                    }
+                    
                     recentPostContainer.innerHTML = `
                         <div class="card border-0 shadow-sm rounded-4 overflow-hidden" data-aos="fade-up" style="transition: transform 0.3s;" onmouseover="this.style.transform='translateY(-5px)'" onmouseout="this.style.transform='translateY(0)'">
                             <div class="row g-0 align-items-stretch">
-                                ${post.imageUrl ? \`
-                                <div class="col-md-5 d-flex">
-                                    <img src="\${post.imageUrl}" class="img-fluid w-100 h-100" style="object-fit: cover; min-height: 300px;" alt="Post image">
-                                </div>
-                                <div class="col-md-7">
-                                \` : '<div class="col-12">'}
+                                ${mediaHtml}
                                     <div class="card-body p-4 p-md-5 h-100 d-flex flex-column justify-content-center">
                                         <small class="text-muted mb-2 d-block"><i class="fa-regular fa-clock me-1 text-gold"></i> ${date}</small>
                                         <h3 class="card-title fw-bold mb-3" style="color: var(--primary-dark);">${post.title}</h3>
