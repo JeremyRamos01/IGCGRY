@@ -94,6 +94,56 @@
     </header>
 
     <main>
+        <!-- LATEST NEWS/MESSAGES SECTION -->
+        <section id="eventos" class="section-padding" style="background-color: var(--primary-dark); color: white;">
+            <div class="container">
+                <div class="section-title text-center" data-aos="fade-up">
+                    <h2 class="fw-bold" style="color: var(--accent-gold);">Anuncios</h2>
+                    <p class="text-light opacity-75">No te pierdas los próximos eventos de nuestra congregación.</p>
+                </div>
+                <!-- Contenedor dinámico alimentado por Firebase -->
+                <div id="carrusel-novedades" class="carousel slide" data-bs-ride="carousel">
+                    <div class="carousel-inner pb-5" id="ultimas-novedades-container">
+
+                    </div>
+                    <button class="carousel-control-prev custom-btn custom-carousel-control" type="button"
+                        data-bs-target="#carrusel-novedades" data-bs-slide="prev">
+                        <i class="fa-solid fa-chevron-left"></i>
+                        <span class="visually-hidden">Anterior</span>
+                    </button>
+                    <button class="carousel-control-next custom-btn custom-carousel-control" type="button"
+                        data-bs-target="#carrusel-novedades" data-bs-slide="next">
+                        <i class="fa-solid fa-chevron-right"></i>
+                        <span class="visually-hidden">Siguiente</span>
+                    </button>
+                </div>
+
+                <div class="text-center mt-5" data-aos="fade-up">
+                    <a href="eventos.html" class="btn-primary-custom px-5 py-3" style="font-size: 1.1rem;">
+                        <i class="fa-regular fa-calendar-days me-2"></i> Ver Calendario Completo
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- RECENT POST SECTION (NEW) -->
+        <section id="recent-post" class="section-padding bg-light">
+            <div class="container">
+                <div class="section-title text-center" data-aos="fade-up">
+                    <h2 class="fw-bold" style="color: var(--primary-dark);">Última Publicación</h2>
+                    <p class="text-muted">Enteráte de lo más reciente en nuestra congregación.</p>
+                </div>
+                <div class="row justify-content-center">
+                    <div class="col-lg-10" id="recent-post-container">
+                        <div class="text-center text-muted p-4"><span class="spinner-border spinner-border-sm"></span> Cargando...</div>
+                    </div>
+                </div>
+                <div class="text-center mt-5" data-aos="fade-up">
+                    <a href="posts.html" class="btn-outline-custom">Ver Todas las Publicaciones <i class="fa-solid fa-newspaper ms-2"></i></a>
+                </div>
+            </div>
+        </section>
+
         <!-- CONÓCENOS SECTION -->
         <section id="conocenos" class="section-padding bg-white">
             <div class="container">
@@ -267,56 +317,6 @@
                 <div class="text-center mt-5" data-aos="fade-up" data-aos-delay="400">
                     <a href="eventos.html" class="btn-primary-custom px-5 py-3">Ver Todos los Horarios <i
                             class="fa-solid fa-arrow-right ms-2"></i></a>
-                </div>
-            </div>
-        </section>
-
-        <!-- LATEST NEWS/MESSAGES SECTION -->
-        <section id="eventos" class="section-padding" style="background-color: var(--primary-dark); color: white;">
-            <div class="container">
-                <div class="section-title text-center" data-aos="fade-up">
-                    <h2 class="fw-bold" style="color: var(--accent-gold);">Anuncios</h2>
-                    <p class="text-light opacity-75">No te pierdas los próximos eventos de nuestra congregación.</p>
-                </div>
-                <!-- Contenedor dinámico alimentado por Firebase -->
-                <div id="carrusel-novedades" class="carousel slide" data-bs-ride="carousel">
-                    <div class="carousel-inner pb-5" id="ultimas-novedades-container">
-
-                    </div>
-                    <button class="carousel-control-prev custom-btn custom-carousel-control" type="button"
-                        data-bs-target="#carrusel-novedades" data-bs-slide="prev">
-                        <i class="fa-solid fa-chevron-left"></i>
-                        <span class="visually-hidden">Anterior</span>
-                    </button>
-                    <button class="carousel-control-next custom-btn custom-carousel-control" type="button"
-                        data-bs-target="#carrusel-novedades" data-bs-slide="next">
-                        <i class="fa-solid fa-chevron-right"></i>
-                        <span class="visually-hidden">Siguiente</span>
-                    </button>
-                </div>
-
-                <div class="text-center mt-5" data-aos="fade-up">
-                    <a href="eventos.html" class="btn-primary-custom px-5 py-3" style="font-size: 1.1rem;">
-                        <i class="fa-regular fa-calendar-days me-2"></i> Ver Calendario Completo
-                    </a>
-                </div>
-            </div>
-        </section>
-
-        <!-- RECENT POST SECTION (NEW) -->
-        <section id="recent-post" class="section-padding bg-light">
-            <div class="container">
-                <div class="section-title text-center" data-aos="fade-up">
-                    <h2 class="fw-bold" style="color: var(--primary-dark);">Última Publicación</h2>
-                    <p class="text-muted">Enteráte de lo más reciente en nuestra congregación.</p>
-                </div>
-                <div class="row justify-content-center">
-                    <div class="col-lg-10" id="recent-post-container">
-                        <div class="text-center text-muted p-4"><span class="spinner-border spinner-border-sm"></span> Cargando...</div>
-                    </div>
-                </div>
-                <div class="text-center mt-5" data-aos="fade-up">
-                    <a href="posts.html" class="btn-outline-custom">Ver Todas las Publicaciones <i class="fa-solid fa-newspaper ms-2"></i></a>
                 </div>
             </div>
         </section>
@@ -762,37 +762,70 @@
                     
                     let mediaHtml = '';
                     const images = post.imageUrls || (post.imageUrl ? [post.imageUrl] : []);
+                    const mediaTypes = post.mediaTypes || [];
+
+                    function isVideo(url, index) {
+                        if (mediaTypes && mediaTypes[index]) {
+                            return mediaTypes[index].startsWith('video/');
+                        }
+                        try {
+                            const urlWithoutQuery = url.split('?')[0];
+                            const decodedUrl = decodeURIComponent(urlWithoutQuery).toLowerCase();
+                            const videoExtensions = ['.mp4', '.webm', '.ogg', '.mov', '.avi', '.m4v', '.3gp', '.wmv', '.flv'];
+                            return videoExtensions.some(ext => decodedUrl.endsWith(ext));
+                        } catch (e) {
+                            return false;
+                        }
+                    }
                     
                     if (images.length === 1) {
-                        mediaHtml = `
-                            <div class="position-relative overflow-hidden rounded-4 mt-3 shadow-sm" style="height: 450px; background-color: #0f172a; cursor: pointer;" onclick="abrirFlyer('${images[0]}')">
-                                <img src="${images[0]}" class="w-100 h-100 post-img-zoom" style="object-fit: cover; transition: transform 0.4s ease;" alt="Imagen del post">
-                                <div class="position-absolute bottom-0 end-0 m-3" style="z-index: 5; pointer-events: none;">
-                                    <span class="badge bg-dark bg-opacity-75 text-white px-3 py-2 rounded-pill shadow-sm" style="backdrop-filter: blur(4px);">
-                                        <i class="fa-solid fa-expand me-1"></i> Ver en grande
-                                    </span>
+                        const url = images[0];
+                        if (isVideo(url, 0)) {
+                            mediaHtml = `
+                                <div class="position-relative overflow-hidden rounded-4 mt-3 shadow-sm bg-dark" style="height: 450px;">
+                                    <video src="${url}" controls playsinline class="w-100 h-100" style="object-fit: contain;"></video>
                                 </div>
-                            </div>
-                        `;
+                            `;
+                        } else {
+                            mediaHtml = `
+                                <div class="position-relative overflow-hidden rounded-4 mt-3 shadow-sm" style="height: 450px; background-color: #0f172a; cursor: pointer;" onclick="abrirFlyer('${url}')">
+                                    <img src="${url}" class="w-100 h-100 post-img-zoom" style="object-fit: cover; transition: transform 0.4s ease;" alt="Imagen del post">
+                                    <div class="position-absolute bottom-0 end-0 m-3" style="z-index: 5; pointer-events: none;">
+                                        <span class="badge bg-dark bg-opacity-75 text-white px-3 py-2 rounded-pill shadow-sm" style="backdrop-filter: blur(4px);">
+                                            <i class="fa-solid fa-expand me-1"></i> Ver en grande
+                                        </span>
+                                    </div>
+                                </div>
+                            `;
+                        }
                     } else if (images.length > 1) {
                         const carouselId = 'carousel-recent';
                         let indicators = '';
                         let inner = '';
                         images.forEach((url, i) => {
                             indicators += `<button type="button" data-bs-target="#${carouselId}" data-bs-slide-to="${i}" class="${i===0?'active':''}"></button>`;
-                            inner += `
-                                <div class="carousel-item ${i===0?'active':''} h-100 position-relative" style="cursor: pointer;" onclick="abrirFlyer('${url}')">
-                                    <img src="${url}" class="d-block w-100 h-100 post-img-zoom" style="object-fit: cover; transition: transform 0.4s ease;" alt="Imagen del post">
-                                    <div class="position-absolute bottom-0 end-0 m-3" style="z-index: 5; pointer-events: none;">
-                                        <span class="badge bg-dark bg-opacity-75 text-white px-3 py-2 rounded-pill shadow-sm" style="backdrop-filter: blur(4px);">
-                                            <i class="fa-solid fa-expand me-1"></i> Ver en grande (${i+1}/${images.length})
-                                        </span>
+                            
+                            if (isVideo(url, i)) {
+                                inner += `
+                                    <div class="carousel-item ${i===0?'active':''} h-100 position-relative bg-dark">
+                                        <video src="${url}" controls playsinline class="d-block w-100 h-100" style="object-fit: contain;"></video>
                                     </div>
-                                </div>
-                            `;
+                                `;
+                            } else {
+                                inner += `
+                                    <div class="carousel-item ${i===0?'active':''} h-100 position-relative" style="cursor: pointer;" onclick="abrirFlyer('${url}')">
+                                        <img src="${url}" class="d-block w-100 h-100 post-img-zoom" style="object-fit: cover; transition: transform 0.4s ease;" alt="Imagen del post">
+                                        <div class="position-absolute bottom-0 end-0 m-3" style="z-index: 5; pointer-events: none;">
+                                            <span class="badge bg-dark bg-opacity-75 text-white px-3 py-2 rounded-pill shadow-sm" style="backdrop-filter: blur(4px);">
+                                                <i class="fa-solid fa-expand me-1"></i> Ver en grande (${i+1}/${images.length})
+                                            </span>
+                                        </div>
+                                    </div>
+                                `;
+                            }
                         });
                         mediaHtml = `
-                            <div id="${carouselId}" class="carousel slide rounded-4 overflow-hidden mt-3 shadow-sm" data-bs-ride="carousel" style="height: 450px; background-color: #0f172a;">
+                            <div id="${carouselId}" class="carousel slide rounded-4 overflow-hidden mt-3 shadow-sm" data-bs-ride="carousel" data-bs-interval="false" style="height: 450px; background-color: #0f172a;">
                                 <div class="carousel-indicators">${indicators}</div>
                                 <div class="carousel-inner h-100">${inner}</div>
                                 <button class="carousel-control-prev" type="button" data-bs-target="#${carouselId}" data-bs-slide="prev">
