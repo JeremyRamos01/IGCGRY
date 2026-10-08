@@ -382,11 +382,11 @@
                                     <textarea class="form-control" id="post-content" rows="4" required placeholder="Escribe el contenido del post..."></textarea>
                                 </div>
                                 <div class="mb-4">
-                                    <label class="form-label fw-bold">Imágenes (Opcional)</label>
+                                    <label class="form-label fw-bold">Archivos Multimedia (Opcional)</label>
                                     <div class="input-group mb-2">
-                                        <input type="file" class="form-control" id="post-image-file" accept="image/*" multiple>
+                                        <input type="file" class="form-control" id="post-image-file" multiple>
                                     </div>
-                                    <div class="form-text">Puedes subir una o varias imágenes desde tu PC para acompañar el post.</div>
+                                    <div class="form-text">Puedes subir imágenes o vídeos desde tu PC para acompañar el post.</div>
                                 </div>
                                 <button type="submit" class="btn btn-gold w-100 fw-bold py-2" id="submit-post-btn">
                                     Publicar Post
@@ -762,7 +762,8 @@
                     if (flyerFile) {
                         submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm"></span> Subiendo imagen...';
                         const storageRef = ref(storage, `eventos/${Date.now()}_${flyerFile.name}`);
-                        const snapshot = await uploadBytes(storageRef, flyerFile);
+                        const metadata = { contentType: flyerFile.type };
+                        const snapshot = await uploadBytes(storageRef, flyerFile, metadata);
                         flyerUrl = await getDownloadURL(snapshot.ref);
                     }
                     submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm"></span> Guardando evento...';
@@ -1150,7 +1151,31 @@
                                         <small class="text-muted d-block mb-2"><i class="fa-regular fa-clock me-1"></i> ${date}</small>
                                         <p class="mb-2 text-muted" style="font-size:0.9rem; overflow:hidden; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical;">${post.content}</p>
                                     </div>
-                                    ${(post.imageUrls && post.imageUrls.length > 0) ? `<img src="${post.imageUrls[0]}" class="rounded-3" style="width: 80px; height: 80px; object-fit: cover;" alt="Imagen post">` : (post.imageUrl ? `<img src="${post.imageUrl}" class="rounded-3" style="width: 80px; height: 80px; object-fit: cover;" alt="Imagen post">` : '')}
+                                    ${(() => {
+                                        const mediaItems = post.imageUrls || (post.imageUrl ? [post.imageUrl] : []);
+                                        const mediaTypes = post.mediaTypes || [];
+                                        if (mediaItems.length === 0) return '';
+                                        
+                                        const url = mediaItems[0];
+                                        let isVid = false;
+                                        
+                                        if (mediaTypes && mediaTypes[0]) {
+                                            isVid = mediaTypes[0].startsWith('video/');
+                                        } else {
+                                            try {
+                                                const urlWithoutQuery = url.split('?')[0];
+                                                const decodedUrl = decodeURIComponent(urlWithoutQuery).toLowerCase();
+                                                const videoExtensions = ['.mp4', '.webm', '.ogg', '.mov', '.avi', '.m4v', '.3gp', '.wmv', '.flv'];
+                                                isVid = videoExtensions.some(ext => decodedUrl.endsWith(ext));
+                                            } catch (e) {}
+                                        }
+
+                                        if (isVid) {
+                                            return `<video src="${url}" class="rounded-3 bg-dark" style="width: 80px; height: 80px; object-fit: cover;" muted playsinline></video>`;
+                                        } else {
+                                            return `<img src="${url}" class="rounded-3" style="width: 80px; height: 80px; object-fit: cover;" alt="Imagen post">`;
+                                        }
+                                    })()}
                                 </div>
                                 <div class="text-end mt-2 d-flex justify-content-between align-items-center">
                                     <button class="btn btn-sm btn-outline-secondary" onclick="toggleAdminComments('${docSnap.id}')">
@@ -1254,16 +1279,26 @@
                 const content = document.getElementById('post-content').value;
                 const imageFiles = document.getElementById('post-image-file').files;
                 let imageUrls = [];
+                let mediaTypes = [];
                 
                 try {
                     if (imageFiles && imageFiles.length > 0) {
-                        submitPostBtn.innerHTML = '<span class="spinner-border spinner-border-sm"></span> Subiendo imágenes...';
+                        submitPostBtn.innerHTML = '<span class="spinner-border spinner-border-sm"></span> Subiendo archivos...';
                         for (let i = 0; i < imageFiles.length; i++) {
                             const file = imageFiles[i];
-                            const storageRef = ref(storage, `posts/${Date.now()}_${i}_${file.name}`);
-                            const snapshot = await uploadBytes(storageRef, file);
+                            
+                            // Asegurarnos de que el nombre tenga una pista en la URL por si acaso
+                            let fileName = file.name;
+                            if (file.type.startsWith('video/') && !fileName.includes('.')) {
+                                fileName += '.mp4';
+                            }
+                            
+                            const storageRef = ref(storage, `posts/${Date.now()}_${i}_${fileName}`);
+                            const metadata = { contentType: file.type };
+                            const snapshot = await uploadBytes(storageRef, file, metadata);
                             const url = await getDownloadURL(snapshot.ref);
                             imageUrls.push(url);
+                            mediaTypes.push(file.type);
                         }
                     }
                     submitPostBtn.innerHTML = '<span class="spinner-border spinner-border-sm"></span> Guardando post...';
@@ -1272,6 +1307,7 @@
                         title: title,
                         content: content,
                         imageUrls: imageUrls,
+                        mediaTypes: mediaTypes,
                         fecha: new Date().toISOString()
                     });
                     

@@ -212,38 +212,71 @@
                 }) : '';
 
                 let mediaHtml = '';
-                const images = post.imageUrls || (post.imageUrl ? [post.imageUrl] : []);
+                const mediaItems = post.imageUrls || (post.imageUrl ? [post.imageUrl] : []);
+                const mediaTypes = post.mediaTypes || [];
+
+                function isVideo(url, index) {
+                    if (mediaTypes && mediaTypes[index]) {
+                        return mediaTypes[index].startsWith('video/');
+                    }
+                    try {
+                        const urlWithoutQuery = url.split('?')[0];
+                        const decodedUrl = decodeURIComponent(urlWithoutQuery).toLowerCase();
+                        const videoExtensions = ['.mp4', '.webm', '.ogg', '.mov', '.avi', '.m4v', '.3gp', '.wmv', '.flv'];
+                        return videoExtensions.some(ext => decodedUrl.endsWith(ext));
+                    } catch (e) {
+                        return false;
+                    }
+                }
                 
-                if (images.length === 1) {
-                    mediaHtml = `
-                        <div class="position-relative overflow-hidden rounded-4 mt-3 shadow-sm" style="height: 480px; background-color: #0f172a; cursor: pointer;" onclick="openImageModal('${images[0]}')">
-                            <img src="${images[0]}" class="w-100 h-100 post-img-zoom" style="object-fit: cover; transition: transform 0.4s ease;" alt="Imagen del post">
-                            <div class="position-absolute bottom-0 end-0 m-3" style="z-index: 5; pointer-events: none;">
-                                <span class="badge bg-dark bg-opacity-75 text-white px-3 py-2 rounded-pill shadow-sm" style="backdrop-filter: blur(4px);">
-                                    <i class="fa-solid fa-expand me-1"></i> Ver en grande
-                                </span>
+                if (mediaItems.length === 1) {
+                    const url = mediaItems[0];
+                    if (isVideo(url, 0)) {
+                        mediaHtml = `
+                            <div class="position-relative overflow-hidden rounded-4 mt-3 shadow-sm bg-dark" style="height: 480px;">
+                                <video src="${url}" controls playsinline class="w-100 h-100" style="object-fit: contain;"></video>
                             </div>
-                        </div>
-                    `;
-                } else if (images.length > 1) {
-                    const carouselId = 'carousel-' + doc.id;
-                    let indicators = '';
-                    let inner = '';
-                    images.forEach((url, i) => {
-                        indicators += `<button type="button" data-bs-target="#${carouselId}" data-bs-slide-to="${i}" class="${i===0?'active':''}"></button>`;
-                        inner += `
-                            <div class="carousel-item ${i===0?'active':''} h-100 position-relative" style="cursor: pointer;" onclick="openImageModal('${url}')">
-                                <img src="${url}" class="d-block w-100 h-100 post-img-zoom" style="object-fit: cover; transition: transform 0.4s ease;" alt="Imagen del post">
+                        `;
+                    } else {
+                        mediaHtml = `
+                            <div class="position-relative overflow-hidden rounded-4 mt-3 shadow-sm" style="height: 480px; background-color: #0f172a; cursor: pointer;" onclick="openImageModal('${url}')">
+                                <img src="${url}" class="w-100 h-100 post-img-zoom" style="object-fit: cover; transition: transform 0.4s ease;" alt="Imagen del post">
                                 <div class="position-absolute bottom-0 end-0 m-3" style="z-index: 5; pointer-events: none;">
                                     <span class="badge bg-dark bg-opacity-75 text-white px-3 py-2 rounded-pill shadow-sm" style="backdrop-filter: blur(4px);">
-                                        <i class="fa-solid fa-expand me-1"></i> Ver en grande (${i+1}/${images.length})
+                                        <i class="fa-solid fa-expand me-1"></i> Ver en grande
                                     </span>
                                 </div>
                             </div>
                         `;
+                    }
+                } else if (mediaItems.length > 1) {
+                    const carouselId = 'carousel-' + doc.id;
+                    let indicators = '';
+                    let inner = '';
+                    mediaItems.forEach((url, i) => {
+                        indicators += `<button type="button" data-bs-target="#${carouselId}" data-bs-slide-to="${i}" class="${i===0?'active':''}"></button>`;
+                        
+                        if (isVideo(url, i)) {
+                            inner += `
+                                <div class="carousel-item ${i===0?'active':''} h-100 position-relative bg-dark">
+                                    <video src="${url}" controls playsinline class="d-block w-100 h-100" style="object-fit: contain;"></video>
+                                </div>
+                            `;
+                        } else {
+                            inner += `
+                                <div class="carousel-item ${i===0?'active':''} h-100 position-relative" style="cursor: pointer;" onclick="openImageModal('${url}')">
+                                    <img src="${url}" class="d-block w-100 h-100 post-img-zoom" style="object-fit: cover; transition: transform 0.4s ease;" alt="Imagen del post">
+                                    <div class="position-absolute bottom-0 end-0 m-3" style="z-index: 5; pointer-events: none;">
+                                        <span class="badge bg-dark bg-opacity-75 text-white px-3 py-2 rounded-pill shadow-sm" style="backdrop-filter: blur(4px);">
+                                            <i class="fa-solid fa-expand me-1"></i> Ver en grande (${i+1}/${mediaItems.length})
+                                        </span>
+                                    </div>
+                                </div>
+                            `;
+                        }
                     });
                     mediaHtml = `
-                        <div id="${carouselId}" class="carousel slide rounded-4 overflow-hidden mt-3 shadow-sm" data-bs-ride="carousel" style="height: 480px; background-color: #0f172a;">
+                        <div id="${carouselId}" class="carousel slide rounded-4 overflow-hidden mt-3 shadow-sm" data-bs-ride="carousel" data-bs-interval="false" style="height: 480px; background-color: #0f172a;">
                             <div class="carousel-indicators">${indicators}</div>
                             <div class="carousel-inner h-100">${inner}</div>
                             <button class="carousel-control-prev" type="button" data-bs-target="#${carouselId}" data-bs-slide="prev">
