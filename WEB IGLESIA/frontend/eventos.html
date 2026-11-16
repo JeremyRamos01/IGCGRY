@@ -7,8 +7,10 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <!-- SEO Meta Tags -->
-    <meta name="description" content="Calendario de eventos, actividades y servicios dominicales de la Iglesia Evangélica en Leganés (Madrid), Casa del Gran REY.">
-    <meta name="keywords" content="Servicios dominicales evangélicos Leganés, Actividades iglesia evangélica Leganés, Iglesia evangélica en Leganés, Cultos evangélicos en Leganés Madrid, Calendario iglesia cristiana Leganés">
+    <meta name="description"
+        content="Calendario de eventos, actividades y servicios dominicales de la Iglesia Evangélica en Leganés (Madrid), Casa del Gran REY.">
+    <meta name="keywords"
+        content="Servicios dominicales evangélicos Leganés, Actividades iglesia evangélica Leganés, Iglesia evangélica en Leganés, Cultos evangélicos en Leganés Madrid, Calendario iglesia cristiana Leganés">
     <meta name="author" content="Iglesia Evangélica Casa del Gran REY">
     <meta name="robots" content="index, follow">
 
@@ -19,7 +21,8 @@
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://www.iglesiacasadelgranreyleganes.es/eventos">
     <meta property="og:title" content="Eventos y Cultos | Iglesia Evangélica en Leganés">
-    <meta property="og:description" content="Calendario de eventos, actividades y servicios dominicales de la Iglesia Evangélica en Leganés (Madrid), Casa del Gran REY.">
+    <meta property="og:description"
+        content="Calendario de eventos, actividades y servicios dominicales de la Iglesia Evangélica en Leganés (Madrid), Casa del Gran REY.">
     <meta property="og:image" content="https://www.iglesiacasadelgranreyleganes.es/img/Logo.png">
     <meta property="og:locale" content="es_ES">
 
@@ -44,7 +47,8 @@
         =========================== */
 
         /* Bordes */
-        .fc-theme-standard td, .fc-theme-standard th {
+        .fc-theme-standard td,
+        .fc-theme-standard th {
             border-color: rgba(30, 41, 59, 0.12);
         }
 
@@ -69,11 +73,13 @@
             border-color: var(--primary-dark) !important;
             color: #fff !important;
         }
+
         .fc .fc-button-primary:hover {
             background-color: var(--accent-gold) !important;
             border-color: var(--accent-gold) !important;
             color: var(--primary-dark) !important;
         }
+
         .fc .fc-button-primary:not(:disabled).fc-button-active,
         .fc .fc-button-primary:not(:disabled):active {
             background-color: var(--accent-gold) !important;
@@ -81,6 +87,7 @@
             color: var(--primary-dark) !important;
             font-weight: 700;
         }
+
         .fc .fc-button-primary:focus {
             box-shadow: 0 0 0 0.2rem rgba(212, 175, 55, 0.4) !important;
         }
@@ -89,6 +96,7 @@
         .fc .fc-daygrid-day.fc-day-today {
             background-color: rgba(212, 175, 55, 0.1) !important;
         }
+
         .fc .fc-daygrid-day.fc-day-today .fc-daygrid-day-number {
             background: var(--accent-gold);
             color: #fff !important;
@@ -112,13 +120,13 @@
             border-radius: 6px !important;
             border: none !important;
             margin: 2px 3px !important;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.08) !important;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08) !important;
             transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease !important;
         }
 
         .fc-event:hover {
             transform: translateY(-1px) scale(1.02);
-            box-shadow: 0 4px 8px rgba(0,0,0,0.12) !important;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.12) !important;
             filter: brightness(1.15);
         }
 
@@ -129,7 +137,8 @@
         .fc-event-time {
             color: #ffffff !important;
             font-weight: 600 !important;
-            white-space: normal !important; /* Permite saltos de línea para que se lea todo */
+            white-space: normal !important;
+            /* Permite saltos de línea para que se lea todo */
             font-size: 0.8rem !important;
         }
 
@@ -152,6 +161,7 @@
             font-weight: 700;
             font-size: 0.88rem;
         }
+
         .fc .fc-list-day-text,
         .fc .fc-list-day-side-text {
             color: #fff !important;
@@ -162,15 +172,18 @@
         .fc .fc-list-event:hover td {
             background: rgba(212, 175, 55, 0.08) !important;
         }
+
         .fc .fc-list-event-title a {
             color: var(--primary-dark) !important;
             font-weight: 600;
             text-decoration: none;
         }
+
         .fc .fc-list-event-time {
             color: var(--text-muted) !important;
             font-size: 0.8rem;
         }
+
         .fc .fc-list-event-dot {
             border-color: var(--accent-gold) !important;
         }
@@ -192,24 +205,41 @@
                 gap: 0.5rem;
                 margin-bottom: 1rem;
             }
+
             .fc .fc-toolbar-chunk {
                 display: flex;
                 align-items: center;
                 justify-content: center;
                 gap: 0.2rem;
             }
+
             .fc .fc-toolbar-title {
                 font-size: 1.05rem !important;
                 text-align: center;
             }
+
             .fc .fc-button {
                 padding: 0.22rem 0.5rem !important;
                 font-size: 0.76rem !important;
             }
-            .fc-daygrid-day-number { font-size: 0.75rem; padding: 2px 3px; }
-            .fc-col-header-cell-cushion { font-size: 0.7rem; padding: 3px 2px; }
-            .fc .fc-daygrid-day { min-height: 2.4rem; }
-            #calendar { overflow: hidden; }
+
+            .fc-daygrid-day-number {
+                font-size: 0.75rem;
+                padding: 2px 3px;
+            }
+
+            .fc-col-header-cell-cushion {
+                font-size: 0.7rem;
+                padding: 3px 2px;
+            }
+
+            .fc .fc-daygrid-day {
+                min-height: 2.4rem;
+            }
+
+            #calendar {
+                overflow: hidden;
+            }
         }
 
         /* ===========================
@@ -219,7 +249,10 @@
             border-left: 4px solid var(--accent-gold);
             transition: transform 0.3s ease;
         }
-        .event-list-card:hover { transform: translateX(5px); }
+
+        .event-list-card:hover {
+            transform: translateX(5px);
+        }
     </style>
 </head>
 
@@ -245,7 +278,8 @@
                     <div class="col-lg-12 mb-5" data-aos="fade-up">
                         <div class="card premium-card border-0 shadow-sm">
                             <div class="card-body p-4 p-md-5">
-                                <h3 class="fw-bold mb-4" style="color: var(--primary-dark);"><i class="fa-regular fa-calendar-days text-gold me-2"></i> Calendario General</h3>
+                                <h3 class="fw-bold mb-4" style="color: var(--primary-dark);"><i
+                                        class="fa-regular fa-calendar-days text-gold me-2"></i> Calendario General</h3>
                                 <div id='calendar'></div>
                             </div>
                         </div>
@@ -253,7 +287,8 @@
 
                     <!-- Agenda de Eventos Destacados -->
                     <div class="col-lg-12" data-aos="fade-up" data-aos-delay="100">
-                        <h3 class="fw-bold mb-4" style="color: var(--primary-dark);"><i class="fa-solid fa-star text-gold me-2"></i> Próximos Eventos Destacados</h3>
+                        <h3 class="fw-bold mb-4" style="color: var(--primary-dark);"><i
+                                class="fa-solid fa-star text-gold me-2"></i> Próximos Eventos Destacados</h3>
                         <div id="event-agenda-container" class="row g-4">
                             <!-- Los eventos se cargarán aquí en formato tarjetas grandes -->
                         </div>
@@ -280,12 +315,14 @@
                             id="modalEventLocation">Casa del Gran REY</span></p>
                     <hr>
                     <p id="modalEventDescription" class="text-muted"></p>
-                    
+
                     <!-- Botones Añadir al Calendario -->
                     <div class="mt-4 pt-3 border-top">
-                        <label class="form-label fw-bold text-muted small mb-2 d-block"><i class="fa-solid fa-file-export me-1"></i> Añadir a mi Calendario Personal:</label>
+                        <label class="form-label fw-bold text-muted small mb-2 d-block"><i
+                                class="fa-solid fa-file-export me-1"></i> Añadir a mi Calendario Personal:</label>
                         <div class="d-flex gap-2 flex-wrap">
-                            <a id="btn-add-google" href="#" target="_blank" class="btn btn-outline-success btn-sm rounded-pill px-3">
+                            <a id="btn-add-google" href="#" target="_blank"
+                                class="btn btn-outline-success btn-sm rounded-pill px-3">
                                 <i class="fa-brands fa-google me-1"></i> Google Calendar
                             </a>
                             <button id="btn-add-ics" class="btn btn-outline-primary btn-sm rounded-pill px-3">
@@ -320,25 +357,171 @@
         async function initEventos() {
             var calendarEl = document.getElementById('calendar');
             var eventModal = new bootstrap.Modal(document.getElementById('eventModal'));
-            
-            // 1. Obtener eventos de Firebase
+
+            // 1. Obtener eventos especiales de Firebase y generar el Programa Semanal Oficial actualizado
             let eventosDB = [];
+            const oldRecurringTitles = new Set([
+                'oración',
+                'reunión de oración',
+                'culto de oración',
+                'culto en el templo',
+                'culto dominical',
+                'culto de sociedades',
+                'culto de ministerios'
+            ]);
+
             try {
                 const querySnapshot = await getDocs(collection(db, "eventos"));
                 querySnapshot.forEach((doc) => {
                     const data = doc.data();
-                    eventosDB.push({
-                        id: doc.id,
-                        title: data.title,
-                        start: data.start, 
-                        end: data.end,
-                        description: data.description,
-                        destacado: data.destacado === true,
-                        backgroundColor: data.backgroundColor || '#0f172a'
-                    });
+                    const normTitle = (data.title || '').trim().toLowerCase();
+                    // Mantener eventos destacados o especiales añadidos manualmente; omitir los antiguos recurrentes para usar los nuevos horarios oficiales
+                    if (data.destacado === true || (!oldRecurringTitles.has(normTitle) && !data.isAutoSchedule)) {
+                        eventosDB.push({
+                            id: doc.id,
+                            title: data.title,
+                            start: data.start,
+                            end: data.end,
+                            description: data.description,
+                            flyerUrl: data.flyerUrl,
+                            destacado: data.destacado === true,
+                            backgroundColor: data.backgroundColor || '#b38f22'
+                        });
+                    }
                 });
             } catch (error) {
-                console.error("Error al obtener eventos de Firebase. ¿Están configuradas tus credenciales?", error);
+                console.error("Error al obtener eventos de Firebase:", error);
+            }
+
+            // Generar los horarios semanales oficiales para todo el calendario:
+            // LUNES: Culto en hogares (19:00 a 20:00)
+            // MARTES: Culto de Oración: En Iglesia Presencial (19:00 a 20:00), En Alcorcón por WhatsApp (19:00 a 20:00), En Urgel por WhatsApp (20:00 a 21:00)
+            // MIÉRCOLES: Estudio Bíblico sobre Apocalipsis por WhatsApp (21:00 a 21:45)
+            // JUEVES: Culto en Alcorcón (19:00 a 20:00)
+            // VIERNES: Clase de Música (17:00 a 18:00) y Culto en Urgel (19:00 a 20:00)
+            // SÁBADOS: Intercesión (12:00 a 13:30) y Culto Normal (19:00 a 20:15)
+            // DOMINGOS: Escuela Bíblica (11:00 a 11:45) y Culto Normal (12:00 a 14:00)
+            const rangeStart = new Date();
+            rangeStart.setDate(1);
+            rangeStart.setMonth(rangeStart.getMonth() - 2);
+            rangeStart.setHours(0, 0, 0, 0);
+
+            const rangeEnd = new Date();
+            rangeEnd.setMonth(rangeEnd.getMonth() + 8);
+
+            const cur = new Date(rangeStart);
+            while (cur <= rangeEnd) {
+                const dow = cur.getDay();
+                const y = cur.getFullYear();
+                const m = String(cur.getMonth() + 1).padStart(2, '0');
+                const d = String(cur.getDate()).padStart(2, '0');
+                const dateStr = `${y}-${m}-${d}`;
+
+                if (dow === 1) {
+                    // LUNES
+                    eventosDB.push({
+                        id: `sched-lun-hogares-${dateStr}`,
+                        title: 'Culto en Hogares',
+                        start: `${dateStr}T19:00:00`,
+                        end: `${dateStr}T20:00:00`,
+                        description: 'Lunes: Culto en hogares.',
+                        backgroundColor: '#334155'
+                    });
+                } else if (dow === 2) {
+                    // MARTES
+                    eventosDB.push({
+                        id: `sched-mar-oracion-iglesia-${dateStr}`,
+                        title: 'Culto de Oración (Presencial y Alcorcón WhatsApp)',
+                        start: `${dateStr}T19:00:00`,
+                        end: `${dateStr}T20:00:00`,
+                        description: 'Martes - Culto de Oración:\n• En Iglesia Presencial de 7:00 a 8:00 PM (19:00 a 20:00)\n• En Alcorcón por WhatsApp de 7:00 a 8:00 PM (19:00 a 20:00)',
+                        backgroundColor: '#1e293b'
+                    });
+                    eventosDB.push({
+                        id: `sched-mar-oracion-urgel-${dateStr}`,
+                        title: 'Culto de Oración Urgel (WhatsApp)',
+                        start: `${dateStr}T20:00:00`,
+                        end: `${dateStr}T21:00:00`,
+                        description: 'Martes - Culto de Oración en Urgel por WhatsApp de 8:00 a 9:00 PM (20:00 a 21:00).',
+                        backgroundColor: '#475569'
+                    });
+                } else if (dow === 3) {
+                    // MIÉRCOLES
+                    eventosDB.push({
+                        id: `sched-mie-apocalipsis-${dateStr}`,
+                        title: 'Estudio Bíblico: Apocalipsis (WhatsApp)',
+                        start: `${dateStr}T21:00:00`,
+                        end: `${dateStr}T21:45:00`,
+                        description: 'Miércoles - Estudio Bíblico sobre Apocalipsis por WhatsApp de 9:00 a 9:45 PM (21:00 a 21:45).',
+                        backgroundColor: '#0f172a'
+                    });
+                } else if (dow === 4) {
+                    // JUEVES
+                    eventosDB.push({
+                        id: `sched-jue-alcorcon-${dateStr}`,
+                        title: 'Culto en Alcorcón',
+                        start: `${dateStr}T19:00:00`,
+                        end: `${dateStr}T20:00:00`,
+                        description: 'Jueves - Culto en Alcorcón de 7:00 a 8:00 PM (19:00 a 20:00).',
+                        backgroundColor: '#334155'
+                    });
+                } else if (dow === 5) {
+                    // VIERNES
+                    eventosDB.push({
+                        id: `sched-vie-musica-${dateStr}`,
+                        title: 'Clase de Música',
+                        start: `${dateStr}T17:00:00`,
+                        end: `${dateStr}T18:00:00`,
+                        description: 'Viernes - Clase de Música de 5:00 a 6:00 PM (17:00 a 18:00).',
+                        backgroundColor: '#475569'
+                    });
+                    eventosDB.push({
+                        id: `sched-vie-urgel-${dateStr}`,
+                        title: 'Culto en Urgel',
+                        start: `${dateStr}T19:00:00`,
+                        end: `${dateStr}T20:00:00`,
+                        description: 'Viernes - Culto en Urgel de 7:00 a 8:00 PM (19:00 a 20:00).',
+                        backgroundColor: '#334155'
+                    });
+                } else if (dow === 6) {
+                    // SÁBADOS
+                    eventosDB.push({
+                        id: `sched-sab-intercesion-${dateStr}`,
+                        title: 'Intercesión',
+                        start: `${dateStr}T12:00:00`,
+                        end: `${dateStr}T13:30:00`,
+                        description: 'Sábados - Tiempo de Intercesión de 12:00 a 1:30 PM (12:00 a 13:30).',
+                        backgroundColor: '#475569'
+                    });
+                    eventosDB.push({
+                        id: `sched-sab-culto-${dateStr}`,
+                        title: 'Culto Normal',
+                        start: `${dateStr}T19:00:00`,
+                        end: `${dateStr}T20:15:00`,
+                        description: 'Sábados - Culto Normal en la iglesia de 7:00 a 8:15 PM (19:00 a 20:15).',
+                        backgroundColor: '#0f172a'
+                    });
+                } else if (dow === 0) {
+                    // DOMINGOS
+                    eventosDB.push({
+                        id: `sched-dom-escuela-${dateStr}`,
+                        title: 'Escuela Bíblica',
+                        start: `${dateStr}T11:00:00`,
+                        end: `${dateStr}T11:45:00`,
+                        description: 'Domingos - Escuela Bíblica de 11:00 a 11:45 AM.',
+                        backgroundColor: '#1e3a8a'
+                    });
+                    eventosDB.push({
+                        id: `sched-dom-culto-${dateStr}`,
+                        title: 'Culto Normal Dominical',
+                        start: `${dateStr}T12:00:00`,
+                        end: `${dateStr}T14:00:00`,
+                        description: 'Domingos - Culto Normal de 12:00 a 2:00 PM (12:00 a 14:00).',
+                        backgroundColor: '#0f172a'
+                    });
+                }
+
+                cur.setDate(cur.getDate() + 1);
             }
 
             // 2. Inicializar calendario
@@ -376,25 +559,25 @@
             calendar.render();
 
             // Función global para mostrar el modal de detalles
-            window.mostrarModalEvento = function(id) {
+            window.mostrarModalEvento = function (id) {
                 const ev = eventosDB.find(e => e.id === id);
                 if (!ev) return;
-                
+
                 document.getElementById('modalEventTitle').textContent = ev.title;
-                
+
                 const start = new Date(ev.start);
                 const end = ev.end ? new Date(ev.end) : new Date(start.getTime() + 2 * 60 * 60 * 1000); // 2h por defecto
-                
+
                 let dateStr = start.toLocaleDateString('es-ES', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
                 let timeStr = start.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' });
-                if(timeStr === "00:00") timeStr = "Todo el día";
+                if (timeStr === "00:00") timeStr = "Todo el día";
 
                 document.getElementById('modalEventTime').textContent = dateStr + (ev.allDay ? '' : ' - ' + timeStr);
                 document.getElementById('modalEventDescription').textContent = ev.description || 'Sin descripción disponible.';
 
                 // Configurar botones de añadir a calendarios
                 const loc = "Iglesia Evangélica Casa del Gran REY, Calle Priorato, 34, 28915 Leganés, Madrid";
-                
+
                 // Función para convertir fecha local a formato UTC ISO YYYYMMDDTHHmmssZ
                 function formatToUTC(date) {
                     try {
@@ -405,19 +588,19 @@
                         return now.toISOString().replace(/[-:]/g, "").split(".")[0] + "Z";
                     }
                 }
-                
+
                 const startUTC = formatToUTC(start);
                 const endUTC = formatToUTC(end);
-                
+
                 // 1. Google Calendar Link
                 const googleUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(ev.title)}&dates=${startUTC}/${endUTC}&details=${encodeURIComponent(ev.description || '')}&location=${encodeURIComponent(loc)}`;
                 document.getElementById('btn-add-google').href = googleUrl;
-                
+
                 // 2. Generación dinámica de archivo ICS (Apple, Android nativo, Outlook)
                 const btnAddIcs = document.getElementById('btn-add-ics');
                 const newBtnAddIcs = btnAddIcs.cloneNode(true);
                 btnAddIcs.parentNode.replaceChild(newBtnAddIcs, btnAddIcs);
-                
+
                 newBtnAddIcs.addEventListener('click', () => {
                     const icsContent = [
                         "BEGIN:VCALENDAR",
@@ -432,7 +615,7 @@
                         "END:VEVENT",
                         "END:VCALENDAR"
                     ].join("\r\n");
-                    
+
                     const blob = new Blob([icsContent], { type: 'text/calendar;charset=utf-8;' });
                     const link = document.createElement('a');
                     link.href = URL.createObjectURL(blob);
@@ -453,7 +636,7 @@
         initEventos();
 
         // Función global para abrir el popup del volante
-        window.abrirFlyer = function(url) {
+        window.abrirFlyer = function (url) {
             document.getElementById('flyerModalImage').src = url;
             var myModal = new bootstrap.Modal(document.getElementById('flyerModal'));
             myModal.show();
@@ -461,7 +644,7 @@
 
         function renderEventList(eventosDB) {
             const container = document.getElementById('event-agenda-container');
-            container.innerHTML = ''; 
+            container.innerHTML = '';
 
             const ahora = new Date();
             const proximos = eventosDB.filter(e => new Date(e.start) >= ahora && e.destacado)
@@ -477,7 +660,7 @@
                 const fecha = new Date(ev.start);
                 const dia = fecha.getDate();
                 const mes = fecha.toLocaleDateString('es-ES', { month: 'long' }).toUpperCase();
-                
+
                 let timeStr = fecha.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' });
                 if (timeStr === "00:00") timeStr = "Todo el día";
 
@@ -518,10 +701,12 @@
         <div class="modal-dialog modal-lg modal-dialog-centered">
             <div class="modal-content bg-transparent border-0">
                 <div class="modal-header border-0 pb-0 justify-content-end">
-                    <button type="button" class="btn-close btn-close-white fs-4" data-bs-dismiss="modal" aria-label="Close" style="filter: invert(1); text-shadow: 0 0 10px black;"></button>
+                    <button type="button" class="btn-close btn-close-white fs-4" data-bs-dismiss="modal"
+                        aria-label="Close" style="filter: invert(1); text-shadow: 0 0 10px black;"></button>
                 </div>
                 <div class="modal-body text-center pt-0">
-                    <img id="flyerModalImage" src="" class="img-fluid rounded shadow-lg" style="max-height: 85vh; object-fit: contain;">
+                    <img id="flyerModalImage" src="" class="img-fluid rounded shadow-lg"
+                        style="max-height: 85vh; object-fit: contain;">
                 </div>
             </div>
         </div>
