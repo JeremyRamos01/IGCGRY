@@ -476,25 +476,11 @@ function parseRssXmlString(xmlString, sourceMeta) {
     return parsedItems;
 }
 
-// Descargar un feed RSS probando múltiples vías seguras (Serverless API -> rss2json -> AllOrigins -> CorsProxy)
+// Descargar un feed RSS probando múltiples vías seguras en cliente (rss2json -> AllOrigins -> CorsProxy)
 async function fetchSingleFeed(sourceMeta) {
     const encodedUrl = encodeURIComponent(sourceMeta.url);
 
-    // Vía 1: Nuestro propio endpoint seguro (/api/noticias) si está disponible
-    try {
-        const res = await fetch(`/api/noticias?url=${encodedUrl}`, { signal: AbortSignal.timeout(4500) });
-        if (res.ok) {
-            const text = await res.text();
-            if (text.includes('<rss') || text.includes('<feed') || text.includes('<item')) {
-                const items = parseRssXmlString(text, sourceMeta);
-                if (items.length > 0) return items;
-            }
-        }
-    } catch (e) {
-        // Silencioso, pasa al siguiente método
-    }
-
-    // Vía 2: rss2json API (Convierte RSS a JSON limpio directamente en el navegador)
+    // Vía 1: rss2json API (Convierte RSS a JSON limpio directamente en el navegador)
     try {
         const res = await fetch(`https://api.rss2json.com/v1/api.json?rss_url=${encodedUrl}`, { signal: AbortSignal.timeout(5500) });
         if (res.ok) {
