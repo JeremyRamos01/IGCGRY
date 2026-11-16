@@ -359,30 +359,54 @@ function getFallbackImage(category, seedStr) {
     return list[hash % list.length];
 }
 
-// Extraer imagen de un nodo XML de RSS o HTML
+// Mejorar resolución de URLs de imágenes (corrige miniaturas borrosas s72-c de Blogger/Acontecer Cristiano y WordPress)
+export function upgradeImageUrl(rawUrl) {
+    if (!rawUrl || typeof rawUrl !== 'string') return null;
+    let url = rawUrl.trim();
+    if (!url.startsWith('http')) return null;
+
+    // 1. Blogger / Blogspot / Googleusercontent (ej. Acontecer Cristiano usa /s72-c/ o =s72-c por defecto en RSS)
+    if (url.includes('blogspot.com') || url.includes('googleusercontent.com') || url.includes('ggpht.com')) {
+        url = url.replace(/\/s\d+(-[a-zA-Z0-9_-]+)?\//g, '/s1200/');
+        url = url.replace(/\/w\d+-h\d+(-[a-zA-Z0-9_-]+)?\//g, '/s1200/');
+        url = url.replace(/=s\d+(-[a-zA-Z0-9_-]+)?$/g, '=s1200');
+        url = url.replace(/=w\d+(-h\d+)?(-[a-zA-Z0-9_-]+)?$/g, '=w1200');
+    }
+
+    // 2. WordPress miniaturas recortadas (ej. foto-150x150.jpg o foto-300x169.jpg)
+    url = url.replace(/-(?:72x72|100x100|150x150|300x\d+|\d+x150)(\.(?:jpe?g|png|webp))$/i, '$1');
+
+    // 3. Parámetros query de baja resolución (?w=150, ?resize=150,150)
+    url = url.replace(/([?&])w=(?:72|100|150|200|240|300)(&|$)/i, '$1w=1000$2');
+
+    return url;
+}
+
+// Extraer imagen de alta resolución de un nodo XML de RSS o HTML
 function extractImageFromXmlItem(itemNode, rawHtml) {
-    // 1. media:content o media:thumbnail o enclosure
+    // 1. Buscar etiqueta <img src="..."> dentro de content:encoded o description (suele tener la foto original grande)
+    if (rawHtml) {
+        const imgMatch = rawHtml.match(/<img[^>]+src=["']([^"']+)["']/i);
+        if (imgMatch && imgMatch[1] && imgMatch[1].startsWith('http') && !imgMatch[1].includes('1x1') && !imgMatch[1].includes('pixel')) {
+            return upgradeImageUrl(imgMatch[1]);
+        }
+    }
+    // 2. enclosure o media:content
     const enclosure = itemNode.querySelector('enclosure');
     if (enclosure && enclosure.getAttribute('url')) {
         const type = enclosure.getAttribute('type') || '';
         if (!type || type.startsWith('image/')) {
-            return enclosure.getAttribute('url');
+            return upgradeImageUrl(enclosure.getAttribute('url'));
         }
     }
     const mediaElements = itemNode.getElementsByTagNameNS('*', 'content');
     if (mediaElements && mediaElements.length > 0 && mediaElements[0].getAttribute('url')) {
-        return mediaElements[0].getAttribute('url');
+        return upgradeImageUrl(mediaElements[0].getAttribute('url'));
     }
+    // 3. media:thumbnail mejorado a alta resolución (s1200)
     const thumbElements = itemNode.getElementsByTagNameNS('*', 'thumbnail');
     if (thumbElements && thumbElements.length > 0 && thumbElements[0].getAttribute('url')) {
-        return thumbElements[0].getAttribute('url');
-    }
-    // 2. Buscar etiqueta <img src="..."> dentro de description o content:encoded
-    if (rawHtml) {
-        const imgMatch = rawHtml.match(/<img[^>]+src=["']([^"']+)["']/i);
-        if (imgMatch && imgMatch[1] && imgMatch[1].startsWith('http') && !imgMatch[1].includes('1x1') && !imgMatch[1].includes('pixel')) {
-            return imgMatch[1];
-        }
+        return upgradeImageUrl(thumbElements[0].getAttribute('url'));
     }
     return null;
 }
@@ -500,10 +524,15 @@ async function fetchSingleFeed(sourceMeta) {
                     const cleanSummary = sanitizePlainText(item.description).slice(0, 280);
                     const cleanContent = sanitizePlainText(item.content || item.description);
                     const category = detectCategory(title, cleanSummary, sourceMeta.defaultCategory);
-                    let img = item.thumbnail || (item.enclosure && item.enclosure.link) || null;
-                    if (!img && (item.content || item.description)) {
+                    let img = null;
+                    if (item.content || item.description) {
                         const m = String(item.content || item.description).match(/<img[^>]+src=["']([^"']+)["']/i);
-                        if (m && m[1] && m[1].startsWith('http')) img = m[1];
+                        if (m && m[1] && m[1].startsWith('http') && !m[1].includes('1x1')) {
+                            img = upgradeImageUrl(m[1]);
+                        }
+                    }
+                    if (!img) {
+                        img = upgradeImageUrl((item.enclosure && item.enclosure.link) || item.thumbnail || null);
                     }
                     let pubIso = new Date().toISOString();
                     if (item.pubDate) {
@@ -581,6 +610,7 @@ export async function saveNewsConfig(newConfig) {
     // Limpiar caché local para aplicar cambios de inmediato
     try {
         localStorage.removeItem('cgr_news_cache_v2');
+        localStorage.removeItem('cgr_news_cache_v3');
     } catch (e) {}
     return merged;
 }
@@ -689,7 +719,8 @@ export async function getCombinedPortalNews({ forceRefresh = false } = {}) {
     const pinnedSet = new Set(config.pinnedIds || []);
 
     // 1. Revisar caché local si no se fuerza refresco y es del mismo día y dentro de la ventana de renovación
-    const CACHE_KEY = 'cgr_news_cache_v2';
+    const CACHE_KEY = 'cgr_news_cache_v3';
+    try { localStorage.removeItem('cgr_news_cache_v2'); } catch (e) {}
     if (!forceRefresh && config.autoEnabled !== false) {
         try {
             const rawCache = localStorage.getItem(CACHE_KEY);
@@ -701,7 +732,11 @@ export async function getCombinedPortalNews({ forceRefresh = false } = {}) {
                 if (isSameDay && isFresh && Array.isArray(parsed.items) && parsed.items.length >= 4) {
                     const filtered = parsed.items
                         .filter(item => !hiddenSet.has(item.id))
-                        .map(item => ({ ...item, pinned: pinnedSet.has(item.id) }));
+                        .map(item => ({
+                            ...item,
+                            imageUrl: upgradeImageUrl(item.imageUrl) || getFallbackImage(item.category, item.title),
+                            pinned: pinnedSet.has(item.id)
+                        }));
                     filtered.sort((a, b) => (b.pinned ? 1 : 0) - (a.pinned ? 1 : 0) || (new Date(b.fecha) - new Date(a.fecha)));
                     return {
                         config,
@@ -721,20 +756,23 @@ export async function getCombinedPortalNews({ forceRefresh = false } = {}) {
         config.autoEnabled !== false ? fetchFreshEvangelicalNews(config) : Promise.resolve([])
     ]);
 
-    // Combinar dando prioridad a las noticias frescas y a las guardadas/fijadas en Firestore
+    // Combinar dando prioridad a las noticias frescas y a las guardadas/fijadas en Firestore (asegurando imágenes en HD)
     const combinedMap = new Map();
     [...liveNews, ...storedNews].forEach(item => {
         if (!item || !item.id || !item.title) return;
         if (hiddenSet.has(item.id)) return;
+        const hdImage = upgradeImageUrl(item.imageUrl) || getFallbackImage(item.category, item.title);
         if (!combinedMap.has(item.id)) {
             combinedMap.set(item.id, {
                 ...item,
+                imageUrl: hdImage,
                 pinned: pinnedSet.has(item.id) || item.pinned === true
             });
         } else {
             const existing = combinedMap.get(item.id);
             combinedMap.set(item.id, {
                 ...existing,
+                imageUrl: upgradeImageUrl(existing.imageUrl) || hdImage,
                 firestoreDocId: existing.firestoreDocId || item.firestoreDocId,
                 pinned: existing.pinned || item.pinned || pinnedSet.has(item.id)
             });

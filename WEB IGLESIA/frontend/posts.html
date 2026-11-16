@@ -430,7 +430,7 @@
                         <div class="col-md-6 col-lg-4">
                             <article class="news-grid-card" onclick="openEvNewsDetail('${escapeHtml(item.id)}')">
                                 <div class="news-grid-img-wrap">
-                                    <img src="${escapeHtml(item.imageUrl)}" alt="${escapeHtml(item.title)}" loading="lazy" onerror="this.src='img/bienvenidos.png'">
+                                    <img src="${escapeHtml(item.imageUrl)}" alt="${escapeHtml(item.title)}" loading="lazy" onload="if(this.naturalWidth && this.naturalWidth < 200){this.src='https://images.unsplash.com/photo-1504052434569-70ad5836ab65?auto=format&fit=crop&w=900&q=80';}" onerror="this.src='img/bienvenidos.png'">
                                     <span class="position-absolute top-0 start-0 m-2 badge rounded-pill px-3 py-1" style="background: rgba(15, 23, 42, 0.88); color: var(--accent-gold); font-size: 0.75rem;">
                                         ${escapeHtml(item.category || 'Actualidad')}
                                     </span>

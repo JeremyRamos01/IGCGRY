@@ -152,10 +152,6 @@
                 <!-- Cabecera del Portal y Filtros -->
                 <div class="d-flex flex-column flex-lg-row justify-content-between align-items-lg-end mb-4 gap-3" data-aos="fade-up">
                     <div>
-                        <div class="d-inline-flex align-items-center gap-2 px-3 py-1 rounded-pill mb-2" style="background: rgba(212, 175, 55, 0.15); color: #856404; font-size: 0.78rem; font-weight: 700;">
-                            <span class="spinner-grow spinner-grow-sm text-warning" style="width: 8px; height: 8px;" role="status"></span>
-                            PORTAL CRISTIANO AUTOMÁTICO · RENOVACIÓN DIARIA
-                        </div>
                         <h2 class="fw-bold mb-1" style="color: var(--primary-dark); font-size: 2.25rem;">Actualidad Evangélica y Palabra Diaria</h2>
                         <p class="text-muted mb-0">Noticias del mundo cristiano, España, Israel, testimonios y reflexiones actualizadas cada día.</p>
                     </div>
@@ -1225,7 +1221,7 @@
                     <div class="row g-0 align-items-stretch">
                         <div class="col-md-6">
                             <div class="news-featured-img-wrap h-100">
-                                <img src="${escapeHtml(mainItem.imageUrl)}" alt="${escapeHtml(mainItem.title)}" onerror="this.src='img/bienvenidos.png'">
+                                <img src="${escapeHtml(mainItem.imageUrl)}" alt="${escapeHtml(mainItem.title)}" onload="if(this.naturalWidth && this.naturalWidth < 200){this.src='https://images.unsplash.com/photo-1504052434569-70ad5836ab65?auto=format&fit=crop&w=900&q=80';}" onerror="this.src='img/bienvenidos.png'">
                                 <div class="position-absolute top-0 start-0 m-3 d-flex flex-wrap gap-2">
                                     <span class="badge rounded-pill px-3 py-2 shadow-sm" style="background: var(--accent-gold); color: #0f172a; font-weight: 800;">
                                         ${mainItem.pinned ? '<i class="fa-solid fa-thumbtack me-1"></i> Destacada · ' : ''}${escapeHtml(mainItem.category || 'Actualidad Cristiana')}
@@ -1263,7 +1259,7 @@
                 <div class="col-sm-6">
                     <article class="news-grid-card" onclick="openPortalNewsModal('${escapeHtml(item.id)}')">
                         <div class="news-grid-img-wrap">
-                            <img src="${escapeHtml(item.imageUrl)}" alt="${escapeHtml(item.title)}" loading="lazy" onerror="this.src='img/bienvenidos.png'">
+                            <img src="${escapeHtml(item.imageUrl)}" alt="${escapeHtml(item.title)}" loading="lazy" onload="if(this.naturalWidth && this.naturalWidth < 200){this.src='https://images.unsplash.com/photo-1504052434569-70ad5836ab65?auto=format&fit=crop&w=900&q=80';}" onerror="this.src='img/bienvenidos.png'">
                             <span class="position-absolute top-0 start-0 m-2 badge rounded-pill px-2 py-1" style="background: rgba(15, 23, 42, 0.85); color: var(--accent-gold); font-size: 0.72rem;">
                                 ${escapeHtml(item.category || 'Actualidad')}
                             </span>
