@@ -42,10 +42,18 @@ service cloud.firestore {
       allow read, write: if true;
     }
 
-    // COLECCIÓN: CONFIG (Estado en Vivo)
-    // Cualquiera puede leer el estado del En Vivo.
-    // Solo los administradores pueden modificarlo.
+    // COLECCIÓN: CONFIG (Estado en Vivo y Configuración de Noticias Automáticas)
+    // Cualquiera puede leer la configuración pública.
+    // SOLO los administradores pueden modificarla.
     match /config/{document=**} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    // COLECCIÓN: NOTICIAS EVANGÉLICAS AUTOMÁTICAS Y GUARDADAS
+    // Cualquiera puede leer las noticias del portal.
+    // SOLO los administradores autorizados pueden crear, sincronizar, editar o borrar noticias en la BD.
+    match /noticias_evangelicas/{document=**} {
       allow read: if true;
       allow write: if isAdmin();
     }

@@ -27,6 +27,9 @@ const navbarHTML = `
                     <li class="nav-item">
                         <a class="nav-link" href="#inicio">Inicio</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#portal-noticias"><i class="fa-solid fa-newspaper text-gold me-1"></i>Noticias</a>
+                    </li>
                     
                     <!-- Dropdown La Iglesia -->
                     <li class="nav-item dropdown">

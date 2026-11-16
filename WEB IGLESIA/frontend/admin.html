@@ -163,6 +163,9 @@
                     <a href="#" onclick="showSection('posts', this)"><i class="fa-solid fa-newspaper me-2"></i> Noticias / Posts</a>
                 </li>
                 <li>
+                    <a href="#" onclick="showSection('noticias-auto', this)"><i class="fa-solid fa-earth-americas me-2 text-gold"></i> Portal Automático</a>
+                </li>
+                <li>
                     <a href="#" onclick="showSection('foro', this)"><i class="fa-solid fa-comments me-2"></i> Foro Libre</a>
                 </li>
                 <li>
@@ -206,7 +209,7 @@
                 <div id="section-dashboard" class="admin-section active">
                     <h2 class="fw-bold mb-4">Visión General</h2>
                     <div class="row">
-                        <div class="col-md-6 mb-4">
+                        <div class="col-md-4 mb-4">
                             <div class="card border-0 shadow-sm rounded-4 h-100" style="background: linear-gradient(135deg, var(--primary-dark), #1e293b); color:white;">
                                 <div class="card-body p-4 d-flex align-items-center">
                                     <div class="display-4 text-gold me-4"><i class="fa-solid fa-calendar-check"></i></div>
@@ -220,7 +223,21 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-6 mb-4">
+                        <div class="col-md-4 mb-4">
+                            <div class="card border-0 shadow-sm rounded-4 h-100" style="background: linear-gradient(135deg, #b38f22, #d4af37); color:#0f172a;">
+                                <div class="card-body p-4 d-flex align-items-center">
+                                    <div class="display-4 text-dark me-4"><i class="fa-solid fa-earth-americas"></i></div>
+                                    <div>
+                                        <h5 class="fw-bold mb-1 text-dark">Noticias Automáticas</h5>
+                                        <p class="mb-0 text-dark opacity-75 small">Portal estilo BibliaTodo (Piloto Automático)</p>
+                                    </div>
+                                </div>
+                                <div class="card-footer bg-transparent border-0 text-end pb-3">
+                                    <button class="btn btn-dark btn-sm" onclick="document.querySelector('a[onclick*=\'noticias-auto\']').click()">Coordinar Portal <i class="fa-solid fa-arrow-right text-gold ms-1"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-4">
                             <div class="card border-0 shadow-sm rounded-4 h-100" style="background: linear-gradient(135deg, #0ea5e9, #0284c7); color:white;">
                                 <div class="card-body p-4 d-flex align-items-center">
                                     <div class="display-4 text-white me-4"><i class="fa-solid fa-comments"></i></div>
@@ -405,6 +422,151 @@
                     </div>
                 </div>
 
+                <!-- Módulo: Portal Automático de Noticias Evangélicas (Estilo BibliaTodo) -->
+                <div id="section-noticias-auto" class="admin-section">
+                    <div class="d-flex justify-content-between align-items-center flex-wrap gap-3 mb-4">
+                        <div>
+                            <h2 class="fw-bold mb-1"><i class="fa-solid fa-earth-americas text-gold me-2"></i>Portal Automático de Noticias (Estilo BibliaTodo)</h2>
+                            <p class="text-muted mb-0">Coordina el piloto automático diario de noticias evangélicas, versículo del día y reflexiones sin mantenimiento manual.</p>
+                        </div>
+                        <button type="button" id="btn-sync-news-now" class="btn fw-bold px-4 py-2 text-dark rounded-pill shadow-sm" style="background: var(--accent-gold);">
+                            <i class="fa-solid fa-cloud-arrow-down me-2"></i> Sincronizar y Guardar Hoy Ahora
+                        </button>
+                    </div>
+
+                    <!-- Tarjeta Informativa: ¿De dónde salen las noticias y cómo funciona? -->
+                    <div class="card border-0 shadow-sm rounded-4 mb-4" style="background: linear-gradient(135deg, #0f172a, #1e293b); color: #fff;">
+                        <div class="card-body p-4">
+                            <div class="row align-items-center g-3">
+                                <div class="col-lg-8">
+                                    <h5 class="fw-bold text-gold mb-2"><i class="fa-solid fa-robot me-2"></i>¿Cómo funciona el Piloto Automático y de dónde saca BibliaTodo las noticias?</h5>
+                                    <p class="small text-white-50 mb-2">
+                                        BibliaTodo.com recopila sus noticias evangélicas de las principales agencias cristianas oficiales: <strong>Protestante Digital</strong> (Alianza Evangélica Española), <strong>Evangélico Digital</strong>, <strong>Acontecer Cristiano</strong>, <strong>Mundo Cristiano (CBN)</strong> y <strong>Puertas Abiertas</strong>.
+                                    </p>
+                                    <p class="small text-white-50 mb-0">
+                                        Con este motor activado, la página de inicio se renueva sola cada día sin que tengas que escribir nada manualmente, y las noticias se guardan de forma segura bajo las reglas de Firebase (<code>isAdmin()</code>).
+                                    </p>
+                                </div>
+                                <div class="col-lg-4 text-lg-end">
+                                    <div class="p-3 rounded-3 d-inline-block text-start" style="background: rgba(255,255,255,0.08); border: 1px solid rgba(212,175,55,0.3);">
+                                        <div class="small text-white-50">Estado del Motor:</div>
+                                        <div id="admin-news-sync-status" class="fw-bold text-warning">Verificando estado...</div>
+                                        <div id="admin-news-last-date" class="small text-white-50 mt-1">Último guardado: --</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row g-4 mb-4">
+                        <!-- Columna 1: Ajustes del Piloto Automático -->
+                        <div class="col-lg-6">
+                            <div class="card border-0 shadow-sm rounded-4 h-100">
+                                <div class="card-body p-4">
+                                    <h5 class="fw-bold mb-3" style="color: var(--primary-dark);"><i class="fa-solid fa-sliders text-gold me-2"></i>Configuración de Automatización Diaria</h5>
+                                    <form id="news-config-form">
+                                        <div class="form-check form-switch mb-3">
+                                            <input class="form-check-input" type="checkbox" id="cfg-auto-enabled" checked>
+                                            <label class="form-check-label fw-bold text-dark" for="cfg-auto-enabled">Activar Renovación Automática en Inicio</label>
+                                            <div class="form-text">Renueva las noticias evangélicas automáticamente todos los días para los visitantes.</div>
+                                        </div>
+
+                                        <div class="form-check form-switch mb-3">
+                                            <input class="form-check-input" type="checkbox" id="cfg-auto-save-db" checked>
+                                            <label class="form-check-label fw-bold text-dark" for="cfg-auto-save-db">Guardar noticias del día en Firebase automáticamente</label>
+                                            <div class="form-text">Almacena en la colección segura <code>noticias_evangelicas</code> y limpia las antiguas automáticamente.</div>
+                                        </div>
+
+                                        <div class="form-check form-switch mb-3">
+                                            <input class="form-check-input" type="checkbox" id="cfg-auto-daily-post">
+                                            <label class="form-check-label fw-bold text-dark" for="cfg-auto-daily-post">Crear también 1 Post Diario con el Versículo y Reflexión</label>
+                                            <div class="form-text">Si lo activas, cada día se publicará automáticamente la reflexión bíblica en la sección de Posts con comentarios.</div>
+                                        </div>
+
+                                        <div class="form-check form-switch mb-3">
+                                            <input class="form-check-input" type="checkbox" id="cfg-show-ticker" checked>
+                                            <label class="form-check-label fw-bold text-dark" for="cfg-show-ticker">Mostrar Cinta de Última Hora (News Ticker) en Inicio</label>
+                                        </div>
+
+                                        <div class="form-check form-switch mb-4">
+                                            <input class="form-check-input" type="checkbox" id="cfg-show-verse" checked>
+                                            <label class="form-check-label fw-bold text-dark" for="cfg-show-verse">Mostrar Tarjeta de Versículo del Día y Reflexión</label>
+                                        </div>
+
+                                        <div class="row g-3 mb-4">
+                                            <div class="col-sm-4">
+                                                <label class="form-label small fw-bold">Frecuencia</label>
+                                                <select id="cfg-renewal-hours" class="form-select form-select-sm">
+                                                    <option value="4">Cada 4 horas</option>
+                                                    <option value="6" selected>Cada 6 horas</option>
+                                                    <option value="12">Cada 12 horas</option>
+                                                    <option value="24">Cada 24 horas</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <label class="form-label small fw-bold">Noticias en Inicio</label>
+                                                <select id="cfg-max-home" class="form-select form-select-sm">
+                                                    <option value="5">5 noticias</option>
+                                                    <option value="7">7 noticias</option>
+                                                    <option value="9" selected>9 noticias</option>
+                                                    <option value="13">13 noticias</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <label class="form-label small fw-bold">Limpieza BD</label>
+                                                <select id="cfg-retention-days" class="form-select form-select-sm">
+                                                    <option value="7">Guardar 7 días</option>
+                                                    <option value="15" selected>Guardar 15 días</option>
+                                                    <option value="30">Guardar 30 días</option>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <button type="submit" id="btn-save-news-cfg" class="btn btn-dark w-100 fw-bold py-2 rounded-pill">
+                                            <i class="fa-solid fa-floppy-disk me-2 text-gold"></i> Guardar Configuración del Portal
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Columna 2: Fuentes Evangélicas Conectadas -->
+                        <div class="col-lg-6">
+                            <div class="card border-0 shadow-sm rounded-4 h-100">
+                                <div class="card-body p-4 d-flex flex-column justify-content-between">
+                                    <div>
+                                        <h5 class="fw-bold mb-2" style="color: var(--primary-dark);"><i class="fa-solid fa-rss text-gold me-2"></i>Fuentes de Noticias Evangélicas</h5>
+                                        <p class="text-muted small mb-3">Marca las agencias de donde deseas extraer las noticias diarias automáticamente:</p>
+                                        <div id="admin-sources-checklist" class="d-flex flex-column gap-2 mb-3">
+                                        </div>
+                                    </div>
+                                    <div class="border-top pt-3 mt-2 d-flex justify-content-between align-items-center flex-wrap gap-2">
+                                        <small class="text-muted"><span id="hidden-news-count">0</span> noticias ocultadas manualmente</small>
+                                        <button type="button" id="btn-restore-hidden-news" class="btn btn-sm btn-outline-secondary rounded-pill">
+                                            <i class="fa-solid fa-eye me-1"></i> Restaurar Ocultas
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Lista de Noticias Activas Hoy (Fijar, Convertir en Post o Ocultar) -->
+                    <div class="card border-0 shadow-sm rounded-4">
+                        <div class="card-body p-4">
+                            <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3">
+                                <h5 class="fw-bold mb-0" style="color: var(--primary-dark);">
+                                    <i class="fa-solid fa-newspaper text-gold me-2"></i>Noticias Evangélicas Activas Hoy (<span id="admin-active-news-count">0</span>)
+                                </h5>
+                                <small class="text-muted">Puedes fijar una noticia en portada, convertirla en Post oficial con 1 clic u ocultarla.</small>
+                            </div>
+                            <div id="admin-auto-news-list" class="list-group" style="max-height: 520px; overflow-y: auto;">
+                                <div class="text-center text-muted p-4"><span class="spinner-border spinner-border-sm"></span> Cargando noticias del portal...</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <!-- Módulo: Foro Libre -->
                 <div id="section-foro" class="admin-section">
                     <h2 class="fw-bold mb-4">Moderación del Foro</h2>
@@ -547,6 +709,7 @@
         import { collection, addDoc, getDocs, deleteDoc, doc, updateDoc, setDoc, getDoc, onSnapshot, query, orderBy } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
         import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
         import { ref, uploadBytes, getDownloadURL, deleteObject } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-storage.js";
+        import { EVANGELICAL_SOURCES, getNewsConfig, saveNewsConfig, getCombinedPortalNews, syncAndSaveDailyNewsToFirestore, escapeHtml } from './js/news-engine.js';
 
         const auth = getAuth();
         const provider = new GoogleAuthProvider();
@@ -1323,6 +1486,263 @@
             });
 
             loadPosts();
+
+            // 6. COORDINACIÓN DEL PORTAL AUTOMÁTICO DE NOTICIAS EVANGÉLICAS (ESTILO BIBLIATODO)
+            let currentNewsConfig = null;
+            let currentPortalItems = [];
+
+            const sourcesChecklistEl = document.getElementById('admin-sources-checklist');
+            const newsConfigForm = document.getElementById('news-config-form');
+            const btnSaveNewsCfg = document.getElementById('btn-save-news-cfg');
+            const btnSyncNewsNow = document.getElementById('btn-sync-news-now');
+            const btnRestoreHidden = document.getElementById('btn-restore-hidden-news');
+            const adminAutoNewsList = document.getElementById('admin-auto-news-list');
+            const syncStatusEl = document.getElementById('admin-news-sync-status');
+            const lastDateEl = document.getElementById('admin-news-last-date');
+            const activeNewsCountEl = document.getElementById('admin-active-news-count');
+            const hiddenCountEl = document.getElementById('hidden-news-count');
+
+            function renderSourcesChecklist(enabledIds = []) {
+                if (!sourcesChecklistEl) return;
+                const enabledSet = new Set(enabledIds);
+                sourcesChecklistEl.innerHTML = EVANGELICAL_SOURCES.map(src => `
+                    <div class="p-3 rounded-3 border bg-light d-flex justify-content-between align-items-start gap-2">
+                        <div class="form-check">
+                            <input class="form-check-input source-chk" type="checkbox" value="${src.id}" id="src-chk-${src.id}" ${enabledSet.has(src.id) ? 'checked' : ''}>
+                            <label class="form-check-label fw-bold text-dark" for="src-chk-${src.id}">
+                                ${escapeHtml(src.name)}
+                            </label>
+                            <div class="small text-muted mt-1">${escapeHtml(src.originInfo)}</div>
+                        </div>
+                        <span class="badge bg-dark text-gold rounded-pill">${escapeHtml(src.badge)}</span>
+                    </div>
+                `).join('');
+            }
+
+            function renderAdminPortalNewsList() {
+                if (!adminAutoNewsList) return;
+                if (activeNewsCountEl) activeNewsCountEl.textContent = currentPortalItems.length;
+
+                if (currentPortalItems.length === 0) {
+                    adminAutoNewsList.innerHTML = '<div class="text-center text-muted p-4">No hay noticias activas. Pulsa "Sincronizar y Guardar Hoy Ahora".</div>';
+                    return;
+                }
+
+                const pinnedSet = new Set((currentNewsConfig && currentNewsConfig.pinnedIds) || []);
+
+                adminAutoNewsList.innerHTML = currentPortalItems.map(item => {
+                    const isPinned = pinnedSet.has(item.id) || item.pinned === true;
+                    const dateStr = item.fecha ? new Date(item.fecha).toLocaleDateString('es-ES', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' }) : 'Hoy';
+                    return `
+                        <div class="list-group-item border-0 shadow-sm mb-2 rounded-4 p-3 bg-white d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3">
+                            <div class="d-flex align-items-center gap-3">
+                                <img src="${escapeHtml(item.imageUrl)}" alt="Miniatura" class="rounded-3 d-none d-sm-block" style="width: 72px; height: 72px; object-fit: cover;" onerror="this.src='img/bienvenidos.png'">
+                                <div>
+                                    <div class="d-flex flex-wrap align-items-center gap-2 mb-1">
+                                        <span class="badge rounded-pill" style="background: var(--primary-dark); color: var(--accent-gold); font-size: 0.72rem;">${escapeHtml(item.category || 'Actualidad')}</span>
+                                        <small class="text-muted fw-semibold"><i class="fa-solid fa-rss text-gold me-1"></i>${escapeHtml(item.sourceName)}</small>
+                                        <small class="text-muted">· ${dateStr}</small>
+                                        ${isPinned ? '<span class="badge bg-warning text-dark"><i class="fa-solid fa-thumbtack me-1"></i>Fijada en Portada</span>' : ''}
+                                    </div>
+                                    <h6 class="fw-bold mb-1" style="color: var(--primary-dark);">${escapeHtml(item.title)}</h6>
+                                    <p class="text-muted small mb-0" style="display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden;">${escapeHtml(item.summary)}</p>
+                                </div>
+                            </div>
+                            <div class="d-flex flex-wrap gap-2 justify-content-end" style="min-width: 240px;">
+                                <button type="button" class="btn btn-sm ${isPinned ? 'btn-warning text-dark fw-bold' : 'btn-outline-dark'} pin-news-btn" data-id="${escapeHtml(item.id)}" title="Fijar o desfijar como noticia principal en Inicio">
+                                    <i class="fa-solid fa-thumbtack me-1"></i> ${isPinned ? 'Fijada' : 'Destacar'}
+                                </button>
+                                <button type="button" class="btn btn-sm btn-outline-primary promote-post-btn" data-id="${escapeHtml(item.id)}" title="Guardar como Post de la iglesia con comentarios">
+                                    <i class="fa-solid fa-share-from-square me-1"></i> Hacer Post
+                                </button>
+                                <button type="button" class="btn btn-sm btn-outline-danger hide-news-btn" data-id="${escapeHtml(item.id)}" title="Ocultar esta noticia del portal">
+                                    <i class="fa-solid fa-eye-slash"></i>
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+
+                // Eventos para Fijar / Destacar en portada
+                adminAutoNewsList.querySelectorAll('.pin-news-btn').forEach(btn => {
+                    btn.addEventListener('click', async () => {
+                        const id = btn.getAttribute('data-id');
+                        const pinned = new Set(currentNewsConfig.pinnedIds || []);
+                        if (pinned.has(id)) {
+                            pinned.delete(id);
+                        } else {
+                            pinned.add(id);
+                        }
+                        currentNewsConfig = await saveNewsConfig({
+                            ...currentNewsConfig,
+                            pinnedIds: Array.from(pinned)
+                        });
+                        await refreshAdminNewsData(false);
+                    });
+                });
+
+                // Eventos para Convertir en Post Oficial de la Iglesia
+                adminAutoNewsList.querySelectorAll('.promote-post-btn').forEach(btn => {
+                    btn.addEventListener('click', async () => {
+                        const id = btn.getAttribute('data-id');
+                        const item = currentPortalItems.find(i => i.id === id);
+                        if (!item) return;
+                        if (!confirm(`¿Deseas publicar "${item.title}" como un Post oficial de la congregación (con sección de comentarios)?`)) return;
+                        btn.disabled = true;
+                        btn.innerHTML = '<span class="spinner-border spinner-border-sm"></span>';
+                        try {
+                            await addDoc(postsRef, {
+                                title: item.title,
+                                content: `${item.content || item.summary}\n\n📰 Fuente: ${item.sourceName || 'Actualidad Evangélica'}`,
+                                imageUrls: item.imageUrl ? [item.imageUrl] : [],
+                                mediaTypes: ['image/jpeg'],
+                                fecha: new Date().toISOString()
+                            });
+                            alert('¡Noticia publicada como Post de la congregación con éxito!');
+                        } catch (err) {
+                            alert('Error al publicar como post: ' + err.message);
+                        } finally {
+                            btn.disabled = false;
+                            btn.innerHTML = '<i class="fa-solid fa-share-from-square me-1"></i> Hacer Post';
+                        }
+                    });
+                });
+
+                // Eventos para Ocultar noticia
+                adminAutoNewsList.querySelectorAll('.hide-news-btn').forEach(btn => {
+                    btn.addEventListener('click', async () => {
+                        const id = btn.getAttribute('data-id');
+                        const hidden = new Set(currentNewsConfig.hiddenIds || []);
+                        hidden.add(id);
+                        currentNewsConfig = await saveNewsConfig({
+                            ...currentNewsConfig,
+                            hiddenIds: Array.from(hidden)
+                        });
+                        try {
+                            const docId = id.replace(/[^a-zA-Z0-9_-]/g, '_').slice(0, 80);
+                            await deleteDoc(doc(db, 'noticias_evangelicas', docId));
+                        } catch (e) {}
+                        await refreshAdminNewsData(false);
+                    });
+                });
+            }
+
+            async function refreshAdminNewsData(forceRefresh = false) {
+                currentNewsConfig = await getNewsConfig();
+
+                document.getElementById('cfg-auto-enabled').checked = currentNewsConfig.autoEnabled !== false;
+                document.getElementById('cfg-auto-save-db').checked = currentNewsConfig.autoSaveToFirestore !== false;
+                document.getElementById('cfg-auto-daily-post').checked = currentNewsConfig.autoPublishDailyPost === true;
+                document.getElementById('cfg-show-ticker').checked = currentNewsConfig.showTicker !== false;
+                document.getElementById('cfg-show-verse').checked = currentNewsConfig.showVerseOfDay !== false;
+                document.getElementById('cfg-renewal-hours').value = String(currentNewsConfig.renewalHours || 6);
+                document.getElementById('cfg-max-home').value = String(currentNewsConfig.maxHomeNews || 9);
+                document.getElementById('cfg-retention-days').value = String(currentNewsConfig.retentionDays || 15);
+
+                if (hiddenCountEl) {
+                    hiddenCountEl.textContent = (currentNewsConfig.hiddenIds || []).length;
+                }
+
+                renderSourcesChecklist(currentNewsConfig.enabledSources || EVANGELICAL_SOURCES.map(s => s.id));
+
+                if (syncStatusEl) {
+                    syncStatusEl.innerHTML = currentNewsConfig.autoEnabled !== false
+                        ? '<i class="fa-solid fa-circle-check text-success me-1"></i> Piloto Automático Activo'
+                        : '<i class="fa-solid fa-circle-pause text-secondary me-1"></i> En Pausa';
+                }
+                if (lastDateEl) {
+                    lastDateEl.textContent = currentNewsConfig.lastAutoSyncDate
+                        ? `Último guardado en BD: ${currentNewsConfig.lastAutoSyncDate}`
+                        : 'Sincronizando hoy automáticamente...';
+                }
+
+                const { items } = await getCombinedPortalNews({ forceRefresh });
+                currentPortalItems = items;
+                renderAdminPortalNewsList();
+            }
+
+            // Guardar configuración del formulario
+            if (newsConfigForm) {
+                newsConfigForm.addEventListener('submit', async (e) => {
+                    e.preventDefault();
+                    btnSaveNewsCfg.disabled = true;
+                    btnSaveNewsCfg.innerHTML = '<span class="spinner-border spinner-border-sm"></span> Guardando...';
+
+                    try {
+                        const selectedSources = [];
+                        document.querySelectorAll('.source-chk:checked').forEach(chk => {
+                            selectedSources.push(chk.value);
+                        });
+
+                        if (selectedSources.length === 0) {
+                            alert('Selecciona al menos una fuente de noticias evangélicas.');
+                            return;
+                        }
+
+                        currentNewsConfig = await saveNewsConfig({
+                            ...currentNewsConfig,
+                            autoEnabled: document.getElementById('cfg-auto-enabled').checked,
+                            autoSaveToFirestore: document.getElementById('cfg-auto-save-db').checked,
+                            autoPublishDailyPost: document.getElementById('cfg-auto-daily-post').checked,
+                            showTicker: document.getElementById('cfg-show-ticker').checked,
+                            showVerseOfDay: document.getElementById('cfg-show-verse').checked,
+                            renewalHours: Number(document.getElementById('cfg-renewal-hours').value) || 6,
+                            maxHomeNews: Number(document.getElementById('cfg-max-home').value) || 9,
+                            retentionDays: Number(document.getElementById('cfg-retention-days').value) || 15,
+                            enabledSources: selectedSources
+                        });
+
+                        await refreshAdminNewsData(true);
+                        alert('¡Configuración del Portal Automático guardada con éxito!');
+                    } catch (err) {
+                        alert('Error al guardar configuración: ' + err.message);
+                    } finally {
+                        btnSaveNewsCfg.disabled = false;
+                        btnSaveNewsCfg.innerHTML = '<i class="fa-solid fa-floppy-disk me-2 text-gold"></i> Guardar Configuración del Portal';
+                    }
+                });
+            }
+
+            // Botón Sincronizar y Guardar Hoy Ahora
+            if (btnSyncNewsNow) {
+                btnSyncNewsNow.addEventListener('click', async () => {
+                    btnSyncNewsNow.disabled = true;
+                    btnSyncNewsNow.innerHTML = '<span class="spinner-border spinner-border-sm"></span> Sincronizando fuentes...';
+                    try {
+                        const result = await syncAndSaveDailyNewsToFirestore({ isManualTrigger: true });
+                        await refreshAdminNewsData(true);
+                        alert(`¡Sincronización completada! Se guardaron/actualizaron ${result.savedCount || 0} noticias evangélicas del día en Firebase.`);
+                    } catch (err) {
+                        alert('Error sincronizando noticias: ' + err.message);
+                    } finally {
+                        btnSyncNewsNow.disabled = false;
+                        btnSyncNewsNow.innerHTML = '<i class="fa-solid fa-cloud-arrow-down me-2"></i> Sincronizar y Guardar Hoy Ahora';
+                    }
+                });
+            }
+
+            // Botón Restaurar noticias ocultas
+            if (btnRestoreHidden) {
+                btnRestoreHidden.addEventListener('click', async () => {
+                    if (!confirm('¿Restaurar todas las noticias ocultadas manualmente?')) return;
+                    currentNewsConfig = await saveNewsConfig({
+                        ...currentNewsConfig,
+                        hiddenIds: []
+                    });
+                    await refreshAdminNewsData(true);
+                });
+            }
+
+            // Inicializar vista y ejecutar auto-guardado diario en segundo plano si corresponde
+            refreshAdminNewsData(false).then(() => {
+                syncAndSaveDailyNewsToFirestore({ isManualTrigger: false })
+                    .then(res => {
+                        if (res && !res.skipped) {
+                            refreshAdminNewsData(false);
+                        }
+                    })
+                    .catch(err => console.warn('Auto-sync silencioso:', err));
+            });
         }
     </script>
 </body>

@@ -77,29 +77,249 @@
 
     <!-- HEADER HERO SECTION -->
     <header id="inicio" class="hero-section">
-        <div class="hero-content" data-aos="fade-up" data-aos-duration="1500">
-            <h1 class="hero-title m-0">
-                <span class="text-uppercase text-gold fw-bold mb-2 d-block"
-                    style="letter-spacing: 2px; font-size: 1.2rem; font-family: var(--body-font, sans-serif);">Iglesia
-                    Evangélica <span class="visually-hidden">en Leganés</span></span>
-                Casa del Gran REY
-            </h1>
-            <p class="hero-subtitle mt-3">Una iglesia de sana doctrina, con la misión de predicar la palabra de Dios y
-                brindar amor a todos.</p>
-            <div class="d-flex flex-wrap gap-3">
-                <a href="quienes-somos.html" class="btn-primary-custom">Conócenos</a>
-                <a href="#eventos" class="btn-outline-custom">Ver Anuncios</a>
+        <div class="container">
+            <div class="row align-items-center g-4">
+                <div class="col-lg-7" data-aos="fade-up" data-aos-duration="1200">
+                    <h1 class="hero-title m-0">
+                        <span class="text-uppercase text-gold fw-bold mb-2 d-block"
+                            style="letter-spacing: 2px; font-size: 1.15rem; font-family: var(--body-font, sans-serif);">Iglesia
+                            Evangélica <span class="visually-hidden">en Leganés</span></span>
+                        Casa del Gran REY
+                    </h1>
+                    <p class="hero-subtitle mt-3 mb-4">Una iglesia de sana doctrina, con la misión de predicar la palabra de Dios, compartir la actualidad cristiana y brindar amor a todos.</p>
+                    <div class="d-flex flex-wrap gap-3">
+                        <a href="#portal-noticias" class="btn-primary-custom"><i class="fa-solid fa-earth-americas me-2"></i>Noticias Evangélicas</a>
+                        <a href="#eventos" class="btn-outline-custom"><i class="fa-solid fa-bullhorn me-2"></i>Anuncios y Cultos</a>
+                        <a href="quienes-somos.html" class="btn-outline-custom d-none d-sm-inline-block">Conócenos</a>
+                    </div>
+                </div>
+                <div class="col-lg-5 d-none d-lg-block" data-aos="fade-left" data-aos-duration="1400">
+                    <div class="p-4 rounded-4 shadow-lg" style="background: rgba(15, 23, 42, 0.82); backdrop-filter: blur(12px); border: 1px solid rgba(212, 175, 55, 0.4);">
+                        <div class="d-flex align-items-center justify-content-between mb-2">
+                            <span class="badge rounded-pill px-3 py-2" style="background: var(--accent-gold); color: #0f172a; font-weight: 700;">
+                                <i class="fa-solid fa-book-open-reader me-1"></i> Palabra de Hoy
+                            </span>
+                            <small id="hero-date-badge" class="text-white-50"></small>
+                        </div>
+                        <blockquote class="mb-2 text-white fst-italic" id="hero-verse-text" style="font-size: 1.02rem; line-height: 1.55;">
+                            "Cargando el versículo del día..."
+                        </blockquote>
+                        <div class="d-flex justify-content-between align-items-center mt-3 pt-2 border-top border-secondary border-opacity-25">
+                            <strong class="text-gold small" id="hero-verse-ref">Reina Valera 1960</strong>
+                            <a href="#versiculo-dia-box" class="text-white-50 small text-decoration-none">Ver reflexión <i class="fa-solid fa-arrow-down ms-1 text-gold"></i></a>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </header>
 
+    <!-- CINTA DINÁMICA DE ÚLTIMA HORA (NEWS TICKER ESTILO BIBLIATODO) -->
+    <div id="news-ticker-bar" class="news-ticker-bar py-2">
+        <div class="container d-flex align-items-center gap-3">
+            <span class="ticker-badge"><i class="fa-solid fa-bolt me-1"></i> Actualidad Cristiana</span>
+            <div class="ticker-viewport">
+                <div class="ticker-track" id="news-ticker-track">
+                    <span class="ticker-item">Cargando titulares evangélicos del día...</span>
+                </div>
+            </div>
+            <a href="posts.html" class="text-gold small fw-bold text-decoration-none d-none d-md-inline-block" style="white-space: nowrap;">
+                Ver todas <i class="fa-solid fa-angle-right ms-1"></i>
+            </a>
+        </div>
+    </div>
+
+    <!-- BARRA DE ORGANIZACIÓN RÁPIDA (RESPONSIVE PORTAL HUB) -->
+    <nav id="portal-quick-nav" class="portal-quick-nav" aria-label="Secciones de la página de inicio">
+        <div class="container">
+            <div class="quick-nav-scroll">
+                <a href="#portal-noticias" class="quick-nav-pill active"><i class="fa-solid fa-newspaper"></i> Noticias Evangélicas</a>
+                <a href="#versiculo-dia-box" class="quick-nav-pill"><i class="fa-solid fa-book-bible"></i> Versículo y Reflexión</a>
+                <a href="#recent-post" class="quick-nav-pill"><i class="fa-solid fa-church"></i> Publicación Local</a>
+                <a href="#eventos" class="quick-nav-pill"><i class="fa-solid fa-star"></i> Anuncios Especiales</a>
+                <a href="#reuniones-regulares" class="quick-nav-pill"><i class="fa-regular fa-clock"></i> Horarios de Cultos</a>
+                <a href="#multimedia" class="quick-nav-pill"><i class="fa-solid fa-video"></i> En Vivo / Redes</a>
+                <a href="#conocenos" class="quick-nav-pill"><i class="fa-solid fa-heart"></i> Conócenos</a>
+                <a href="#contacto" class="quick-nav-pill"><i class="fa-solid fa-location-dot"></i> Nuestras Sedes</a>
+            </div>
+        </div>
+    </nav>
+
     <main>
-        <!-- LATEST NEWS/MESSAGES SECTION -->
-        <section id="eventos" class="section-padding" style="background-color: var(--primary-dark); color: white;">
+        <!-- PORTAL DINÁMICO DE NOTICIAS EVANGÉLICAS Y EDIFICACIÓN DIARIA (ESTILO BIBLIATODO) -->
+        <section id="portal-noticias" class="section-padding" style="background-color: #f8fafc; padding-top: 55px; padding-bottom: 70px;">
+            <div class="container">
+                <!-- Cabecera del Portal y Filtros -->
+                <div class="d-flex flex-column flex-lg-row justify-content-between align-items-lg-end mb-4 gap-3" data-aos="fade-up">
+                    <div>
+                        <div class="d-inline-flex align-items-center gap-2 px-3 py-1 rounded-pill mb-2" style="background: rgba(212, 175, 55, 0.15); color: #856404; font-size: 0.78rem; font-weight: 700;">
+                            <span class="spinner-grow spinner-grow-sm text-warning" style="width: 8px; height: 8px;" role="status"></span>
+                            PORTAL CRISTIANO AUTOMÁTICO · RENOVACIÓN DIARIA
+                        </div>
+                        <h2 class="fw-bold mb-1" style="color: var(--primary-dark); font-size: 2.25rem;">Actualidad Evangélica y Palabra Diaria</h2>
+                        <p class="text-muted mb-0">Noticias del mundo cristiano, España, Israel, testimonios y reflexiones actualizadas cada día.</p>
+                    </div>
+                    <div class="d-flex align-items-center gap-2">
+                        <button type="button" id="btn-refresh-portal-news" class="btn btn-sm btn-outline-secondary rounded-pill px-3 py-2 fw-semibold" title="Buscar últimas noticias ahora">
+                            <i class="fa-solid fa-rotate me-1 text-gold"></i> Actualizar
+                        </button>
+                        <a href="posts.html" class="btn btn-sm btn-dark rounded-pill px-3 py-2 fw-semibold">
+                            Archivo y Posts <i class="fa-solid fa-arrow-right ms-1 text-gold"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Píldoras de Categorías (Responsive Horizontal Scroll) -->
+                <div class="news-cat-filter mb-4" id="news-category-bar" data-aos="fade-up">
+                    <button type="button" class="news-cat-btn active" data-category="Todas"><i class="fa-solid fa-layer-group me-1"></i> Todas</button>
+                    <button type="button" class="news-cat-btn" data-category="Actualidad Cristiana"><i class="fa-solid fa-globe me-1"></i> Actualidad</button>
+                    <button type="button" class="news-cat-btn" data-category="España y Europa"><i class="fa-solid fa-landmark me-1"></i> España y Europa</button>
+                    <button type="button" class="news-cat-btn" data-category="Mundo Cristiano"><i class="fa-solid fa-earth-americas me-1"></i> Mundo Cristiano</button>
+                    <button type="button" class="news-cat-btn" data-category="Israel y Profecía"><i class="fa-solid fa-star-of-david me-1"></i> Israel y Profecía</button>
+                    <button type="button" class="news-cat-btn" data-category="Testimonios y Fe"><i class="fa-solid fa-hands-praying me-1"></i> Testimonios</button>
+                    <button type="button" class="news-cat-btn" data-category="Estudio y Reflexión"><i class="fa-solid fa-book-open me-1"></i> Reflexiones</button>
+                </div>
+
+                <!-- Cuerpo del Portal: 8 Columnas Noticias + 4 Columnas Sidebar Espiritual -->
+                <div class="row g-4">
+                    <!-- Columna Principal de Noticias Evangélicas -->
+                    <div class="col-lg-8">
+                        <!-- Noticia Destacada Principal -->
+                        <div id="featured-news-slot" class="mb-4">
+                            <div class="card border-0 shadow-sm rounded-4 p-5 text-center bg-white">
+                                <div><span class="spinner-border text-warning"></span></div>
+                                <p class="text-muted mt-3 mb-0">Sincronizando noticias evangélicas del día...</p>
+                            </div>
+                        </div>
+
+                        <!-- Cuadrícula de Noticias Secundarias del Día -->
+                        <div class="row g-3" id="news-grid-slot">
+                        </div>
+
+                        <!-- Botón para cargar más noticias sin salir de inicio -->
+                        <div class="text-center mt-4" id="news-load-more-wrap">
+                            <button type="button" id="btn-load-more-news" class="btn btn-outline-dark rounded-pill px-4 py-2 fw-bold">
+                                <i class="fa-solid fa-plus-circle me-2 text-gold"></i> Mostrar Más Noticias del Día
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Columna Lateral: Versículo del Día, Reflexión, Horarios y Fuentes -->
+                    <div class="col-lg-4">
+                        <div class="d-flex flex-column gap-4">
+                            <!-- Widget 1: Versículo del Día y Reflexión (Estilo BibliaTodo) -->
+                            <div id="versiculo-dia-box" class="verse-of-day-card p-4" data-aos="fade-left">
+                                <div class="d-flex justify-content-between align-items-center mb-3">
+                                    <span class="badge rounded-pill px-3 py-2" style="background: var(--accent-gold); color: #0f172a; font-weight: 800;">
+                                        <i class="fa-solid fa-book-bible me-1"></i> Versículo del Día
+                                    </span>
+                                    <small id="verse-date-label" class="text-white-50" style="font-size: 0.78rem;"></small>
+                                </div>
+                                <p id="verse-main-text" class="fs-5 fw-semibold text-white mb-2" style="line-height: 1.55;">
+                                    "Cargando versículo del día..."
+                                </p>
+                                <p id="verse-main-cite" class="text-gold fw-bold mb-3" style="font-size: 0.95rem;"></p>
+
+                                <div class="p-3 rounded-3 mb-3" style="background: rgba(255,255,255,0.07); border-left: 3px solid var(--accent-gold);">
+                                    <h6 class="text-gold fw-bold mb-1" style="font-size: 0.88rem;">
+                                        <i class="fa-solid fa-lightbulb me-1"></i> <span id="devotional-title">Reflexión Diaria</span>
+                                    </h6>
+                                    <p id="devotional-text" class="text-white-50 small mb-0" style="line-height: 1.5;"></p>
+                                </div>
+
+                                <div class="d-flex gap-2">
+                                    <button type="button" id="btn-copy-verse" class="btn btn-sm btn-outline-light rounded-pill flex-fill fw-semibold">
+                                        <i class="fa-regular fa-copy me-1"></i> Copiar
+                                    </button>
+                                    <a id="btn-share-verse-wa" href="#" target="_blank" rel="noopener" class="btn btn-sm rounded-pill flex-fill fw-bold text-dark" style="background: var(--accent-gold);">
+                                        <i class="fa-brands fa-whatsapp me-1"></i> Compartir
+                                    </a>
+                                </div>
+                            </div>
+
+                            <!-- Widget 2: Horarios Rápidos de Cultos en Leganés -->
+                            <div class="card border-0 shadow-sm rounded-4 p-4 bg-white">
+                                <div class="d-flex align-items-center justify-content-between mb-3">
+                                    <h5 class="fw-bold mb-0" style="color: var(--primary-dark); font-size: 1.15rem;">
+                                        <i class="fa-solid fa-church text-gold me-2"></i>Nuestros Cultos
+                                    </h5>
+                                    <a href="eventos.html" class="small fw-bold text-decoration-none" style="color: var(--accent-gold);">Calendario</a>
+                                </div>
+                                <div class="d-flex flex-column gap-2">
+                                    <div class="d-flex justify-content-between align-items-center p-2 rounded-3 bg-light">
+                                        <div>
+                                            <strong class="text-dark d-block" style="font-size: 0.9rem;">Culto Dominical</strong>
+                                            <small class="text-muted">Alabanza y Predicación</small>
+                                        </div>
+                                        <span class="badge bg-dark text-gold px-3 py-2 rounded-pill">Dom 12:00h</span>
+                                    </div>
+                                    <div class="d-flex justify-content-between align-items-center p-2 rounded-3 bg-light">
+                                        <div>
+                                            <strong class="text-dark d-block" style="font-size: 0.9rem;">Culto de Oración</strong>
+                                            <small class="text-muted">Intercesión y Clamor</small>
+                                        </div>
+                                        <span class="badge bg-dark text-gold px-3 py-2 rounded-pill">Mar 19:00h</span>
+                                    </div>
+                                    <div class="d-flex justify-content-between align-items-center p-2 rounded-3 bg-light">
+                                        <div>
+                                            <strong class="text-dark d-block" style="font-size: 0.9rem;">Culto de Sociedades</strong>
+                                            <small class="text-muted">Jóvenes, Damas y Caballeros</small>
+                                        </div>
+                                        <span class="badge bg-dark text-gold px-3 py-2 rounded-pill">Sáb 19:00h</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Widget 3: Fuentes Evangélicas Verificadas -->
+                            <div class="card border-0 shadow-sm rounded-4 p-4 bg-white">
+                                <h6 class="fw-bold mb-2" style="color: var(--primary-dark); font-size: 0.95rem;">
+                                    <i class="fa-solid fa-satellite-dish text-gold me-2"></i>Fuentes Evangélicas Conectadas
+                                </h6>
+                                <p class="text-muted small mb-3">
+                                    Nuestro sistema recopila y renueva automáticamente cada día las noticias de las principales agencias cristianas en español:
+                                </p>
+                                <div class="d-flex flex-wrap gap-1">
+                                    <span class="badge bg-light text-dark border">BibliaTodo Noticias</span>
+                                    <span class="badge bg-light text-dark border">Protestante Digital</span>
+                                    <span class="badge bg-light text-dark border">Evangélico Digital</span>
+                                    <span class="badge bg-light text-dark border">Acontecer Cristiano</span>
+                                    <span class="badge bg-light text-dark border">Mundo Cristiano</span>
+                                    <span class="badge bg-light text-dark border">Puertas Abiertas</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- RECENT POST SECTION (PUBLICACIONES PROPIAS DE NUESTRA CONGREGACIÓN) -->
+        <section id="recent-post" class="section-padding bg-white" style="padding-top: 70px; padding-bottom: 70px;">
             <div class="container">
                 <div class="section-title text-center" data-aos="fade-up">
-                    <h2 class="fw-bold" style="color: var(--accent-gold);">Anuncios</h2>
-                    <p class="text-light opacity-75">No te pierdas los próximos eventos de nuestra congregación.</p>
+                    <span class="badge rounded-pill px-3 py-2 mb-2" style="background: rgba(30, 41, 59, 0.08); color: var(--primary-dark); font-weight: 700;">
+                        <i class="fa-solid fa-people-roof text-gold me-1"></i> Vida Congregacional en Leganés
+                    </span>
+                    <h2 class="fw-bold" style="color: var(--primary-dark);">Última Publicación de Nuestra Iglesia</h2>
+                    <p class="text-muted">Entérate de las actividades, bautismos, cultos especiales y anuncios locales de Casa del Gran REY.</p>
+                </div>
+                <div class="row justify-content-center">
+                    <div class="col-lg-10" id="recent-post-container">
+                        <div class="text-center text-muted p-4"><span class="spinner-border spinner-border-sm"></span> Cargando...</div>
+                    </div>
+                </div>
+                <div class="text-center mt-4" data-aos="fade-up">
+                    <a href="posts.html" class="btn-primary-custom">Ver Todas las Publicaciones y Comentar <i class="fa-solid fa-comments ms-2"></i></a>
+                </div>
+            </div>
+        </section>
+
+        <!-- LATEST NEWS/MESSAGES SECTION (ANUNCIOS Y EVENTOS ESPECIALES) -->
+        <section id="eventos" class="section-padding" style="background-color: var(--primary-dark); color: white; padding-top: 75px; padding-bottom: 75px;">
+            <div class="container">
+                <div class="section-title text-center" data-aos="fade-up">
+                    <h2 class="fw-bold" style="color: var(--accent-gold);">Anuncios y Próximos Eventos</h2>
+                    <p class="text-light opacity-75">No te pierdas las campañas, vigilias y eventos especiales de nuestra congregación.</p>
                 </div>
                 <!-- Contenedor dinámico alimentado por Firebase -->
                 <div id="carrusel-novedades" class="carousel slide" data-bs-ride="carousel">
@@ -118,28 +338,10 @@
                     </button>
                 </div>
 
-                <div class="text-center mt-5" data-aos="fade-up">
-                    <a href="eventos.html" class="btn-primary-custom px-5 py-3" style="font-size: 1.1rem;">
+                <div class="text-center mt-4" data-aos="fade-up">
+                    <a href="eventos.html" class="btn-primary-custom px-5 py-3" style="font-size: 1.05rem;">
                         <i class="fa-regular fa-calendar-days me-2"></i> Ver Calendario Completo
                     </a>
-                </div>
-            </div>
-        </section>
-
-        <!-- RECENT POST SECTION (NEW) -->
-        <section id="recent-post" class="section-padding bg-light">
-            <div class="container">
-                <div class="section-title text-center" data-aos="fade-up">
-                    <h2 class="fw-bold" style="color: var(--primary-dark);">Última Publicación</h2>
-                    <p class="text-muted">Enteráte de lo más reciente en nuestra congregación.</p>
-                </div>
-                <div class="row justify-content-center">
-                    <div class="col-lg-10" id="recent-post-container">
-                        <div class="text-center text-muted p-4"><span class="spinner-border spinner-border-sm"></span> Cargando...</div>
-                    </div>
-                </div>
-                <div class="text-center mt-5" data-aos="fade-up">
-                    <a href="posts.html" class="btn-outline-custom">Ver Todas las Publicaciones <i class="fa-solid fa-newspaper ms-2"></i></a>
                 </div>
             </div>
         </section>
@@ -619,6 +821,7 @@
     <script type="module">
         import { db } from './js/firebase-config.js';
         import { collection, getDocs, query, orderBy, limit, onSnapshot } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+        import { getCombinedPortalNews, getDailyBiblicalContent, escapeHtml } from './js/news-engine.js';
 
         // Renderizado dinámico de Últimos Eventos Especiales
         async function renderNovedades() {
@@ -870,7 +1073,343 @@
             var myModal = new bootstrap.Modal(document.getElementById('flyerModal'));
             myModal.show();
         };
+
+        // =========================================================================
+        // MOTOR DINÁMICO DE NOTICIAS EVANGÉLICAS Y PALABRA DIARIA (ESTILO BIBLIATODO)
+        // =========================================================================
+        let portalNewsItems = [];
+        let activeCategory = 'Todas';
+        let visibleGridCount = 6;
+        let maxHomeConfigured = 9;
+
+        // 1. Renderizar Versículo y Reflexión del Día inmediatamente
+        function renderDailyBiblicalBox() {
+            const daily = getDailyBiblicalContent();
+            const heroVerse = document.getElementById('hero-verse-text');
+            const heroRef = document.getElementById('hero-verse-ref');
+            const heroDate = document.getElementById('hero-date-badge');
+
+            if (heroVerse) heroVerse.textContent = `"${daily.versiculo}"`;
+            if (heroRef) heroRef.textContent = daily.cita;
+            if (heroDate) heroDate.textContent = daily.fechaLegible;
+
+            const verseText = document.getElementById('verse-main-text');
+            const verseCite = document.getElementById('verse-main-cite');
+            const verseDate = document.getElementById('verse-date-label');
+            const devTitle = document.getElementById('devotional-title');
+            const devText = document.getElementById('devotional-text');
+            const shareWa = document.getElementById('btn-share-verse-wa');
+            const copyBtn = document.getElementById('btn-copy-verse');
+
+            if (verseText) verseText.textContent = `"${daily.versiculo}"`;
+            if (verseCite) verseCite.textContent = daily.cita;
+            if (verseDate) verseDate.textContent = daily.fechaKey;
+            if (devTitle) devTitle.textContent = daily.tituloReflexion;
+            if (devText) devText.textContent = daily.reflexion;
+
+            const shareMessage = `📖 *Versículo del Día (${daily.cita})*\n"${daily.versiculo}"\n\n✨ *${daily.tituloReflexion}:*\n${daily.reflexion}\n\n⛪ _Iglesia Casa del Gran REY - Leganés_`;
+            if (shareWa) {
+                shareWa.href = `https://wa.me/?text=${encodeURIComponent(shareMessage)}`;
+            }
+            if (copyBtn) {
+                copyBtn.onclick = () => {
+                    navigator.clipboard.writeText(shareMessage).then(() => {
+                        const prev = copyBtn.innerHTML;
+                        copyBtn.innerHTML = '<i class="fa-solid fa-check me-1 text-warning"></i> ¡Copiado!';
+                        setTimeout(() => { copyBtn.innerHTML = prev; }, 2000);
+                    });
+                };
+            }
+        }
+
+        renderDailyBiblicalBox();
+
+        // Formatear fecha amigable ("Hoy", "Ayer" o fecha corta)
+        function formatNewsDate(isoStr) {
+            if (!isoStr) return 'Hoy';
+            const d = new Date(isoStr);
+            if (isNaN(d.getTime())) return 'Hoy';
+            const diffHours = Math.floor((Date.now() - d.getTime()) / (1000 * 3600));
+            if (diffHours >= 0 && diffHours < 1) return 'Hace unos minutos';
+            if (diffHours >= 1 && diffHours < 24) return `Hace ${diffHours} h`;
+            return d.toLocaleDateString('es-ES', { day: 'numeric', month: 'short', year: 'numeric' });
+        }
+
+        // Abrir lector modal de noticia completa
+        window.openPortalNewsModal = function (newsId) {
+            const item = portalNewsItems.find(n => n.id === newsId);
+            if (!item) return;
+
+            document.getElementById('modal-news-category').textContent = item.category || 'Actualidad Cristiana';
+            document.getElementById('modal-news-source').textContent = item.sourceName || 'Prensa Evangélica';
+            document.getElementById('modal-news-date').textContent = formatNewsDate(item.fecha);
+            document.getElementById('modal-news-title').textContent = item.title;
+
+            const imgEl = document.getElementById('modal-news-img');
+            imgEl.src = item.imageUrl || 'img/bienvenidos.png';
+            imgEl.onerror = function () { this.src = 'img/bienvenidos.png'; };
+
+            const bodyEl = document.getElementById('modal-news-body');
+            bodyEl.textContent = item.content || item.summary || '';
+
+            const extLink = document.getElementById('modal-news-external-link');
+            if (item.sourceUrl && item.sourceUrl.startsWith('http')) {
+                extLink.href = item.sourceUrl;
+                extLink.classList.remove('d-none');
+            } else {
+                extLink.classList.add('d-none');
+            }
+
+            const waShare = document.getElementById('modal-news-wa-share');
+            const waText = `📰 *${item.title}*\n\n${item.summary || ''}\n\n🔗 Vía Casa del Gran REY: ${window.location.origin}`;
+            waShare.href = `https://wa.me/?text=${encodeURIComponent(waText)}`;
+
+            const modal = new bootstrap.Modal(document.getElementById('newsReaderModal'));
+            modal.show();
+        };
+
+        // Renderizar Cinta de Última Hora (Ticker)
+        function renderNewsTicker(items, config) {
+            const tickerBar = document.getElementById('news-ticker-bar');
+            const track = document.getElementById('news-ticker-track');
+            if (!tickerBar || !track) return;
+
+            if (config && config.showTicker === false) {
+                tickerBar.classList.add('d-none');
+                return;
+            }
+            tickerBar.classList.remove('d-none');
+
+            const topItems = items.slice(0, 8);
+            if (topItems.length === 0) return;
+
+            const buildLinks = () => topItems.map(item => `
+                <a class="ticker-item" onclick="openPortalNewsModal('${escapeHtml(item.id)}')">
+                    <span class="badge bg-secondary bg-opacity-25 text-gold me-2">${escapeHtml(item.category || 'Actualidad')}</span>
+                    ${escapeHtml(item.title)}
+                </a>
+            `).join('');
+
+            // Duplicamos para bucle infinito continuo
+            track.innerHTML = buildLinks() + buildLinks();
+        }
+
+        // Renderizar Noticia Destacada y Cuadrícula según filtro
+        function renderPortalNewsView() {
+            const featuredSlot = document.getElementById('featured-news-slot');
+            const gridSlot = document.getElementById('news-grid-slot');
+            const loadMoreWrap = document.getElementById('news-load-more-wrap');
+            if (!featuredSlot || !gridSlot) return;
+
+            const filtered = activeCategory === 'Todas'
+                ? portalNewsItems
+                : portalNewsItems.filter(i => i.category === activeCategory);
+
+            if (filtered.length === 0) {
+                featuredSlot.innerHTML = `
+                    <div class="card border-0 shadow-sm rounded-4 p-5 text-center bg-white">
+                        <i class="fa-regular fa-newspaper text-muted mb-3" style="font-size: 2.5rem;"></i>
+                        <h5 class="fw-bold text-dark">No hay noticias en esta categoría por ahora</h5>
+                        <p class="text-muted mb-0">Selecciona "Todas" para ver la actualidad evangélica del día.</p>
+                    </div>
+                `;
+                gridSlot.innerHTML = '';
+                if (loadMoreWrap) loadMoreWrap.classList.add('d-none');
+                return;
+            }
+
+            // 1. Noticia Principal Destacada
+            const mainItem = filtered[0];
+            featuredSlot.innerHTML = `
+                <article class="news-featured-card" style="cursor: pointer;" onclick="openPortalNewsModal('${escapeHtml(mainItem.id)}')">
+                    <div class="row g-0 align-items-stretch">
+                        <div class="col-md-6">
+                            <div class="news-featured-img-wrap h-100">
+                                <img src="${escapeHtml(mainItem.imageUrl)}" alt="${escapeHtml(mainItem.title)}" onerror="this.src='img/bienvenidos.png'">
+                                <div class="position-absolute top-0 start-0 m-3 d-flex flex-wrap gap-2">
+                                    <span class="badge rounded-pill px-3 py-2 shadow-sm" style="background: var(--accent-gold); color: #0f172a; font-weight: 800;">
+                                        ${mainItem.pinned ? '<i class="fa-solid fa-thumbtack me-1"></i> Destacada · ' : ''}${escapeHtml(mainItem.category || 'Actualidad Cristiana')}
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 p-4 p-lg-4 d-flex flex-column justify-content-between bg-white">
+                            <div>
+                                <div class="d-flex align-items-center justify-content-between text-muted small mb-2">
+                                    <span class="fw-semibold text-dark"><i class="fa-solid fa-rss text-gold me-1"></i> ${escapeHtml(mainItem.sourceName || 'Prensa Evangélica')}</span>
+                                    <span><i class="fa-regular fa-clock me-1"></i> ${formatNewsDate(mainItem.fecha)}</span>
+                                </div>
+                                <h3 class="fw-bold mb-3" style="color: var(--primary-dark); font-size: 1.45rem; line-height: 1.3;">
+                                    ${escapeHtml(mainItem.title)}
+                                </h3>
+                                <p class="text-secondary mb-3" style="font-size: 0.96rem; line-height: 1.6; display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden;">
+                                    ${escapeHtml(mainItem.summary)}
+                                </p>
+                            </div>
+                            <div class="d-flex align-items-center justify-content-between pt-3 border-top">
+                                <span class="fw-bold small" style="color: var(--primary-dark);">
+                                    Leer noticia completa <i class="fa-solid fa-arrow-right ms-1 text-gold"></i>
+                                </span>
+                                <span class="badge bg-light text-secondary border"><i class="fa-solid fa-book-open-reader me-1"></i> Lectura rápida</span>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+            `;
+
+            // 2. Cuadrícula de Noticias Secundarias
+            const secondaryItems = filtered.slice(1, 1 + visibleGridCount);
+            gridSlot.innerHTML = secondaryItems.map(item => `
+                <div class="col-sm-6">
+                    <article class="news-grid-card" onclick="openPortalNewsModal('${escapeHtml(item.id)}')">
+                        <div class="news-grid-img-wrap">
+                            <img src="${escapeHtml(item.imageUrl)}" alt="${escapeHtml(item.title)}" loading="lazy" onerror="this.src='img/bienvenidos.png'">
+                            <span class="position-absolute top-0 start-0 m-2 badge rounded-pill px-2 py-1" style="background: rgba(15, 23, 42, 0.85); color: var(--accent-gold); font-size: 0.72rem;">
+                                ${escapeHtml(item.category || 'Actualidad')}
+                            </span>
+                        </div>
+                        <div class="p-3 d-flex flex-column flex-grow-1 justify-content-between">
+                            <div>
+                                <div class="d-flex justify-content-between align-items-center text-muted mb-1" style="font-size: 0.75rem;">
+                                    <span class="text-truncate" style="max-width: 65%;"><i class="fa-solid fa-newspaper text-gold me-1"></i>${escapeHtml(item.sourceName || 'Prensa Cristiana')}</span>
+                                    <span>${formatNewsDate(item.fecha)}</span>
+                                </div>
+                                <h4 class="fw-bold mb-2" style="color: var(--primary-dark); font-size: 1.04rem; line-height: 1.35; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;">
+                                    ${escapeHtml(item.title)}
+                                </h4>
+                                <p class="text-muted small mb-2" style="display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; line-height: 1.45;">
+                                    ${escapeHtml(item.summary)}
+                                </p>
+                            </div>
+                            <div class="pt-2 border-top d-flex justify-content-between align-items-center">
+                                <span class="small fw-bold" style="color: var(--accent-gold); font-size: 0.8rem;">Leer más <i class="fa-solid fa-chevron-right ms-1" style="font-size: 0.7rem;"></i></span>
+                                ${item.pinned ? '<span class="badge bg-warning text-dark" style="font-size:0.68rem;">Destacada</span>' : ''}
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            `).join('');
+
+            if (loadMoreWrap) {
+                if (filtered.length > 1 + visibleGridCount) {
+                    loadMoreWrap.classList.remove('d-none');
+                } else {
+                    loadMoreWrap.classList.add('d-none');
+                }
+            }
+        }
+
+        // Inicializar y sincronizar Portal de Noticias
+        async function loadPortalNews(forceRefresh = false) {
+            const refreshBtn = document.getElementById('btn-refresh-portal-news');
+            if (refreshBtn && forceRefresh) {
+                refreshBtn.disabled = true;
+                refreshBtn.innerHTML = '<span class="spinner-border spinner-border-sm"></span> Actualizando...';
+            }
+
+            try {
+                const { config, items } = await getCombinedPortalNews({ forceRefresh });
+                portalNewsItems = items;
+                maxHomeConfigured = Number(config.maxHomeNews) || 9;
+                visibleGridCount = Math.max(4, maxHomeConfigured - 1);
+
+                const verseBox = document.getElementById('versiculo-dia-box');
+                if (verseBox) {
+                    if (config.showVerseOfDay === false) {
+                        verseBox.classList.add('d-none');
+                    } else {
+                        verseBox.classList.remove('d-none');
+                    }
+                }
+
+                renderNewsTicker(items, config);
+                renderPortalNewsView();
+            } catch (e) {
+                console.error("Error cargando portal de noticias:", e);
+            } finally {
+                if (refreshBtn && forceRefresh) {
+                    refreshBtn.disabled = false;
+                    refreshBtn.innerHTML = '<i class="fa-solid fa-rotate me-1 text-gold"></i> Actualizar';
+                }
+            }
+        }
+
+        // Eventos de botones de categoría
+        document.querySelectorAll('#news-category-bar .news-cat-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('#news-category-bar .news-cat-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                activeCategory = btn.getAttribute('data-category') || 'Todas';
+                visibleGridCount = Math.max(4, maxHomeConfigured - 1);
+                renderPortalNewsView();
+            });
+        });
+
+        // Botón cargar más noticias
+        const btnLoadMore = document.getElementById('btn-load-more-news');
+        if (btnLoadMore) {
+            btnLoadMore.addEventListener('click', () => {
+                visibleGridCount += 6;
+                renderPortalNewsView();
+            });
+        }
+
+        // Botón actualizar noticias manualmente
+        const btnRefreshPortal = document.getElementById('btn-refresh-portal-news');
+        if (btnRefreshPortal) {
+            btnRefreshPortal.addEventListener('click', () => {
+                loadPortalNews(true);
+            });
+        }
+
+        // Resaltar píldora activa en la barra rápida al hacer clic
+        document.querySelectorAll('#portal-quick-nav .quick-nav-pill').forEach(pill => {
+            pill.addEventListener('click', () => {
+                document.querySelectorAll('#portal-quick-nav .quick-nav-pill').forEach(p => p.classList.remove('active'));
+                pill.classList.add('active');
+            });
+        });
+
+        loadPortalNews(false);
     </script>
+
+    <!-- Modal Lector Integrado de Noticias Evangélicas (Estilo BibliaTodo) -->
+    <div class="modal fade" id="newsReaderModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content border-0 rounded-4 overflow-hidden shadow-lg">
+                <div class="modal-header border-0 text-white" style="background: var(--primary-dark);">
+                    <div class="d-flex align-items-center gap-2">
+                        <span id="modal-news-category" class="badge rounded-pill px-3 py-2" style="background: var(--accent-gold); color: #0f172a; font-weight: 800;">Actualidad</span>
+                        <small id="modal-news-source" class="text-white-50 fw-semibold"></small>
+                    </div>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                </div>
+                <div class="modal-body p-0">
+                    <div style="max-height: 360px; overflow: hidden; background: #0f172a;">
+                        <img id="modal-news-img" src="" alt="Imagen de la noticia" class="w-100" style="object-fit: cover; max-height: 360px;">
+                    </div>
+                    <div class="p-4 p-md-5">
+                        <div class="text-muted small mb-2">
+                            <i class="fa-regular fa-calendar me-1 text-gold"></i> <span id="modal-news-date"></span>
+                        </div>
+                        <h3 id="modal-news-title" class="fw-bold mb-4" style="color: var(--primary-dark); line-height: 1.3;"></h3>
+                        <div id="modal-news-body" class="text-secondary" style="white-space: pre-line; font-size: 1.05rem; line-height: 1.75;"></div>
+                    </div>
+                </div>
+                <div class="modal-footer bg-light border-0 d-flex justify-content-between flex-wrap gap-2">
+                    <div class="d-flex gap-2">
+                        <a id="modal-news-wa-share" href="#" target="_blank" rel="noopener" class="btn btn-sm rounded-pill px-3 py-2 fw-bold text-dark" style="background: var(--accent-gold);">
+                            <i class="fa-brands fa-whatsapp me-1"></i> Compartir Noticia
+                        </a>
+                        <a id="modal-news-external-link" href="#" target="_blank" rel="noopener" class="btn btn-sm btn-outline-dark rounded-pill px-3 py-2 fw-semibold">
+                            <i class="fa-solid fa-up-right-from-square me-1"></i> Fuente Original
+                        </a>
+                    </div>
+                    <button type="button" class="btn btn-sm btn-secondary rounded-pill px-4 py-2" data-bs-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- Modal Flyer -->
     <div class="modal fade" id="flyerModal" tabindex="-1" aria-labelledby="flyerModalLabel" aria-hidden="true">
